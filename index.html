@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心理測驗：你的旅遊角色是什麼？</title>
+    <style>
+        :root {
+            --primary-color: #ff7eb3;
+            --secondary-color: #7ec4ff;
+            --accent-color: #ffd93d;
+            --bg-gradient: linear-gradient(135deg, #fff6f9 0%, #f0f7ff 100%);
+            --box-shadow: 0 8px 32px rgba(255, 126, 179, 0.2);
+        }
+
+        body {
+            background: var(--bg-gradient);
+            font-family: "Comic Sans MS", "微軟正黑體", sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--box-shadow);
+            border: 2px solid rgba(255, 126, 179, 0.3);
+            border-radius: 25px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .container h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            font-size: 2.2em;
+            text-shadow: 2px 2px 4px rgba(255, 126, 179, 0.2);
+            padding: 0 20px;
+        }
+
+        .question {
+            display: none;
+            position: relative;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px dashed var(--secondary-color);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            min-height: 400px;
+            text-align: center;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            padding: 12px 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+            max-width: 200px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            background: var(--secondary-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .character-img {
+            max-width: 200px;
+            height: auto;
+            margin: 20px auto;
+            display: block;
+        }
+
+        td {
+            background: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        td:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+        }
+
+        input[type="radio"]:checked + label {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 12px;
+            transform: scale(1.02);
+        }
+
+        .start-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(rgba(255, 126, 179, 0.3), rgba(126, 196, 255, 0.3)), url('cover-bg.png');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .start-page h1 {
+            color: var(--primary-color);
+            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.5);
+        }
+
+        .start-page p {
+            color: #666;
+            font-size: 1.3em;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        /* 添加可愛的浮動元素動畫 */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-15px) rotate(5deg);
+            }
+            75% {
+                transform: translateY(15px) rotate(-5deg);
+            }
+        }
+
+        .floating-characters {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-character {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: all 0.3s ease;
+        }
+
+        .char1 {
+            top: 15%;
+            left: 2%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .char2 {
+            top: 30%;
+            right: 2%;
+            animation: float 6s ease-in-out infinite 2s;
+        }
+
+        .char3 {
+            bottom: 15%;
+            left: 3%;
+            animation: float 6s ease-in-out infinite 4s;
+        }
+
+        /* 添加可愛的問題切換動畫 */
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) translateY(100px);
+            }
+            50% {
+                transform: scale(1.05) translateY(-10px);
+            }
+            70% {
+                transform: scale(0.9) translateY(5px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .question.active {
+            display: block;
+            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* 添加結果顯示的可愛動畫 */
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotate(-10deg);
+            }
+            80% {
+                transform: scale(1.1) rotate(5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+            }
+        }
+
+        .results {
+            animation: popIn 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* 添加可愛的裝飾元素 */
+        .results::before,
+        .results::after {
+            content: '✨';
+            position: absolute;
+            font-size: 2em;
+            color: var(--accent-color);
+            animation: twinkle 2s infinite;
+        }
+
+        .results::before {
+            top: 10px;
+            left: 10px;
+        }
+
+        .results::after {
+            bottom: 10px;
+            right: 10px;
+        }
+
+        /* 定義動畫 */
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes popAndRotate {
+            0% {
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.1) rotate(10deg);
+            }
+            80% {
+                transform: scale(0.95) rotate(-5deg);
+            }
+            100% {
+                transform: scale(1) rotate(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+        }
+
+        /* 添加亂跑動畫 */
+        @keyframes randomMove {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(100px, -50px) rotate(15deg);
+            }
+            50% {
+                transform: translate(-50px, 100px) rotate(-15deg);
+            }
+            75% {
+                transform: translate(-100px, -50px) rotate(15deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+        }
+
+        /* 添加點擊效果的動畫 */
+        @keyframes shake {
+            0%, 100% {
+                transform: rotate(0deg) scale(1);
+            }
+            25% {
+                transform: rotate(-15deg) scale(1.1);
+            }
+            50% {
+                transform: rotate(10deg) scale(1.1);
+            }
+            75% {
+                transform: rotate(-5deg) scale(1.1);
+            }
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px auto;
+                padding: 10px;
+                width: 95%;
+            }
+
+            .character-img {
+                max-width: 150px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+                padding: 0 10px;
+            }
+
+            h3 {
+                font-size: 1.2em;
+                padding: 0 10px;
+            }
+
+            td {
+                padding: 0 5px;
+            }
+
+            label {
+                padding: 12px 8px;
+                font-size: 0.9em;
+                width: 100%;
+            }
+
+            button {
+                max-width: 180px;
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+
+            table {
+                width: 100%;
+                padding: 0;
+                margin: 10px 0;
+            }
+
+            .question {
+                padding: 10px 5px;
+                margin: 5px 0;
+            }
+
+            /* 調整錯誤訊息的樣式 */
+            .error {
+                padding: 0 10px;
+                font-size: 0.9em;
+            }
+
+            .floating-character {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .char1 {
+                top: 5%;
+                left: -10px;
+            }
+            
+            .char2 {
+                top: 20%;
+                right: -10px;
+            }
+            
+            .char3 {
+                bottom: 5%;
+                left: -10px;
+            }
+        }
+
+        /* 添加更小螢幕的樣式 */
+        @media (max-width: 480px) {
+            .container {
+                margin: 5px auto;
+                padding: 8px;
+                width: 98%;
+            }
+
+            h1 {
+                font-size: 1.3em;
+            }
+
+            h3 {
+                font-size: 1.1em;
+            }
+
+            label {
+                padding: 10px 6px;
+                font-size: 0.85em;
+            }
+
+            button {
+                max-width: 150px;
+                padding: 8px 16px;
+                font-size: 0.9em;
+            }
+
+            .floating-character {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .char1 {
+                top: 2%;
+                left: -5px;
+            }
+            
+            .char2 {
+                top: 15%;
+                right: -5px;
+            }
+            
+            .char3 {
+                bottom: 2%;
+                left: -5px;
+            }
+        }
+
+        table {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            box-sizing: border-box;
+            padding: 0 10px;
+        }
+
+        input[type="radio"] {
+            display: none; /* 隱藏原始的 radio 按鈕 */
+        }
+
+        label {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+        }
+
+        label:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="radio"]:checked + label {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 126, 179, 0.3);
+        }
+
+        td {
+            padding: 0; /* 移除 td 的內邊距，因為 label 已經有內邊距了 */
+            border: none;
+            background: transparent;
+        }
+
+        td:hover {
+            transform: none; /* 移除 td 的懸停效果，因為已經在 label 上設置了 */
+        }
+
+        /* 結果區域的基本樣式 */
+        .results {
+            display: none;
+            padding: 30px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95));
+            box-shadow: 0 10px 30px rgba(255, 126, 179, 0.2);
+            border: 2px solid rgba(255, 126, 179, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 結果標題動畫 */
+        .results h2 {
+            animation: slideDown 0.8s ease-out;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            text-shadow: 2px 2px 4px rgba(255, 126, 179, 0.2);
+        }
+
+        /* 結果角色圖片動畫 */
+        .results .character-img {
+            animation: popAndRotate 1s ease-out;
+            border: 4px solid var(--primary-color);
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(255, 126, 179, 0.3);
+            margin: 20px auto;
+        }
+
+        /* 結果文字動畫 */
+        .results p {
+            animation: fadeInUp 0.8s ease-out;
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+
+        .results .result-description {
+            animation: fadeInUp 1s ease-out 0.3s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        /* 裝飾元素 */
+        .results::before,
+        .results::after {
+            content: '✨';
+            position: absolute;
+            font-size: 2em;
+            color: var(--accent-color);
+            animation: twinkle 2s infinite;
+        }
+
+        .results::before {
+            top: 10px;
+            left: 10px;
+        }
+
+        .results::after {
+            bottom: 10px;
+            right: 10px;
+        }
+
+        /* 定義動畫 */
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes popAndRotate {
+            0% {
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.1) rotate(10deg);
+            }
+            80% {
+                transform: scale(0.95) rotate(-5deg);
+            }
+            100% {
+                transform: scale(1) rotate(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+        }
+
+        /* 響應式設計調整 */
+        @media (max-width: 768px) {
+            .results {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .results h2 {
+                font-size: 1.5em;
+            }
+
+            .results .character-img {
+                max-width: 150px;
+            }
+
+            .results p {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-characters">
+        <div class="floating-character char1" style="background-image: url('character1.png');"></div>
+        <div class="floating-character char2" style="background-image: url('character2.png');"></div>
+        <div class="floating-character char3" style="background-image: url('character3.png');"></div>
+    </div>
+
+    <div class="start-page" id="startPage">
+        <h1>心理測驗</h1>
+        <p>測驗看看你的旅遊角色是什麼！</p>
+        <button onclick="startQuiz()">開始測驗</button>
+    </div>
+
+    <div class="container" id="quizContainer" style="display:none;">
+        <h1>心理測驗：你的旅遊角色是什麼？</h1>
+
+        <form id="quizForm">
+            <div class="question" id="q1">
+                <div class="question-bg" style="background-image: url('bg1.jpg');"></div>
+                <h3>1. 已經很晚了但明天一大早就要出門，你會選擇？</h3>
+                <img src="character1.png" class="character-img" alt="角色1">
+                <table>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q1-option1" name="q1" value="好好心">
+                            <label for="q1-option1">最後檢查包包有沒有東西都帶齊後上床睡覺</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q1-option2" name="q1" value="乖寶寶">
+                            <label for="q1-option2">設好鬧鐘立刻關燈睡覺</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q1-option3" name="q1" value="吵吵鬧">
+                            <label for="q1-option3">不要睡著就不會睡過頭，直接熬夜！</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q1-option4" name="q1" value="酷哭星">
+                            <label for="q1-option4">睡過頭就算了＠＠，會有人叫我起床的</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q1-option5" name="q1" value="吃光光">
+                            <label for="q1-option5">但消夜還是要吃，吃飽睡得比較安穩</label>
+                        </td>
+                    </tr>
+                </table>
+                <div class="error" id="error1"></div>
+                <button type="button" onclick="nextQuestion(1)">下一題</button>
+            </div>
+            <div class="question" id="q2">
+                <div class="question-bg" style="background-image: url('bg1.jpg');"></div>
+                <h3>2. 在出門之前，你會？</h3>
+                <img src="character1.png" class="character-img" alt="車掌角色">
+                <table>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q2-option1" name="q2" value="吵吵鬧">
+                            <label for="q2-option1">直接出門，安啦！</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q2-option2" name="q2" value="好好心">
+                            <label for="q2-option2">仔細檢查要帶東西有沒有都帶到，順便看看天氣預報</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q2-option3" name="q2" value="酷哭星">
+                            <label for="q2-option3">佛要金裝，人要衣裝。所以要化好妝</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q2-option4" name="q2" value="乖寶寶">
+                            <label for="q2-option4">有帶手機、錢包就夠了</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q2-option5" name="q2" value="吃光光">
+                            <label for="q2-option5">想著到目的地後要吃甚麼</label>
+                        </td>
+                    </tr>
+                </table>
+                <div class="error" id="error2"></div>
+                <button type="button" onclick="nextQuestion(2)">下一題</button>
+            </div>
+            <div class="question" id="q3">
+                <div class="question-bg" style="background-image: url('bg1.jpg');"></div>
+                <h3>3. 到跟朋友的集合地點後發現有人遲到，這時你會？</h3>
+                <img src="character1.png" class="character-img" alt="車掌角色">
+                <table>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q3-option1" name="q3" value="吵吵鬧">
+                            <label for="q3-option1">打電話瘋狂 call 他</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q3-option2" name="q3" value="好好心">
+                            <label for="q3-option2">傳訊息問他目前到哪了</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q3-option3" name="q3" value="乖寶寶">
+                            <label for="q3-option3">做自己的事繼續等</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q3-option4" name="q3" value="酷哭星">
+                            <label for="q3-option4">先自拍記錄，然後再拍一張</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q3-option5" name="q3" value="吃光光">
+                            <label for="q3-option5">去附近買個手搖喝</label>
+                        </td>
+                    </tr>
+                </table>
+                <div class="error" id="error3"></div>
+                <button type="button" onclick="nextQuestion(3)">下一題</button>
+            </div>
+            <div class="question" id="q4">
+                <div class="question-bg" style="background-image: url('bg1.jpg');"></div>
+                <h3>4. 大家決定開車前往目的地，在過去的過程中，你通常會？</h3>
+                <img src="character1.png" class="character-img" alt="車掌角色">
+                <table>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q4-option1" name="q4" value="好好心">
+                            <label for="q4-option1">我認真開車，遵守交通規則</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q4-option2" name="q4" value="酷哭星">
+                            <label for="q4-option2">負責拍限時動態記錄大家的歡樂時光</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q4-option3" name="q4" value="吵吵鬧">
+                            <label for="q4-option3">放音樂大家一起嗨</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q4-option4" name="q4" value="吃光光">
+                            <label for="q4-option4">邊吃上車前準備好的食物</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q4-option5" name="q4" value="乖寶寶">
+                            <label for="q4-option5">安靜玩手機直到到目的地</label>
+                        </td>
+                    </tr>
+                </table>
+                <div class="error" id="error4"></div>
+                <button type="button" onclick="nextQuestion(4)">下一題</button>
+            </div>
+            <div class="question" id="q5">
+                <div class="question-bg" style="background-image: url('bg1.jpg');"></div>
+                <h3>5. 玩了一整天終於回到家了，最令你難忘的是？</h3>
+                <img src="character1.png" class="character-img" alt="車掌角色">
+                <table>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q5-option1" name="q5" value="好好心">
+                            <label for="q5-option1">跟大家在一起的時光</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q5-option2" name="q5" value="吃光光">
+                            <label for="q5-option2">回味無窮的美食</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q5-option3" name="q5" value="酷哭星">
+                            <label for="q5-option3">拍了超多好看的照片</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q5-option4" name="q5" value="吵吵鬧">
+                            <label for="q5-option4">記得超開心的時光</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="q5-option5" name="q5" value="乖寶寶">
+                            <label for="q5-option5">其實就是有人揪我我就去</label>
+                        </td>
+                    </tr>
+                </table>
+                <div class="error" id="error5"></div>
+                <button type="button" onclick="nextQuestion(5)">下一題</button>
+            </div>
+        </form>
+
+        <div class="results" id="results"></div>
+        <div style="text-align: center;">
+            <button id="retryButton" style="display:none;" onclick="retryQuiz()">再測一次</button>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+        const questions = document.querySelectorAll('.question');
+        const resultsDiv = document.getElementById('results');
+        const quizContainer = document.getElementById('quizContainer');
+        const retryButton = document.getElementById('retryButton');
+        let scores = {
+            "乖寶寶": 0,
+            "吵吵鬧": 0,
+            "酷哭星": 0,
+            "吃光光": 0,
+            "好好心": 0
+        };
+
+        function startQuiz() {
+            document.getElementById('startPage').style.display = 'none';
+            quizContainer.style.display = 'block';
+            questions[0].classList.add('active');
+            
+            // 重置所有其他問題
+            for (let i = 1; i < questions.length; i++) {
+                questions[i].classList.remove('active');
+            }
+        }
+
+        function nextQuestion(questionIndex) {
+            const selectedOption = document.querySelector(`input[name="q${questionIndex}"]:checked`);
+            const errorDiv = document.getElementById(`error${questionIndex}`);
+            errorDiv.textContent = '';
+
+            if (!selectedOption) {
+                errorDiv.textContent = '請選擇一個選項！';
+                return;
+            }
+
+            const answer = selectedOption.value;
+            scores[answer]++;
+
+            const currentQuestion = questions[questionIndex - 1];
+            const nextQuestionElement = questions[questionIndex];
+
+            // 隱藏當前問題
+            currentQuestion.classList.remove('active');
+            
+            if (questionIndex < questions.length) {
+                // 顯示下一題
+                nextQuestionElement.classList.add('active');
+                
+                // 更新問題的圖片
+                const questionImages = {
+                    1: { bg: 'bg1.jpg', character: 'character1.png' },
+                    2: { bg: 'bg2.jpg', character: 'character2.png' },
+                    3: { bg: 'bg3.jpg', character: 'character3.png' },
+                    4: { bg: 'bg4.jpg', character: 'character4.png' },
+                    5: { bg: 'bg5.jpg', character: 'character5.png' }
+                };
+                
+                const nextQuestionBg = nextQuestionElement.querySelector('.question-bg');
+                const nextQuestionChar = nextQuestionElement.querySelector('.character-img');
+                
+                if (nextQuestionBg && questionImages[questionIndex + 1]) {
+                    nextQuestionBg.style.backgroundImage = `url('${questionImages[questionIndex + 1].bg}')`;
+                }
+                if (nextQuestionChar && questionImages[questionIndex + 1]) {
+                    nextQuestionChar.src = questionImages[questionIndex + 1].character;
+                }
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            let maxScore = 0;
+            let result = "";
+
+            for (const character in scores) {
+                if (scores[character] > maxScore) {
+                    maxScore = scores[character];
+                    result = character;
+                }
+            }
+
+            if (result) {
+                const resultDescriptions = {
+                    "乖寶寶": {
+                        description: "你是個貼心的旅伴，總是準時且遵守約定。雖然不太會主動提出建議，但會認真配合大家的行程。",
+                        image: "character_baby.png"
+                    },
+                    "吵吵鬧": {
+                        description: "你是團隊中的開心果，總是帶來歡樂的氣氛。喜歡嘗試新事物，常常會有意想不到的驚喜發現。",
+                        image: "character_noisy.png"
+                    },
+                    "酷哭星": {
+                        description: "你是個注重外表的時尚旅人，走到哪都像走秀一樣。善於發現打卡美點，是朋友們的攝影師。",
+                        image: "character_cool.png"
+                    },
+                    "吃光光": {
+                        description: "你是個美食專家，對於當地特色小吃瞭若指掌。總是能找到隱藏版美食，讓旅程更加美味。",
+                        image: "character_foodie.png"
+                    },
+                    "好好心": {
+                        description: "你是個細心的規劃者，總是為團隊著想。會事先做好完整準備，讓旅程順利進行。",
+                        image: "character_kind.png"
+                    }
+                };
+
+                const resultData = resultDescriptions[result];
+                resultsDiv.style.display = 'block';
+                resultsDiv.innerHTML = `
+                    <h2>✨ 測驗結果 ✨</h2>
+                    <img src="${resultData.image}" class="character-img" alt="${result}角色">
+                    <p class="result-title">你的旅遊角色是：<strong>${result}</strong></p>
+                    <p class="result-description">${resultData.description}</p>
+                `;
+            } else {
+                resultsDiv.textContent = '無法計算結果，請重試。';
+            }
+            retryButton.style.display = 'block';
+        }
+
+        function retryQuiz() {
+            // 重置分數
+            scores = {
+                "乖寶寶": 0,
+                "吵吵鬧": 0,
+                "酷哭星": 0,
+                "吃光光": 0,
+                "好好心": 0
+            };
+            
+            // 隱藏結果和重試按鈕
+            resultsDiv.style.display = 'none';
+            retryButton.style.display = 'none';
+            
+            // 重置所有問題狀態
+            questions.forEach((question, index) => {
+                // 移除 active 類別
+                question.classList.remove('active');
+                
+                // 重置選項
+                const radios = question.querySelectorAll('input[type="radio"]');
+                radios.forEach(radio => {
+                    radio.checked = false;
+                });
+                
+                // 重置錯誤訊息
+                const errorDiv = question.querySelector('.error');
+                if (errorDiv) {
+                    errorDiv.textContent = '';
+                }
+                
+                // 重置圖片
+                const questionBg = question.querySelector('.question-bg');
+                const questionChar = question.querySelector('.character-img');
+                if (questionBg) {
+                    questionBg.style.backgroundImage = `url('bg${index + 1}.jpg')`;
+                }
+                if (questionChar) {
+                    questionChar.src = `character${index + 1}.png`;
+                }
+            });
+            
+            // 顯示第一題
+            questions[0].classList.add('active');
+            
+            // 重置當前問題索引
+            currentQuestion = 0;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const characters = document.querySelectorAll('.floating-character');
+            const quizContainer = document.getElementById('quizContainer');
+            
+            characters.forEach(character => {
+                character.addEventListener('click', function() {
+                    // 先添加搖晃動畫
+                    this.style.animation = 'shake 0.5s ease';
+                    
+                    // 搖晃動畫結束後開始亂跑
+                    setTimeout(() => {
+                        // 獲取測驗容器的位置
+                        const quizRect = quizContainer.getBoundingClientRect();
+                        const charWidth = 150; // 角色寬度
+                        
+                        // 計算安全區域（避開測驗區域）
+                        let randomX, randomY;
+                        const isLeftSide = Math.random() < 0.5;
+                        
+                        if (isLeftSide) {
+                            // 在左側移動
+                            randomX = Math.random() * (quizRect.left - charWidth);
+                        } else {
+                            // 在右側移動
+                            randomX = quizRect.right + Math.random() * (window.innerWidth - quizRect.right - charWidth);
+                        }
+                        
+                        // 垂直位置在整個視窗範圍內
+                        randomY = Math.random() * (window.innerHeight - charWidth);
+                        
+                        // 確保不會跑出視窗外
+                        const x = Math.max(0, Math.min(randomX, window.innerWidth - charWidth));
+                        const y = Math.max(0, Math.min(randomY, window.innerHeight - charWidth));
+                        
+                        // 設置新位置
+                        this.style.animation = 'randomMove 1s ease-in-out';
+                        this.style.left = x + 'px';
+                        this.style.top = y + 'px';
+                        
+                        // 動畫結束後恢復原本的浮動動畫
+                        setTimeout(() => {
+                            this.style.animation = 'float 6s ease-in-out infinite';
+                        }, 1000);
+                    }, 500);
+                });
+                
+                // 防止角色跑出視窗外和進入測驗區域
+                character.addEventListener('transitionend', function() {
+                    const rect = this.getBoundingClientRect();
+                    const quizRect = quizContainer.getBoundingClientRect();
+                    
+                    // 檢查是否進入測驗區域
+                    if (rect.right > quizRect.left && rect.left < quizRect.right) {
+                        // 如果在左側，則移到最左邊
+                        if (rect.left < quizRect.left) {
+                            this.style.left = '0px';
+                        } else {
+                            // 否則移到最右邊
+                            this.style.left = (window.innerWidth - rect.width) + 'px';
+                        }
+                    }
+                    
+                    // 防止超出視窗邊界
+                    if (rect.right > window.innerWidth) {
+                        this.style.left = (window.innerWidth - rect.width) + 'px';
+                    }
+                    if (rect.bottom > window.innerHeight) {
+                        this.style.top = (window.innerHeight - rect.height) + 'px';
+                    }
+                    if (rect.left < 0) {
+                        this.style.left = '0px';
+                    }
+                    if (rect.top < 0) {
+                        this.style.top = '0px';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -673,13 +673,21 @@
         // 測驗結果紀錄
         async function recordQuizResult(result) {
             const docRef = doc(db, "quizResults", result);
+
             await updateDoc(docRef, { count: increment(1) }).catch(async () => {
                 await setDoc(docRef, { count: 1 });
             });
-    
+
             const docSnap = await getDoc(docRef);
-            document.getElementById('resultStats').innerText += `\n${result}：${docSnap.data().count} 次`;
+            const resultStatsElement = document.getElementById('resultStats');
+
+            if (docSnap.exists()) {
+                resultStatsElement.innerHTML = `${result}：${docSnap.data().count} 次`;
+            } else {
+                resultStatsElement.innerHTML = `${result}：1 次`;
+            }
         }
+
     
         // 當網頁載入時，更新訪問次數
         document.addEventListener('DOMContentLoaded', updateVisitCount);
@@ -1017,6 +1025,8 @@
                 };
 
                 const resultData = resultDescriptions[result];
+
+                // 確保結果頁面顯示
                 resultsDiv.style.display = 'block';
                 resultsDiv.innerHTML = `
                     <h2>✨ 測驗結果 ✨</h2>
@@ -1024,13 +1034,16 @@
                     <p class="result-title">你的旅遊角色是：<strong>${result}</strong></p>
                     <p class="result-description">${resultData.description}</p>
                     <p id="visitCount">訪問次數：載入中...</p>
-                    <p id="resultStats">測驗結果統計：</p>
+                    <p id="resultStats">測驗結果統計：載入中...</p>
                 `;
 
+                // **確保數據更新後顯示**
                 await updateVisitCount(); // 更新訪問次數
                 await recordQuizResult(result); // 更新測驗結果統計
+                retryButton.style.display = 'block';
             }
         }
+
 
         function retryQuiz() {
             // 重置分數

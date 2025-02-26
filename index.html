@@ -640,6 +640,51 @@
             }
         }
     </style>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+        import { getFirestore, doc, setDoc, updateDoc, increment, getDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+    
+        // 🔥 你的 Firebase 設定（請換成你的資訊）
+        const firebaseConfig = {
+            apiKey: "AIzaSyBmOHmBhTImfbSZ6eiMz3ps9GknNJe_7Zc",
+            authDomain: "hearttest-7ae63.firebaseapp.com",
+            projectId: "hearttest-7ae63",
+            storageBucket: "hearttest-7ae63.firebasestorage.app",
+            messagingSenderId: "796857942920",
+            appId: "1:796857942920:web:5c074922ba11c5674d303d",
+            measurementId: "G-MN7R1PKZ95"
+            };
+    
+        // 初始化 Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+    
+        // 訪問次數紀錄
+        async function updateVisitCount() {
+            const docRef = doc(db, "siteStats", "visits");
+            await updateDoc(docRef, { count: increment(1) }).catch(async () => {
+                await setDoc(docRef, { count: 1 });
+            });
+    
+            const docSnap = await getDoc(docRef);
+            document.getElementById('visitCount').innerText = `訪問次數：${docSnap.data().count}`;
+        }
+    
+        // 測驗結果紀錄
+        async function recordQuizResult(result) {
+            const docRef = doc(db, "quizResults", result);
+            await updateDoc(docRef, { count: increment(1) }).catch(async () => {
+                await setDoc(docRef, { count: 1 });
+            });
+    
+            const docSnap = await getDoc(docRef);
+            document.getElementById('resultStats').innerText += `\n${result}：${docSnap.data().count} 次`;
+        }
+    
+        // 當網頁載入時，更新訪問次數
+        document.addEventListener('DOMContentLoaded', updateVisitCount);
+    </script>
+    
 </head>
 <body>
     <div class="floating-characters">
@@ -855,7 +900,11 @@
             </div>
         </form>
 
-        <div class="results" id="results"></div>
+        <div class="results" id="results">
+            <h2>✨ 測驗結果 ✨</h2>
+            <p id="visitCount">訪問次數：載入中...</p>
+            <p id="resultStats">測驗結果統計：</p>
+        </div>
         <div style="text-align: center;">
             <button id="retryButton" style="display:none;" onclick="retryQuiz()">再測一次</button>
         </div>
@@ -932,7 +981,7 @@
             }
         }
 
-        function showResults() {
+        async function showResults() {
             let maxScore = 0;
             let result = "";
 
@@ -946,23 +995,23 @@
             if (result) {
                 const resultDescriptions = {
                     "乖寶寶": {
-                        description: "你是個貼心的旅伴，總是準時且遵守約定。雖然不太會主動提出建議，但會認真配合大家的行程。",
+                        description: "你是個貼心的旅伴，總是準時且遵守約定。",
                         image: "character_baby.png"
                     },
                     "吵吵鬧": {
-                        description: "你是團隊中的開心果，總是帶來歡樂的氣氛。喜歡嘗試新事物，常常會有意想不到的驚喜發現。",
+                        description: "你是團隊中的開心果，總是帶來歡樂的氣氛。",
                         image: "character_noisy.png"
                     },
                     "酷哭星": {
-                        description: "你是個注重外表的時尚旅人，走到哪都像走秀一樣。善於發現打卡美點，是朋友們的攝影師。",
+                        description: "你是個注重外表的時尚旅人，走到哪都像走秀一樣。",
                         image: "character_cool.png"
                     },
                     "吃光光": {
-                        description: "你是個美食專家，對於當地特色小吃瞭若指掌。總是能找到隱藏版美食，讓旅程更加美味。",
+                        description: "你是個美食專家，總是能找到隱藏版美食。",
                         image: "character_foodie.png"
                     },
                     "好好心": {
-                        description: "你是個細心的規劃者，總是為團隊著想。會事先做好完整準備，讓旅程順利進行。",
+                        description: "你是個細心的規劃者，讓旅程順利進行。",
                         image: "character_kind.png"
                     }
                 };
@@ -974,11 +1023,13 @@
                     <img src="${resultData.image}" class="character-img" alt="${result}角色">
                     <p class="result-title">你的旅遊角色是：<strong>${result}</strong></p>
                     <p class="result-description">${resultData.description}</p>
+                    <p id="visitCount">訪問次數：載入中...</p>
+                    <p id="resultStats">測驗結果統計：</p>
                 `;
-            } else {
-                resultsDiv.textContent = '無法計算結果，請重試。';
+
+                await updateVisitCount(); // 更新訪問次數
+                await recordQuizResult(result); // 更新測驗結果統計
             }
-            retryButton.style.display = 'block';
         }
 
         function retryQuiz() {

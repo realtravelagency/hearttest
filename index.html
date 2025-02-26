@@ -643,35 +643,28 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
         import { getFirestore, doc, setDoc, updateDoc, increment, getDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
-    
-        // 🔥 你的 Firebase 設定（請換成你的資訊）
+
+        // 🔥 Firebase 設定
         const firebaseConfig = {
-            apiKey: "AIzaSyBmOHmBhTImfbSZ6eiMz3ps9GknNJe_7Zc",
-            authDomain: "hearttest-7ae63.firebaseapp.com",
-            projectId: "hearttest-7ae63",
-            storageBucket: "hearttest-7ae63.firebasestorage.app",
-            messagingSenderId: "796857942920",
-            appId: "1:796857942920:web:5c074922ba11c5674d303d",
-            measurementId: "G-MN7R1PKZ95"
-            };
-    
+            // ... existing config ...
+        };
+
         // 初始化 Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-    
-        // 訪問次數紀錄
-        async function updateVisitCount() {
+
+        // 將函數掛載到 window 對象上，使其可以在全局範圍內訪問
+        window.updateVisitCount = async function() {
             const docRef = doc(db, "siteStats", "visits");
             await updateDoc(docRef, { count: increment(1) }).catch(async () => {
                 await setDoc(docRef, { count: 1 });
             });
-    
+
             const docSnap = await getDoc(docRef);
             document.getElementById('visitCount').innerText = `訪問次數：${docSnap.data().count}`;
         }
-    
-        // 測驗結果紀錄
-        async function recordQuizResult(result) {
+
+        window.recordQuizResult = async function(result) {
             const docRef = doc(db, "quizResults", result);
 
             await updateDoc(docRef, { count: increment(1) }).catch(async () => {
@@ -688,9 +681,8 @@
             }
         }
 
-    
         // 當網頁載入時，更新訪問次數
-        document.addEventListener('DOMContentLoaded', updateVisitCount);
+        document.addEventListener('DOMContentLoaded', window.updateVisitCount);
     </script>
     
 </head>
@@ -1037,9 +1029,13 @@
                     <p id="resultStats">測驗結果統計：載入中...</p>
                 `;
 
-                // **確保數據更新後顯示**
-                await updateVisitCount(); // 更新訪問次數
-                await recordQuizResult(result); // 更新測驗結果統計
+                try {
+                // 確保數據更新後顯示
+                    await window.updateVisitCount(); // 使用 window.updateVisitCount
+                    await window.recordQuizResult(result); // 使用 window.recordQuizResult
+                } catch (error) {
+                    console.error('Error updating stats:', error);
+                }
                 retryButton.style.display = 'block';
             }
         }

@@ -220,11 +220,14 @@
         }
 
     .results {
-    width: 800px;  /* 確保結果區域寬度一致 */
-    max-width: 100%;
-    margin: 0 auto;
-    text-align: center;
-}
+        width: 100%;
+        max-width: 800px; /* 避免超出畫面 */
+        margin: 0 auto;
+        text-align: center;
+        box-sizing: border-box; /* 確保 padding 不影響寬度 */
+        overflow: hidden; /* 防止內容超出 */
+    }
+
 
     .result-header {
         margin-bottom: 30px;

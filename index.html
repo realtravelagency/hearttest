@@ -1088,42 +1088,42 @@
             if (result) {
                 const resultDescriptions = {
                     "乖寶寶": {
+                        image: "./images/character_乖寶寶.png",
                         description: "你是個貼心的旅伴，總是準時且遵守約定。雖然不太會主動提出建議，但會認真配合大家的行程。",
-                        image: "./images/character_baby.png",
-                        innerThoughts: ["好想準時", "大家開心就好", "要記得帶東西", "希望不要出錯"],
-                        outerTraits: ["守時", "配合度高", "細心", "可靠", "安靜", "謹慎"],
+                        innerThoughts: ["要準時到", "大家說什麼都好", "不要麻煩到人", "記得報平安"],
+                        outerTraits: ["守時", "配合", "有禮貌", "溫和"],
+                        compatible: ["好好心", "酷哭星"],
+                        incompatible: ["吵吵鬧"]
+                    },
+                    "吵吵鬧": {
+                        image: "./images/character_吵吵鬧.png",
+                        description: "你是團隊中的開心果，總是帶來歡樂的氣氛。喜歡嘗試新事物，常常會有意想不到的驚喜發現。",
+                        innerThoughts: ["好想玩", "看起來很好玩", "我要拍照", "我要打卡"],
+                        outerTraits: ["活潑", "熱情", "愛玩", "愛拍照"],
+                        compatible: ["吃光光", "酷哭星"],
+                        incompatible: ["乖寶寶"]
+                    },
+                    "酷哭星": {
+                        image: "./images/character_酷哭星.png",
+                        description: "你是個注重外表的時尚旅人，走到哪都像走秀一樣。善於發現打卡美點，是朋友們的攝影師。",
+                        innerThoughts: ["這裡好好拍", "衣服要搭配", "找好角度", "修圖要美美的"],
+                        outerTraits: ["時尚", "有品味", "講究", "會拍照"],
+                        compatible: ["乖寶寶", "吵吵鬧"],
+                        incompatible: ["吃光光"]
+                    },
+                    "吃光光": {
+                        image: "./images/character_吃光光.png",
+                        description: "你是個美食專家，對於當地特色小吃瞭若指掌。總是能找到隱藏版美食，讓旅程更加美味。",
+                        innerThoughts: ["肚子餓了", "這家很有名", "要排隊嗎", "要訂位嗎"],
+                        outerTraits: ["饞嘴", "懂吃", "會找美食", "愛分享"],
                         compatible: ["吵吵鬧", "好好心"],
                         incompatible: ["酷哭星"]
                     },
-                    "吵吵鬧": {
-                        description: "你是團隊中的開心果，總是帶來歡樂的氣氛。活力充沛，善於炒熱氣氛，讓旅程充滿笑聲與驚喜。",
-                        image: "./images/character_noisy.png",
-                        innerThoughts: ["好想跟大家玩", "下一個景點去哪", "要拍團體照", "好期待晚上的行程"],
-                        outerTraits: ["活潑", "熱情", "愛說話", "幽默", "主動", "開朗"],
-                        compatible: ["乖寶寶", "吃光光"],
-                        incompatible: ["好好心"]
-                    },
-                    "酷哭星": {
-                        description: "你是個注重外表的時尚旅人，走到哪都像走秀一樣。對於拍照構圖和美感有獨特品味，是朋友圈的網美。",
-                        image: "./images/character_cool.png",
-                        innerThoughts: ["這裡光線好美", "要找最佳拍照點", "需要補妝嗎", "這角度顯瘦"],
-                        outerTraits: ["時尚", "講究", "有品味", "愛美", "會拍照", "有自信"],
-                        compatible: ["吃光光", "吵吵鬧"],
-                        incompatible: ["乖寶寶"]
-                    },
-                    "吃光光": {
-                        description: "你是個美食專家，對於當地特色小吃瞭若指掌。總是能找到隱藏版美食，是團隊的美食指南。",
-                        image: "./images/character_foodie.png",
-                        innerThoughts: ["肚子餓了", "這家評價不錯", "要點什麼好", "要幫大家找美食"],
-                        outerTraits: ["饕客", "懂吃", "樂於分享", "熱情推薦", "記性好", "貪吃"],
-                        compatible: ["酷哭星", "吵吵鬧"],
-                        incompatible: ["好好心"]
-                    },
                     "好好心": {
-                        description: "你是個細心的規劃者，總是為團隊著想。做事有條理，喜歡把每個細節都安排妥當。",
                         image: "./images/character_kind.png",
+                        description: "你是個細心的規劃者，總是為團隊著想。會事先做好完整準備，讓旅程順利進行。",
                         innerThoughts: ["行程要安排好", "大家都帶夠錢了嗎", "要記得買伴手禮", "時間要掌控好"],
-                        outerTraits: ["細心", "負責", "有條理", "體貼", "周到", "可靠"],
+                        outerTraits: ["細心", "負責", "有條理", "體貼"],
                         compatible: ["乖寶寶", "酷哭星"],
                         incompatible: ["吵吵鬧"]
                     }
@@ -1135,6 +1135,7 @@
                     <div class="result-header">
                         <h2 class="result-title">✨ 你的旅遊角色是：${result} ✨</h2>
                         <img src="${resultData.image}" class="character-img" alt="${result}角色">
+                        <p class="character-description">${resultData.description}</p>
                     </div>
                     
                     <section class="result-description">
@@ -1158,17 +1159,17 @@
                         <div class="compatible-types">
                             ${resultData.compatible.map(type => 
                                 `<div class="type">
-                                    <img src="./images/character_${type.toLowerCase()}.png" alt="${type}">
+                                    <img src="./images/character_${type}.png" alt="${type}">
                                     <span>${type}</span>
                                 </div>`
                             ).join('')}
                         </div>
 
-                        <h3>需要磨合的旅伴：</h3>
+                        <h3>較不合適的旅伴：</h3>
                         <div class="incompatible-types">
                             ${resultData.incompatible.map(type => 
                                 `<div class="type">
-                                    <img src="./images/character_${type.toLowerCase()}.png" alt="${type}">
+                                    <img src="./images/character_${type}.png" alt="${type}">
                                     <span>${type}</span>
                                 </div>`
                             ).join('')}
@@ -1176,20 +1177,20 @@
                     </section>
 
                     <div class="call-to-action" style="text-align: center; width: 100%; margin: 20px 0;">
-                            <button onclick="downloadResult()" style="
-                                background: var(--primary-color);
-                                color: white;
-                                border: none;
-                                border-radius: 8px;
-                                font-size: 1.1em;
-                                padding: 12px 30px;
-                                cursor: pointer;
-                                display: inline-block;
-                                margin: 0 auto;
-                                max-width: 200px;
-                            ">下載測驗結果</button>
-                        </div>
-                    `;
+                        <button onclick="downloadResult()" style="
+                            background: var(--primary-color);
+                            color: white;
+                            border: none;
+                            border-radius: 8px;
+                            font-size: 1.1em;
+                            padding: 12px 30px;
+                            cursor: pointer;
+                            display: inline-block;
+                            margin: 0 auto;
+                            max-width: 200px;
+                        ">下載測驗結果</button>
+                    </div>
+                `;
             } else {
                 resultsDiv.textContent = '無法計算結果，請重試。';
             }
@@ -1276,23 +1277,27 @@
                 `;
             }
 
-            // 修正主角色圖片樣式
-            const characterImg = tempDiv.querySelector('.character-img');
-            if (characterImg) {
-                characterImg.style.cssText = `
-                    width: 180px !important;
-                    height: 180px !important;
-                    border-radius: 50% !important;
-                    border: 4px solid #ff7eb3 !important;
+            // 修正角色描述樣式
+            const description = tempDiv.querySelector('.character-description');
+            if (description) {
+                description.style.cssText = `
+                    color: #666666 !important;
+                    font-size: 1.1em !important;
                     margin: 20px auto !important;
+                    max-width: 600px !important;
+                    line-height: 1.6 !important;
+                    padding: 15px !important;
+                    background: rgba(255, 255, 255, 0.8) !important;
+                    border-radius: 15px !important;
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+                    text-align: center !important;
                     display: block !important;
-                    object-fit: cover !important;
-                    background: white !important;
-                    transform: none !important;
                     opacity: 1 !important;
+                    transform: none !important;
                 `;
             }
 
+            // 修正主角色圖片樣式
             // 修正內心表現和外在特徵區塊
             const sections = tempDiv.querySelectorAll('section');
             sections.forEach(section => {
@@ -1317,8 +1322,19 @@
                 }
             });
 
+            // 修正標題樣式（包括所有 h3）
+            tempDiv.querySelectorAll('h3').forEach(heading => {
+                heading.style.cssText = `
+                    color: #333333 !important;
+                    font-size: 20px !important;
+                    margin: 10px 0 !important;
+                    text-align: center !important;
+                    font-weight: bold !important;
+                `;
+            });
+
             // 修正泡泡樣式
-            tempDiv.querySelectorAll('.thought-bubble, .trait-bubble').forEach(bubble => {
+            tempDiv.querySelectorAll('.thought-bubble').forEach(bubble => {
                 bubble.style.cssText = `
                     display: inline-block !important;
                     margin: 5px !important;
@@ -1329,6 +1345,22 @@
                     font-size: 16px !important;
                     opacity: 1 !important;
                     transform: none !important;
+                    box-shadow: 0 2px 8px rgba(255, 126, 179, 0.3) !important;
+                `;
+            });
+
+            tempDiv.querySelectorAll('.trait-bubble').forEach(bubble => {
+                bubble.style.cssText = `
+                    display: inline-block !important;
+                    margin: 5px !important;
+                    padding: 8px 15px !important;
+                    background: linear-gradient(45deg, #7ec4ff, #ffd93d) !important;
+                    color: white !important;
+                    border-radius: 20px !important;
+                    font-size: 16px !important;
+                    opacity: 1 !important;
+                    transform: none !important;
+                    box-shadow: 0 2px 8px rgba(126, 196, 255, 0.3) !important;
                 `;
             });
 

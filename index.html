@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>心理測驗：你的旅遊角色是什麼？</title>
     <style>
         :root {
@@ -219,8 +220,142 @@
         }
 
         .results {
-            animation: popIn 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        display: none;
+        padding: 40px;
+        border-radius: 25px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.98));
+        box-shadow: 0 15px 35px rgba(255, 126, 179, 0.25);
+        border: 3px solid rgba(255, 126, 179, 0.4);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        margin: 20px auto;
+    }
+
+    .result-header {
+        margin-bottom: 30px;
+        animation: slideDown 0.8s ease-out;
+    }
+
+    .result-title {
+        color: var(--primary-color);
+        font-size: 2em;
+        margin: 15px 0;
+        text-shadow: 2px 2px 4px rgba(255, 126, 179, 0.3);
+        animation: popAndRotate 1s ease-out;
+    }
+
+    .character-img {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        border: 4px solid var(--primary-color);
+        box-shadow: 0 8px 25px rgba(255, 126, 179, 0.4);
+        margin: 20px auto;
+        animation: popAndRotate 1.2s ease-out;
+        object-fit: cover;
+    }
+
+    .inner-thoughts, .outer-traits {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin: 15px 0;
+        animation: fadeInUp 1s ease-out;
+    }
+
+    .thought-bubble, .trait-bubble {
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        animation: popIn 0.5s ease-out forwards;
+        opacity: 0;
+    }
+
+    .trait-bubble {
+        background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+    }
+
+    .compatibility {
+        margin: 30px 0;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 15px;
+        animation: fadeInUp 1.2s ease-out;
+    }
+
+    .compatible-types, .incompatible-types {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin: 15px 0;
+    }
+
+    .type {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 15px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .type img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid var(--primary-color);
+    }
+
+    .compatible-types .type img {
+        border-color: var(--primary-color);
+    }
+
+    .incompatible-types .type img {
+        border-color: var(--secondary-color);
+    }
+
+    .type span {
+        font-size: 0.9em;
+        color: #666;
+    }
+
+    /* 響應式設計調整 */
+    @media (max-width: 768px) {
+        .type img {
+            width: 30px;
+            height: 30px;
         }
+        
+        .type span {
+            font-size: 0.8em;
+        }
+    }
+
+    .call-to-action {
+        margin-top: 30px;
+        animation: fadeInUp 1.4s ease-out;
+    }
+
+    .call-to-action button {
+        margin: 10px;
+    }
+
+    /* 為每個特徵泡泡添加延遲動畫 */
+    .thought-bubble:nth-child(1) { animation-delay: 0.2s; }
+    .thought-bubble:nth-child(2) { animation-delay: 0.4s; }
+    .thought-bubble:nth-child(3) { animation-delay: 0.6s; }
+    .thought-bubble:nth-child(4) { animation-delay: 0.8s; }
+
+    .trait-bubble:nth-child(1) { animation-delay: 0.3s; }
+    .trait-bubble:nth-child(2) { animation-delay: 0.5s; }
+    .trait-bubble:nth-child(3) { animation-delay: 0.7s; }
+    .trait-bubble:nth-child(4) { animation-delay: 0.9s; }
 
         /* 添加可愛的裝飾元素 */
         .results::before,
@@ -640,63 +775,22 @@
             }
         }
     </style>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-        import { getFirestore, doc, setDoc, updateDoc, increment, getDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
-
-        // 🔥 Firebase 設定
-        const firebaseConfig = {
-          apiKey: "AIzaSyBmOHmBhTImfbSZ6eiMz3ps9GknNJe_7Zc",
-          authDomain: "hearttest-7ae63.firebaseapp.com",
-          projectId: "hearttest-7ae63",
-          storageBucket: "hearttest-7ae63.firebasestorage.app",
-          messagingSenderId: "796857942920",
-          appId: "1:796857942920:web:5c074922ba11c5674d303d",
-          measurementId: "G-MN7R1PKZ95"
-        };
-
-        // 初始化 Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // 將函數掛載到 window 對象上，使其可以在全局範圍內訪問
-        window.updateVisitCount = async function() {
-            const docRef = doc(db, "siteStats", "visits");
-            await updateDoc(docRef, { count: increment(1) }).catch(async () => {
-                await setDoc(docRef, { count: 1 });
-            });
-
-            const docSnap = await getDoc(docRef);
-            document.getElementById('visitCount').innerText = `訪問次數：${docSnap.data().count}`;
-        }
-
-        window.recordQuizResult = async function(result) {
-            const docRef = doc(db, "quizResults", result);
-
-            await updateDoc(docRef, { count: increment(1) }).catch(async () => {
-                await setDoc(docRef, { count: 1 });
-            });
-
-            const docSnap = await getDoc(docRef);
-            const resultStatsElement = document.getElementById('resultStats');
-
-            if (docSnap.exists()) {
-                resultStatsElement.innerHTML = `${result}：${docSnap.data().count} 次`;
-            } else {
-                resultStatsElement.innerHTML = `${result}：1 次`;
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 為所有圖片添加 crossorigin 屬性
+            const allImages = document.getElementsByTagName('img');
+            for(let img of allImages) {
+                img.crossOrigin = "anonymous";
             }
-        }
-
-        // 當網頁載入時，更新訪問次數
-        document.addEventListener('DOMContentLoaded', window.updateVisitCount);
+        });
     </script>
-    
 </head>
 <body>
     <div class="floating-characters">
-        <div class="floating-character char1" style="background-image: url('character1.png');"></div>
-        <div class="floating-character char2" style="background-image: url('character2.png');"></div>
-        <div class="floating-character char3" style="background-image: url('character3.png');"></div>
+        <div class="floating-character char1" style="background-image: url('./images/character1.png');"></div>
+        <div class="floating-character char2" style="background-image: url('./images/character2.png');"></div>
+        <div class="floating-character char3" style="background-image: url('./images/character3.png');"></div>
     </div>
 
     <div class="start-page" id="startPage">
@@ -710,9 +804,9 @@
 
         <form id="quizForm">
             <div class="question" id="q1">
-                <div class="question-bg" style="background-image: url('bg1.jpg');"></div>
+                <div class="question-bg" style="background-image: url('./images/bg1.jpg');"></div>
                 <h3>1. 已經很晚了但明天一大早就要出門，你會選擇？</h3>
-                <img src="character1.png" class="character-img" alt="角色1">
+                <img src="./images/character1.png" class="character-img" alt="角色1">
                 <table>
                     <tr>
                         <td>
@@ -749,9 +843,9 @@
                 <button type="button" onclick="nextQuestion(1)">下一題</button>
             </div>
             <div class="question" id="q2">
-                <div class="question-bg" style="background-image: url('bg1.jpg');"></div>
+                <div class="question-bg" style="background-image: url('./images/bg1.jpg');"></div>
                 <h3>2. 在出門之前，你會？</h3>
-                <img src="character1.png" class="character-img" alt="車掌角色">
+                <img src="./images/character1.png" class="character-img" alt="車掌角色">
                 <table>
                     <tr>
                         <td>
@@ -788,9 +882,9 @@
                 <button type="button" onclick="nextQuestion(2)">下一題</button>
             </div>
             <div class="question" id="q3">
-                <div class="question-bg" style="background-image: url('bg1.jpg');"></div>
+                <div class="question-bg" style="background-image: url('./images/bg1.jpg');"></div>
                 <h3>3. 到跟朋友的集合地點後發現有人遲到，這時你會？</h3>
-                <img src="character1.png" class="character-img" alt="車掌角色">
+                <img src="./images/character1.png" class="character-img" alt="車掌角色">
                 <table>
                     <tr>
                         <td>
@@ -827,9 +921,9 @@
                 <button type="button" onclick="nextQuestion(3)">下一題</button>
             </div>
             <div class="question" id="q4">
-                <div class="question-bg" style="background-image: url('bg1.jpg');"></div>
+                <div class="question-bg" style="background-image: url('./images/bg1.jpg');"></div>
                 <h3>4. 大家決定開車前往目的地，在過去的過程中，你通常會？</h3>
-                <img src="character1.png" class="character-img" alt="車掌角色">
+                <img src="./images/character1.png" class="character-img" alt="車掌角色">
                 <table>
                     <tr>
                         <td>
@@ -866,7 +960,7 @@
                 <button type="button" onclick="nextQuestion(4)">下一題</button>
             </div>
             <div class="question" id="q5">
-                <div class="question-bg" style="background-image: url('bg1.jpg');"></div>
+                <div class="./images/question-bg" style="background-image: url('./images/bg1.jpg');"></div>
                 <h3>5. 玩了一整天終於回到家了，最令你難忘的是？</h3>
                 <img src="character1.png" class="character-img" alt="車掌角色">
                 <table>
@@ -906,11 +1000,7 @@
             </div>
         </form>
 
-        <div class="results" id="results">
-            <h2>✨ 測驗結果 ✨</h2>
-            <p id="visitCount">訪問次數：載入中...</p>
-            <p id="resultStats">測驗結果統計：</p>
-        </div>
+        <div class="results" id="results"></div>
         <div style="text-align: center;">
             <button id="retryButton" style="display:none;" onclick="retryQuiz()">再測一次</button>
         </div>
@@ -966,11 +1056,11 @@
                 
                 // 更新問題的圖片
                 const questionImages = {
-                    1: { bg: 'bg1.jpg', character: 'character1.png' },
-                    2: { bg: 'bg2.jpg', character: 'character2.png' },
-                    3: { bg: 'bg3.jpg', character: 'character3.png' },
-                    4: { bg: 'bg4.jpg', character: 'character4.png' },
-                    5: { bg: 'bg5.jpg', character: 'character5.png' }
+                    1: { bg: './images/bg1.jpg', character: './images/character1.png' },
+                    2: { bg: './images/bg2.jpg', character: './images/character2.png' },
+                    3: { bg: './images/bg3.jpg', character: './images/character3.png' },
+                    4: { bg: './images/bg4.jpg', character: './images/character4.png' },
+                    5: { bg: './images/bg5.jpg', character: './images/character5.png' }
                 };
                 
                 const nextQuestionBg = nextQuestionElement.querySelector('.question-bg');
@@ -987,7 +1077,7 @@
             }
         }
 
-        async function showResults() {
+        function showResults() {
             let maxScore = 0;
             let result = "";
 
@@ -1001,52 +1091,171 @@
             if (result) {
                 const resultDescriptions = {
                     "乖寶寶": {
-                        description: "你是個貼心的旅伴，總是準時且遵守約定。",
-                        image: "character_baby.png"
+                        description: "你是個貼心的旅伴，總是準時且遵守約定。雖然不太會主動提出建議，但會認真配合大家的行程。",
+                        image: "./images/character_baby.png",
+                        innerThoughts: ["好想準時", "大家開心就好", "要記得帶東西", "希望不要出錯"],
+                        outerTraits: ["守時", "配合度高", "細心", "可靠", "安靜", "謹慎"],
+                        compatible: ["吵吵鬧", "好好心"],
+                        incompatible: ["酷哭星"]
                     },
                     "吵吵鬧": {
-                        description: "你是團隊中的開心果，總是帶來歡樂的氣氛。",
-                        image: "character_noisy.png"
+                        description: "你是團隊中的開心果，總是帶來歡樂的氣氛。活力充沛，善於炒熱氣氛，讓旅程充滿笑聲與驚喜。",
+                        image: "./images/character_noisy.png",
+                        innerThoughts: ["好想跟大家玩", "下一個景點去哪", "要拍團體照", "好期待晚上的行程"],
+                        outerTraits: ["活潑", "熱情", "愛說話", "幽默", "主動", "開朗"],
+                        compatible: ["乖寶寶", "吃光光"],
+                        incompatible: ["好好心"]
                     },
                     "酷哭星": {
-                        description: "你是個注重外表的時尚旅人，走到哪都像走秀一樣。",
-                        image: "character_cool.png"
+                        description: "你是個注重外表的時尚旅人，走到哪都像走秀一樣。對於拍照構圖和美感有獨特品味，是朋友圈的網美。",
+                        image: "./images/character_cool.png",
+                        innerThoughts: ["這裡光線好美", "要找最佳拍照點", "需要補妝嗎", "這角度顯瘦"],
+                        outerTraits: ["時尚", "講究", "有品味", "愛美", "會拍照", "有自信"],
+                        compatible: ["吃光光", "吵吵鬧"],
+                        incompatible: ["乖寶寶"]
                     },
                     "吃光光": {
-                        description: "你是個美食專家，總是能找到隱藏版美食。",
-                        image: "character_foodie.png"
+                        description: "你是個美食專家，對於當地特色小吃瞭若指掌。總是能找到隱藏版美食，是團隊的美食指南。",
+                        image: "./images/character_foodie.png",
+                        innerThoughts: ["肚子餓了", "這家評價不錯", "要點什麼好", "要幫大家找美食"],
+                        outerTraits: ["饕客", "懂吃", "樂於分享", "熱情推薦", "記性好", "貪吃"],
+                        compatible: ["酷哭星", "吵吵鬧"],
+                        incompatible: ["好好心"]
                     },
                     "好好心": {
-                        description: "你是個細心的規劃者，讓旅程順利進行。",
-                        image: "character_kind.png"
+                        description: "你是個細心的規劃者，總是為團隊著想。做事有條理，喜歡把每個細節都安排妥當。",
+                        image: "./images/character_kind.png",
+                        innerThoughts: ["行程要安排好", "大家都帶夠錢了嗎", "要記得買伴手禮", "時間要掌控好"],
+                        outerTraits: ["細心", "負責", "有條理", "體貼", "周到", "可靠"],
+                        compatible: ["乖寶寶", "酷哭星"],
+                        incompatible: ["吵吵鬧"]
                     }
                 };
 
                 const resultData = resultDescriptions[result];
-
-                // 確保結果頁面顯示
                 resultsDiv.style.display = 'block';
                 resultsDiv.innerHTML = `
-                    <h2>✨ 測驗結果 ✨</h2>
-                    <img src="${resultData.image}" class="character-img" alt="${result}角色">
-                    <p class="result-title">你的旅遊角色是：<strong>${result}</strong></p>
-                    <p class="result-description">${resultData.description}</p>
-                    <p id="visitCount">訪問次數：載入中...</p>
-                    <p id="resultStats">測驗結果統計：載入中...</p>
-                `;
+                    <div class="result-header">
+                        <h2 class="result-title">✨ 你的旅遊角色是：${result} ✨</h2>
+                        <img src="${resultData.image}" class="character-img" alt="${result}角色">
+                    </div>
+                    
+                    <section class="result-description">
+                        <h3>內心表現：</h3>
+                        <div class="inner-thoughts">
+                            ${resultData.innerThoughts.map(thought => 
+                                `<span class="thought-bubble">${thought}</span>`
+                            ).join('')}
+                        </div>
 
-                try {
-                // 確保數據更新後顯示
-                    await window.updateVisitCount(); // 使用 window.updateVisitCount
-                    await window.recordQuizResult(result); // 使用 window.recordQuizResult
-                } catch (error) {
-                    console.error('Error updating stats:', error);
-                }
-                retryButton.style.display = 'block';
+                        <h3>外在特徵：</h3>
+                        <div class="outer-traits">
+                            ${resultData.outerTraits.map(trait => 
+                                `<span class="trait-bubble">${trait}</span>`
+                            ).join('')}
+                        </div>
+                    </section>
+
+                    <section class="compatibility">
+                        <h3>最佳旅伴：</h3>
+                        <div class="compatible-types">
+                            ${resultData.compatible.map(type => 
+                                `<div class="type">
+                                    <img src="character_${type.toLowerCase()}.png" alt="${type}">
+                                    <span>${type}</span>
+                                </div>`
+                            ).join('')}
+                        </div>
+
+                        <h3>需要磨合的旅伴：</h3>
+                        <div class="incompatible-types">
+                            ${resultData.incompatible.map(type => 
+                                `<div class="type">
+                                    <img src="character_${type.toLowerCase()}.png" alt="${type}">
+                                    <span>${type}</span>
+                                </div>`
+                            ).join('')}
+                        </div>
+                    </section>
+
+                    <div class="call-to-action" style="text-align: center;">
+                        <button onclick="downloadResult()">下載測驗結果</button>
+                    </div>
+                `;
+            } else {
+                resultsDiv.textContent = '無法計算結果，請重試。';
             }
+            retryButton.style.display = 'block';
         }
 
+        function downloadResult() {
+            const resultsDiv = document.getElementById('results');
+            
+            // 創建一個新的 div 用於截圖，移除按鈕
+            const tempDiv = resultsDiv.cloneNode(true);
+            const button = tempDiv.querySelector('button');
+            button.parentElement.remove();
+            
+            // 設置樣式確保截圖效果
+            tempDiv.style.display = 'block';
+            tempDiv.style.position = 'absolute';
+            tempDiv.style.left = '-9999px';
+            document.body.appendChild(tempDiv);
 
+            // 找到所有圖片並設置 crossorigin
+            const images = tempDiv.getElementsByTagName('img');
+            let loadedImages = 0;
+            const totalImages = images.length;
+
+            // 為每個圖片添加 crossorigin 屬性
+            for(let img of images) {
+                img.crossOrigin = "anonymous";
+                // 重新載入圖片以應用 crossorigin
+                const originalSrc = img.src;
+                img.src = originalSrc;
+                
+                img.onload = () => {
+                    loadedImages++;
+                    // 當所有圖片都載入完成後，執行截圖
+                    if(loadedImages === totalImages) {
+                        html2canvas(tempDiv, {
+                            backgroundColor: null,
+                            scale: 2,
+                            logging: false,
+                            useCORS: true,
+                            allowTaint: true
+                        }).then(canvas => {
+                            // 移除臨時元素
+                            document.body.removeChild(tempDiv);
+                            
+                            try {
+                                // 轉換為圖片並下載
+                                const image = canvas.toDataURL('image/png');
+                                const link = document.createElement('a');
+                                link.download = `旅遊角色測驗結果_${new Date().getTime()}.png`;
+                                link.href = image;
+                                link.click();
+                            } catch(e) {
+                                console.error('下載圖片時發生錯誤：', e);
+                                alert('無法下載圖片，請確保圖片資源可以正確載入。');
+                            }
+                        }).catch(err => {
+                            console.error('生成圖片時發生錯誤：', err);
+                            alert('生成圖片時發生錯誤，請稍後再試。');
+                        });
+                    }
+                };
+
+                img.onerror = () => {
+                    console.error('圖片載入失敗：', img.src);
+                    loadedImages++;
+                    if(loadedImages === totalImages) {
+                        alert('部分圖片載入失敗，可能會影響下載結果。');
+                    }
+                };
+            }
+        }
+        
         function retryQuiz() {
             // 重置分數
             scores = {

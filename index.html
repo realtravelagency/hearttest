@@ -23,7 +23,8 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 800px; /* 保持最大寬度 */
+            width: 100%; /* 適應螢幕寬度 */
             margin: 20px auto;
             padding: 20px;
             background-color: rgba(255, 255, 255, 0.95);
@@ -225,12 +226,19 @@
         }
 
     .results {
-        width: 100%;
-        max-width: 800px; /* 避免超出畫面 */
+        display: none;
+        width: 100%; /* 改為 100% 適應父容器 */
+        max-width: 800px; /* 最大寬度限制 */
         margin: 0 auto;
+        padding: 20px; /* 減少內邊距，避免內容過窄 */
+        border-radius: 20px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95));
+        box-shadow: 0 10px 30px rgba(255, 126, 179, 0.2);
+        border: 2px solid rgba(255, 126, 179, 0.3);
         text-align: center;
-        box-sizing: border-box; /* 確保 padding 不影響寬度 */
-        overflow: hidden; /* 防止內容超出 */
+        position: relative;
+        box-sizing: border-box; /* 確保內邊距不影響寬度 */
+        overflow-x: hidden; /* 防止水平溢出 */
     }
 
 
@@ -546,7 +554,7 @@
             .container {
                 margin: 5px auto;
                 padding: 8px;
-                width: 98%;
+                width: 95%;
             }
 
             h1 {
@@ -1223,18 +1231,23 @@
         }
         
         function downloadResult() {
+            // 動態設置容器寬度，適應當前設備
+            const screenWidth = window.innerWidth;
+            const containerWidth = Math.min(screenWidth * 0.9, 800); // 寬度為螢幕的90%，最大800px
+
             // 創建一個新的容器
             const container = document.createElement('div');
             container.style.cssText = `
                 position: fixed;
                 left: -9999px;
                 top: -9999px;
-                width: 800px;
-                padding: 40px;
+                width: ${containerWidth}px !important;
+                padding: 20px;
                 background: linear-gradient(135deg, #fff6f9 0%, #f0f7ff 100%);
                 border-radius: 25px;
                 border: 3px solid rgba(255, 126, 179, 0.4);
                 box-shadow: 0 15px 35px rgba(255, 126, 179, 0.25);
+                box-sizing: border-box;
             `;
             
             // 複製結果內容
@@ -1257,7 +1270,7 @@
             tempDiv.style.cssText = `
                 display: block !important;
                 width: 100% !important;
-                max-width: 720px !important;
+                max-width: ${containerWidth - 40}px !important; /* 減去padding */
                 margin: 0 auto !important;
                 padding: 20px !important;
                 text-align: center !important;
@@ -1266,6 +1279,7 @@
                 opacity: 1 !important;
                 visibility: visible !important;
                 transform: none !important;
+                box-sizing: border-box !important;
             `;
 
             // 修正標題樣式
@@ -1289,7 +1303,7 @@
                     color: #666666 !important;
                     font-size: 1.1em !important;
                     margin: 20px auto !important;
-                    max-width: 600px !important;
+                    max-width: ${containerWidth - 80}px !important; /* 適應容器 */
                     line-height: 1.6 !important;
                     padding: 15px !important;
                     background: rgba(255, 255, 255, 0.8) !important;
@@ -1304,7 +1318,6 @@
 
             // 修正角色圖片樣式，保持原始比例並確保圓形外框
             tempDiv.querySelectorAll('.character-img').forEach(img => {
-                // 創建一個圓形容器
                 const imgContainer = document.createElement('div');
                 imgContainer.style.cssText = `
                     width: 180px !important;
@@ -1322,7 +1335,6 @@
                     transform: none !important;
                 `;
 
-                // 設置圖片樣式，保持比例且填滿容器
                 img.style.cssText = `
                     max-width: 180px !important;
                     max-height: 180px !important;
@@ -1337,7 +1349,6 @@
                     display: block !important;
                 `;
 
-                // 將圖片放入容器並替換原始位置
                 const parent = img.parentNode;
                 parent.replaceChild(imgContainer, img);
                 imgContainer.appendChild(img);
@@ -1354,6 +1365,8 @@
                     text-align: center !important;
                     transform: none !important;
                     opacity: 1 !important;
+                    width: 100% !important;
+                    max-width: ${containerWidth - 80}px !important;
                 `;
 
                 const heading = section.querySelector('h3');
@@ -1441,6 +1454,8 @@
                     margin: 15px 0 !important;
                     opacity: 1 !important;
                     transform: none !important;
+                    width: 100% !important;
+                    max-width: ${containerWidth - 80}px !important;
                 `;
             });
 
@@ -1457,7 +1472,7 @@
                         img.onload = () => resolve();
                         img.onerror = () => {
                             console.error(`圖片載入失敗: ${img.src}`);
-                            resolve(); // 即使失敗也繼續，避免卡住
+                            resolve();
                         };
                     }
                 });

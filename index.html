@@ -81,12 +81,12 @@
         }
 
         .character-img {
-            max-width: 200px;
-            height: auto;
-            margin: 20px auto;
-            display: block;
+            width: 180px !important;
+            height: 180px !important;
+            object-fit: contain !important; /* 避免圖片變形 */
+            display: block !important;
+            border-radius: 50%;
         }
-
         td {
             background: #fff;
             border-radius: 8px;
@@ -220,19 +220,11 @@
         }
 
     .results {
-        display: none;
-        padding: 40px;
-        border-radius: 25px;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.9));  /* 修改這行 */
-        box-shadow: 0 15px 35px rgba(255, 126, 179, 0.25);
-        border: 3px solid rgba(255, 126, 179, 0.4);
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-        margin: 20px auto;
-        backdrop-filter: blur(10px);  /* 添加這行 */
-        -webkit-backdrop-filter: blur(10px);  /* 添加這行，用於 Safari 支援 */
-    }
+    width: 800px;  /* 確保結果區域寬度一致 */
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
 
     .result-header {
         margin-bottom: 30px;
@@ -1190,167 +1182,72 @@
             retryButton.style.display = 'block';
         }
 
+        function preloadImages(callback) {
+            const images = document.querySelectorAll('.results img');
+            let loaded = 0;
+            if (images.length === 0) {
+                callback(); // 如果沒有圖片，直接執行截圖
+                return;
+            }
+            
+            images.forEach(img => {
+                img.onload = () => {
+                    loaded++;
+                    if (loaded === images.length) callback(); // 當所有圖片載入後執行
+                };
+                img.onerror = () => {
+                    loaded++;
+                    if (loaded === images.length) callback();
+                };
+            });
+        }
+        
         function downloadResult() {
             const resultsDiv = document.getElementById('results');
-            
-            // 創建一個新的 div 用於截圖
+        
+            // 移除按鈕，避免影響截圖
             const tempDiv = resultsDiv.cloneNode(true);
             const button = tempDiv.querySelector('button');
-            button.parentElement.remove();
-            
-            // 創建一個容器來隱藏截圖過程
-            const hiddenContainer = document.createElement('div');
-            hiddenContainer.style.position = 'fixed';
-            hiddenContainer.style.left = '-9999px';
-            hiddenContainer.style.top = '-9999px';
-            hiddenContainer.style.width = '800px';
-            hiddenContainer.style.background = 'linear-gradient(135deg, #fff6f9 0%, #f0f7ff 100%)';
-            hiddenContainer.style.padding = '40px';
-            hiddenContainer.style.boxSizing = 'border-box';
-            hiddenContainer.style.borderRadius = '25px';
-            hiddenContainer.style.border = '3px solid rgba(255, 126, 179, 0.4)';
-            document.body.appendChild(hiddenContainer);
-            
-            // 設置樣式確保截圖效果
-            tempDiv.style.position = 'fixed';
-            tempDiv.style.left = '-9999px';
-            tempDiv.style.top = '0';
-            tempDiv.style.transform = 'none';
-            tempDiv.style.width = '800px';
-            tempDiv.style.maxWidth = '100%';
-            tempDiv.style.margin = '0 auto';
-            tempDiv.style.background = 'linear-gradient(135deg, #fff6f9 0%, #f0f7ff 100%)';
-            tempDiv.style.padding = '40px';
-            tempDiv.style.borderRadius = '25px';
-            tempDiv.style.border = '3px solid rgba(255, 126, 179, 0.4)';
-            tempDiv.style.boxSizing = 'border-box';
-            tempDiv.style.zIndex = '-1000';
-            tempDiv.style.display = 'block';
-            tempDiv.style.opacity = '1';
-            tempDiv.style.visibility = 'visible';
-            tempDiv.style.pointerEvents = 'none';
-            tempDiv.style.overflow = 'visible';
-
-            // 修正圖片樣式
+            if (button) button.remove();
+        
+            // 確保圖片樣式正確
             const characterImg = tempDiv.querySelector('.character-img');
             if (characterImg) {
                 characterImg.style.width = '180px';
                 characterImg.style.height = '180px';
                 characterImg.style.objectFit = 'contain';
                 characterImg.style.borderRadius = '50%';
-                characterImg.style.border = '4px solid var(--primary-color)';
+                characterImg.style.display = 'block';
             }
-
-            // 修正類型圖片樣式
-            tempDiv.querySelectorAll('.type img').forEach(img => {
-                img.style.width = '40px';
-                img.style.height = '40px';
-                img.style.objectFit = 'cover';
-                img.style.borderRadius = '50%';
-                img.style.border = '2px solid var(--primary-color)';
-            });
-
-            // 移除所有動畫和轉換效果
-            tempDiv.querySelectorAll('*').forEach(el => {
-                el.style.animation = 'none';
-                el.style.opacity = '1';
-                el.style.transform = 'none';
-                el.style.transition = 'none';
-                el.style.position = 'relative';
-                el.style.overflow = 'visible';
-            });
-
+        
             document.body.appendChild(tempDiv);
-
-            // 預載所有圖片並確保它們保持正確的比例
-            const images = tempDiv.getElementsByTagName('img');
-            const imagePromises = Array.from(images).map(img => {
-                return new Promise((resolve, reject) => {
-                    const newImg = new Image();
-                    newImg.crossOrigin = "anonymous";
-                    newImg.onload = () => {
-                        img.src = newImg.src;
-                        // 確保圖片保持原始比例
-                        img.style.objectFit = 'cover';
-                        resolve();
-                    };
-                    newImg.onerror = reject;
-                    newImg.src = img.src;
+            tempDiv.style.position = 'fixed';
+            tempDiv.style.left = '-9999px';
+            tempDiv.style.top = '-9999px';
+            tempDiv.style.opacity = '0';
+        
+            preloadImages(() => {
+                html2canvas(tempDiv, {
+                    backgroundColor: null,
+                    scale: 2,
+                    useCORS: true
+                }).then(canvas => {
+                    document.body.removeChild(tempDiv); // 截圖後移除
+        
+                    const image = canvas.toDataURL('image/png');
+                    const link = document.createElement('a');
+                    link.download = `旅遊角色測驗結果_${new Date().getTime()}.png`;
+                    link.href = image;
+                    link.click();
+                }).catch(err => {
+                    document.body.removeChild(tempDiv);
+                    console.error('生成圖片時發生錯誤：', err);
+                    alert('無法下載圖片，請確保圖片資源可以正確載入。');
                 });
             });
-
-            // 等待所有圖片載入
-            Promise.all(imagePromises)
-                .then(() => {
-                    const options = {
-                        backgroundColor: '#fff6f9',
-                        scale: 2,
-                        logging: true,
-                        useCORS: true,
-                        allowTaint: true,
-                        width: 800,
-                        height: tempDiv.scrollHeight,
-                        scrollX: 0,
-                        scrollY: 0,
-                        windowWidth: 800,
-                        windowHeight: tempDiv.scrollHeight,
-                        onclone: function(clonedDoc) {
-                            const clonedElement = clonedDoc.querySelector('.results');
-                            if (clonedElement) {
-                                clonedElement.style.display = 'block';
-                                clonedElement.style.opacity = '1';
-                                clonedElement.style.visibility = 'visible';
-                                clonedElement.style.position = 'relative';
-                                clonedElement.style.transform = 'none';
-                                clonedElement.style.overflow = 'visible';
-                                
-                                // 確保克隆元素中的圖片也保持正確比例
-                                const clonedCharacterImg = clonedElement.querySelector('.character-img');
-                                if (clonedCharacterImg) {
-                                    clonedCharacterImg.style.width = '180px';
-                                    clonedCharacterImg.style.height = '180px';
-                                    clonedCharacterImg.style.objectFit = 'cover';
-                                }
-
-                                clonedElement.querySelectorAll('.type img').forEach(img => {
-                                    img.style.width = '40px';
-                                    img.style.height = '40px';
-                                    img.style.objectFit = 'cover';
-                                });
-                            }
-                        }
-                    };
-
-                    html2canvas(tempDiv, {
-                        backgroundColor: null, // 保留原始背景
-                        scale: 2,
-                        useCORS: true
-                    }).then(canvas => {
-                        document.body.removeChild(tempDiv);
-                        
-                        try {
-                            const image = canvas.toDataURL('image/png', 1.0);
-                            const link = document.createElement('a');
-                            link.download = `旅遊角色測驗結果_${new Date().getTime()}.png`;
-                            link.href = image;
-                            link.click();
-                        } catch(e) {
-                            console.error('下載圖片時發生錯誤：', e);
-                            alert('無法下載圖片，請確保圖片資源可以正確載入。');
-                        }
-                    }).catch(err => {
-                        document.body.removeChild(tempDiv);
-                        console.error('生成圖片時發生錯誤：', err);
-                        alert('生成圖片時發生錯誤，請稍後再試。');
-                    });
-                })
-                .catch(err => {
-                    document.body.removeChild(tempDiv);
-                    console.error('圖片載入失敗：', err);
-                    alert('部分圖片載入失敗，請稍後再試。');
-                });
         }
         
+                
         function retryQuiz() {
             // 重置分數
             scores = {

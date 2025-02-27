@@ -1207,46 +1207,133 @@
         
         function downloadResult() {
             const resultsDiv = document.getElementById('results');
-        
-            // 移除按鈕，避免影響截圖
+            
+            // 創建一個新的容器
+            const container = document.createElement('div');
+            container.style.cssText = `
+                position: fixed;
+                left: -9999px;
+                top: -9999px;
+                width: 800px;
+                padding: 40px;
+                background: linear-gradient(135deg, #fff6f9 0%, #f0f7ff 100%);
+                border-radius: 25px;
+                border: 3px solid rgba(255, 126, 179, 0.4);
+                box-shadow: 0 15px 35px rgba(255, 126, 179, 0.25);
+            `;
+            
+            // 複製結果內容
             const tempDiv = resultsDiv.cloneNode(true);
-            const button = tempDiv.querySelector('button');
+            
+            // 移除下載按鈕
+            const button = tempDiv.querySelector('.call-to-action');
             if (button) button.remove();
-        
-            // 確保圖片樣式正確
-            const characterImg = tempDiv.querySelector('.character-img');
-            if (characterImg) {
-                characterImg.style.width = '180px';
-                characterImg.style.height = '180px';
-                characterImg.style.objectFit = 'contain';
-                characterImg.style.borderRadius = '50%';
-                characterImg.style.display = 'block';
-            }
-        
-            document.body.appendChild(tempDiv);
-            tempDiv.style.position = 'fixed';
-            tempDiv.style.left = '-9999px';
-            tempDiv.style.top = '-9999px';
-            tempDiv.style.opacity = '0';
-        
-            preloadImages(() => {
-                html2canvas(tempDiv, {
-                    backgroundColor: null,
-                    scale: 2,
-                    useCORS: true
-                }).then(canvas => {
-                    document.body.removeChild(tempDiv); // 截圖後移除
-        
-                    const image = canvas.toDataURL('image/png');
-                    const link = document.createElement('a');
-                    link.download = `旅遊角色測驗結果_${new Date().getTime()}.png`;
-                    link.href = image;
-                    link.click();
-                }).catch(err => {
-                    document.body.removeChild(tempDiv);
-                    console.error('生成圖片時發生錯誤：', err);
-                    alert('無法下載圖片，請確保圖片資源可以正確載入。');
+
+            // 設置基本樣式
+            tempDiv.style.cssText = `
+                display: block !important;
+                width: 100% !important;
+                max-width: 720px !important;
+                margin: 0 auto !important;
+                padding: 20px !important;
+                text-align: center !important;
+                background: transparent !important;
+                position: relative !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            `;
+
+            // 確保所有圖片都有正確的樣式
+            const images = tempDiv.getElementsByTagName('img');
+            Array.from(images).forEach(img => {
+                if (img.classList.contains('character-img')) {
+                    img.style.cssText = `
+                        width: 180px !important;
+                        height: 180px !important;
+                        border-radius: 50% !important;
+                        border: 4px solid #ff7eb3 !important;
+                        margin: 20px auto !important;
+                        display: block !important;
+                        object-fit: contain !important;
+                        background: white !important;
+                    `;
+                } else {
+                    img.style.cssText = `
+                        width: 40px !important;
+                        height: 40px !important;
+                        border-radius: 50% !important;
+                        border: 2px solid #ff7eb3 !important;
+                        margin: 5px !important;
+                        display: inline-block !important;
+                        vertical-align: middle !important;
+                        object-fit: contain !important;
+                        background: white !important;
+                    `;
+                }
+                img.crossOrigin = 'anonymous';
+            });
+
+            // 添加到容器
+            container.appendChild(tempDiv);
+            document.body.appendChild(container);
+
+            // 等待所有圖片載入
+            const imagePromises = Array.from(images).map(img => {
+                return new Promise((resolve, reject) => {
+                    if (img.complete) {
+                        resolve();
+                    } else {
+                        img.onload = resolve;
+                        img.onerror = () => {
+                            console.warn(`圖片載入失敗: ${img.src}`);
+                            resolve(); // 即使失敗也繼續
+                        };
+                    }
                 });
+            });
+
+            // 當所有圖片都載入後進行截圖
+            Promise.all(imagePromises).then(() => {
+                html2canvas(tempDiv, {
+                    backgroundColor: '#fff6f9',
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: true,
+                    logging: true,
+                    width: tempDiv.offsetWidth,
+                    height: tempDiv.offsetHeight,
+                    onclone: function(clonedDoc) {
+                        const clonedElement = clonedDoc.querySelector('.results');
+                        if (clonedElement) {
+                            clonedElement.style.display = 'block';
+                            clonedElement.style.visibility = 'visible';
+                            clonedElement.style.opacity = '1';
+                        }
+                    }
+                }).then(canvas => {
+                    // 移除臨時元素
+                    document.body.removeChild(container);
+                    
+                    try {
+                        // 下載圖片
+                        const image = canvas.toDataURL('image/png', 1.0);
+                        const link = document.createElement('a');
+                        link.download = `旅遊角色測驗結果_${new Date().getTime()}.png`;
+                        link.href = image;
+                        link.click();
+                    } catch (error) {
+                        console.error('下載圖片時發生錯誤：', error);
+                        alert('無法下載圖片，請確保圖片資源可以正確載入。');
+                    }
+                }).catch(error => {
+                    document.body.removeChild(container);
+                    console.error('生成圖片時發生錯誤：', error);
+                    alert('生成圖片時發生錯誤，請稍後再試。');
+                });
+            }).catch(error => {
+                document.body.removeChild(container);
+                console.error('圖片載入失敗：', error);
+                alert('圖片載入失敗，請稍後再試。');
             });
         }
         

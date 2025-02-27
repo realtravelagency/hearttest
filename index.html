@@ -1206,8 +1206,6 @@
         }
         
         function downloadResult() {
-            const resultsDiv = document.getElementById('results');
-            
             // 創建一個新的容器
             const container = document.createElement('div');
             container.style.cssText = `
@@ -1225,9 +1223,18 @@
             // 複製結果內容
             const tempDiv = resultsDiv.cloneNode(true);
             
-            // 移除下載按鈕
+            // 移除下載按鈕和動畫效果
             const button = tempDiv.querySelector('.call-to-action');
             if (button) button.remove();
+
+            // 移除所有動畫和過渡效果
+            tempDiv.querySelectorAll('*').forEach(el => {
+                el.style.animation = 'none';
+                el.style.transition = 'none';
+                el.style.transform = 'none';
+                el.style.opacity = '1';
+                el.style.visibility = 'visible';
+            });
 
             // 設置基本樣式
             tempDiv.style.cssText = `
@@ -1241,59 +1248,125 @@
                 position: relative !important;
                 opacity: 1 !important;
                 visibility: visible !important;
+                transform: none !important;
             `;
 
-            // 確保所有圖片都有正確的樣式
-            const images = tempDiv.getElementsByTagName('img');
-            Array.from(images).forEach(img => {
-                if (img.classList.contains('character-img')) {
-                    img.style.cssText = `
-                        width: 180px !important;
-                        height: 180px !important;
-                        border-radius: 50% !important;
-                        border: 4px solid #ff7eb3 !important;
-                        margin: 20px auto !important;
-                        display: block !important;
-                        object-fit: contain !important;
-                        background: white !important;
-                    `;
-                } else {
-                    img.style.cssText = `
-                        width: 40px !important;
-                        height: 40px !important;
-                        border-radius: 50% !important;
-                        border: 2px solid #ff7eb3 !important;
-                        margin: 5px !important;
-                        display: inline-block !important;
-                        vertical-align: middle !important;
-                        object-fit: contain !important;
-                        background: white !important;
+            // 修正標題樣式
+            const title = tempDiv.querySelector('.result-title');
+            if (title) {
+                title.style.cssText = `
+                    color: #ff7eb3 !important;
+                    font-size: 28px !important;
+                    margin: 20px 0 !important;
+                    text-align: center !important;
+                    font-weight: bold !important;
+                    transform: none !important;
+                    opacity: 1 !important;
+                `;
+            }
+
+            // 修正主角色圖片樣式
+            const characterImg = tempDiv.querySelector('.character-img');
+            if (characterImg) {
+                characterImg.style.cssText = `
+                    width: 180px !important;
+                    height: 180px !important;
+                    border-radius: 50% !important;
+                    border: 4px solid #ff7eb3 !important;
+                    margin: 20px auto !important;
+                    display: block !important;
+                    object-fit: cover !important;
+                    background: white !important;
+                    transform: none !important;
+                    opacity: 1 !important;
+                `;
+            }
+
+            // 修正內心表現和外在特徵區塊
+            const sections = tempDiv.querySelectorAll('section');
+            sections.forEach(section => {
+                section.style.cssText = `
+                    margin: 30px 0 !important;
+                    padding: 20px !important;
+                    background: rgba(255, 255, 255, 0.8) !important;
+                    border-radius: 15px !important;
+                    text-align: center !important;
+                    transform: none !important;
+                    opacity: 1 !important;
+                `;
+
+                const heading = section.querySelector('h3');
+                if (heading) {
+                    heading.style.cssText = `
+                        color: #ff7eb3 !important;
+                        font-size: 20px !important;
+                        margin: 10px 0 !important;
+                        text-align: center !important;
                     `;
                 }
+            });
+
+            // 修正泡泡樣式
+            tempDiv.querySelectorAll('.thought-bubble, .trait-bubble').forEach(bubble => {
+                bubble.style.cssText = `
+                    display: inline-block !important;
+                    margin: 5px !important;
+                    padding: 8px 15px !important;
+                    background: linear-gradient(45deg, #ff7eb3, #7ec4ff) !important;
+                    color: white !important;
+                    border-radius: 20px !important;
+                    font-size: 16px !important;
+                    opacity: 1 !important;
+                    transform: none !important;
+                `;
+            });
+
+            // 修正類型圖片樣式
+            tempDiv.querySelectorAll('.type img').forEach(img => {
+                img.style.cssText = `
+                    width: 40px !important;
+                    height: 40px !important;
+                    border-radius: 50% !important;
+                    border: 2px solid #ff7eb3 !important;
+                    margin: 5px !important;
+                    display: inline-block !important;
+                    vertical-align: middle !important;
+                    object-fit: cover !important;
+                    background: white !important;
+                    opacity: 1 !important;
+                    transform: none !important;
+                `;
                 img.crossOrigin = 'anonymous';
             });
 
-            // 添加到容器
+            // 修正類型容器樣式
+            tempDiv.querySelectorAll('.compatible-types, .incompatible-types').forEach(container => {
+                container.style.cssText = `
+                    display: flex !important;
+                    justify-content: center !important;
+                    flex-wrap: wrap !important;
+                    gap: 10px !important;
+                    margin: 15px 0 !important;
+                    opacity: 1 !important;
+                    transform: none !important;
+                `;
+            });
+
             container.appendChild(tempDiv);
             document.body.appendChild(container);
 
-            // 等待所有圖片載入
-            const imagePromises = Array.from(images).map(img => {
-                return new Promise((resolve, reject) => {
+            // 等待所有圖片載入後進行截圖
+            const images = tempDiv.getElementsByTagName('img');
+            Promise.all(Array.from(images).map(img => {
+                return new Promise((resolve) => {
                     if (img.complete) {
                         resolve();
                     } else {
                         img.onload = resolve;
-                        img.onerror = () => {
-                            console.warn(`圖片載入失敗: ${img.src}`);
-                            resolve(); // 即使失敗也繼續
-                        };
+                        img.onerror = resolve;
                     }
                 });
-            });
-
-            // 當所有圖片都載入後進行截圖
-            Promise.all(imagePromises).then(() => {
+            })).then(() => {
                 html2canvas(tempDiv, {
                     backgroundColor: '#fff6f9',
                     scale: 2,
@@ -1301,21 +1374,11 @@
                     allowTaint: true,
                     logging: true,
                     width: tempDiv.offsetWidth,
-                    height: tempDiv.offsetHeight,
-                    onclone: function(clonedDoc) {
-                        const clonedElement = clonedDoc.querySelector('.results');
-                        if (clonedElement) {
-                            clonedElement.style.display = 'block';
-                            clonedElement.style.visibility = 'visible';
-                            clonedElement.style.opacity = '1';
-                        }
-                    }
+                    height: tempDiv.offsetHeight
                 }).then(canvas => {
-                    // 移除臨時元素
                     document.body.removeChild(container);
                     
                     try {
-                        // 下載圖片
                         const image = canvas.toDataURL('image/png', 1.0);
                         const link = document.createElement('a');
                         link.download = `旅遊角色測驗結果_${new Date().getTime()}.png`;
@@ -1330,10 +1393,6 @@
                     console.error('生成圖片時發生錯誤：', error);
                     alert('生成圖片時發生錯誤，請稍後再試。');
                 });
-            }).catch(error => {
-                document.body.removeChild(container);
-                console.error('圖片載入失敗：', error);
-                alert('圖片載入失敗，請稍後再試。');
             });
         }
         

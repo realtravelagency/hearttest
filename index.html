@@ -1175,10 +1175,21 @@
                         </div>
                     </section>
 
-                    <div class="call-to-action" style="text-align: center;">
-                        <button onclick="downloadResult()">下載測驗結果</button>
-                    </div>
-                `;
+                    <div class="call-to-action" style="text-align: center; width: 100%; margin: 20px 0;">
+                            <button onclick="downloadResult()" style="
+                                background: var(--primary-color);
+                                color: white;
+                                border: none;
+                                border-radius: 8px;
+                                font-size: 1.1em;
+                                padding: 12px 30px;
+                                cursor: pointer;
+                                display: inline-block;
+                                margin: 0 auto;
+                                max-width: 200px;
+                            ">下載測驗結果</button>
+                        </div>
+                    `;
             } else {
                 resultsDiv.textContent = '無法計算結果，請重試。';
             }

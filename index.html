@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>心理測驗：你的旅遊角色是什麼？</title>
     <style>
         :root {
@@ -23,8 +22,8 @@
         }
 
         .container {
-            max-width: 800px; /* 保持最大寬度 */
-            width: 100%; /* 適應螢幕寬度 */
+            max-width: 800px;
+            width: 100%;
             margin: 20px auto;
             padding: 20px;
             background-color: rgba(255, 255, 255, 0.95);
@@ -46,7 +45,6 @@
 
         .question {
             display: none;
-            position: relative;
             padding: 20px;
             margin: 20px 0;
             border: 2px dashed var(--secondary-color);
@@ -69,7 +67,6 @@
             transition: all 0.3s ease;
             display: block;
             margin: 20px auto;
-            text-align: center;
             max-width: 200px;
             width: 100%;
             box-sizing: border-box;
@@ -82,17 +79,16 @@
         }
 
         .character-img {
-            max-width: 180px; /* 限制最大寬度 */
-            max-height: 180px; /* 限制最大高度 */
-            width: auto; /* 讓寬度根據原始比例自動調整 */
-            height: auto; /* 讓高度根據原始比例自動調整 */
-            object-fit: contain; /* 保持比例，不裁剪圖片 */
-            border-radius: 50%;
-            border: 4px solid var(--primary-color);
-            box-shadow: 0 8px 25px rgba(255, 126, 179, 0.4);
+            max-width: 180px;
+            max-height: 180px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border: none; /* 移除邊框 */
             margin: 20px auto;
             animation: popAndRotate 1.2s ease-out;
         }
+
         td {
             background: #fff;
             border-radius: 8px;
@@ -137,17 +133,10 @@
             text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
         }
 
-        /* 添加可愛的浮動元素動畫 */
         @keyframes float {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            25% {
-                transform: translateY(-15px) rotate(5deg);
-            }
-            75% {
-                transform: translateY(15px) rotate(-5deg);
-            }
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(5deg); }
+            75% { transform: translateY(15px) rotate(-5deg); }
         }
 
         .floating-characters {
@@ -169,40 +158,15 @@
             transition: all 0.3s ease;
         }
 
-        .char1 {
-            top: 15%;
-            left: 2%;
-            animation: float 6s ease-in-out infinite;
-        }
+        .char1 { top: 15%; left: 2%; animation: float 6s ease-in-out infinite; }
+        .char2 { top: 30%; right: 2%; animation: float 6s ease-in-out infinite 2s; }
+        .char3 { bottom: 15%; left: 3%; animation: float 6s ease-in-out infinite 4s; }
 
-        .char2 {
-            top: 30%;
-            right: 2%;
-            animation: float 6s ease-in-out infinite 2s;
-        }
-
-        .char3 {
-            bottom: 15%;
-            left: 3%;
-            animation: float 6s ease-in-out infinite 4s;
-        }
-
-        /* 添加可愛的問題切換動畫 */
         @keyframes bounceIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.3) translateY(100px);
-            }
-            50% {
-                transform: scale(1.05) translateY(-10px);
-            }
-            70% {
-                transform: scale(0.9) translateY(5px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+            0% { opacity: 0; transform: scale(0.3) translateY(100px); }
+            50% { transform: scale(1.05) translateY(-10px); }
+            70% { transform: scale(0.9) translateY(5px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .question.active {
@@ -210,164 +174,169 @@
             animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
-        /* 添加結果顯示的可愛動畫 */
         @keyframes popIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.5) rotate(-10deg);
-            }
-            80% {
-                transform: scale(1.1) rotate(5deg);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) rotate(0);
-            }
+            0% { opacity: 0; transform: scale(0.5) rotate(-10deg); }
+            80% { transform: scale(1.1) rotate(5deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0); }
         }
 
-    .results {
-        display: none;
-        width: 100%; /* 改為 100% 適應父容器 */
-        max-width: 800px; /* 最大寬度限制 */
-        margin: 0 auto;
-        padding: 20px; /* 減少內邊距，避免內容過窄 */
-        border-radius: 20px;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95));
-        box-shadow: 0 10px 30px rgba(255, 126, 179, 0.2);
-        border: 2px solid rgba(255, 126, 179, 0.3);
-        text-align: center;
-        position: relative;
-        box-sizing: border-box; /* 確保內邊距不影響寬度 */
-        overflow-x: hidden; /* 防止水平溢出 */
-    }
+        .results {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95));
+            box-shadow: 0 10px 30px rgba(255, 126, 179, 0.2);
+            border: 2px solid rgba(255, 126, 179, 0.3);
+            text-align: center;
+            position: relative;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
 
+        .result-header {
+            margin-bottom: 30px;
+            animation: slideDown 0.8s ease-out;
+        }
 
-    .result-header {
-        margin-bottom: 30px;
-        animation: slideDown 0.8s ease-out;
-    }
+        .result-title {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin: 15px 0;
+            text-shadow: 2px 2px 4px rgba(255, 126, 179, 0.3);
+            animation: popAndRotate 1s ease-out;
+        }
 
-    .result-title {
-        color: var(--primary-color);
-        font-size: 2em;
-        margin: 15px 0;
-        text-shadow: 2px 2px 4px rgba(255, 126, 179, 0.3);
-        animation: popAndRotate 1s ease-out;
-    }
+        .results .character-img {
+            width: 180px;
+            height: 180px;
+            border: none; /* 移除結果中的邊框 */
+            margin: 20px auto;
+            animation: popAndRotate 1.2s ease-out;
+            object-fit: cover;
+        }
 
-    .character-img {
-        width: 180px;
-        height: 180px;
-        border-radius: 50%;
-        border: 4px solid var(--primary-color);
-        box-shadow: 0 8px 25px rgba(255, 126, 179, 0.4);
-        margin: 20px auto;
-        animation: popAndRotate 1.2s ease-out;
-        object-fit: cover;
-    }
+        .inner-thoughts, .outer-traits {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            animation: fadeInUp 1s ease-out;
+        }
 
-    .inner-thoughts, .outer-traits {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-        margin: 15px 0;
-        animation: fadeInUp 1s ease-out;
-    }
+        .thought-bubble, .trait-bubble {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            animation: popIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
 
-    .thought-bubble, .trait-bubble {
-        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-        color: white;
-        padding: 8px 15px;
-        border-radius: 20px;
-        font-size: 0.9em;
-        animation: popIn 0.5s ease-out forwards;
-        opacity: 0;
-    }
+        .trait-bubble {
+            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+        }
 
-    .trait-bubble {
-        background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
-    }
+        .compatibility {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            animation: fadeInUp 1.2s ease-out;
+        }
 
-    .compatibility {
-        margin: 30px 0;
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: 15px;
-        animation: fadeInUp 1.2s ease-out;
-    }
+        .compatible-types, .incompatible-types {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 15px 0;
+        }
 
-    .compatible-types, .incompatible-types {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        margin: 15px 0;
-    }
+        .type {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
 
-    .type {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 15px;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
+        .type:hover {
+            transform: scale(1.05);
+        }
 
-    .type img {
-        width: 40px;
-        height: 40px;
-        object-fit: cover;
-        border-radius: 50%;
-        border: 2px solid var(--primary-color);
-    }
-
-    .compatible-types .type img {
-        border-color: var(--primary-color);
-    }
-
-    .incompatible-types .type img {
-        border-color: var(--secondary-color);
-    }
-
-    .type span {
-        font-size: 0.9em;
-        color: #666;
-    }
-
-    /* 響應式設計調整 */
-    @media (max-width: 768px) {
         .type img {
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
         }
-        
+
+        .compatible-types .type img {
+            border-color: var(--primary-color);
+        }
+
+        .incompatible-types .type img {
+            border-color: var(--secondary-color);
+        }
+
         .type span {
-            font-size: 0.8em;
+            font-size: 0.9em;
+            color: #666;
         }
-    }
 
-    .call-to-action {
-        margin-top: 30px;
-        animation: fadeInUp 1.4s ease-out;
-    }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            max-width: 300px;
+            text-align: center;
+        }
 
-    .call-to-action button {
-        margin: 10px;
-    }
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
 
-    /* 為每個特徵泡泡添加延遲動畫 */
-    .thought-bubble:nth-child(1) { animation-delay: 0.2s; }
-    .thought-bubble:nth-child(2) { animation-delay: 0.4s; }
-    .thought-bubble:nth-child(3) { animation-delay: 0.6s; }
-    .thought-bubble:nth-child(4) { animation-delay: 0.8s; }
+        @media (max-width: 768px) {
+            .type img { width: 30px; height: 30px; }
+            .type span { font-size: 0.8em; }
+        }
 
-    .trait-bubble:nth-child(1) { animation-delay: 0.3s; }
-    .trait-bubble:nth-child(2) { animation-delay: 0.5s; }
-    .trait-bubble:nth-child(3) { animation-delay: 0.7s; }
-    .trait-bubble:nth-child(4) { animation-delay: 0.9s; }
+        .call-to-action {
+            margin-top: 30px;
+            animation: fadeInUp 1.4s ease-out;
+        }
 
-        /* 添加可愛的裝飾元素 */
+        .thought-bubble:nth-child(1) { animation-delay: 0.2s; }
+        .thought-bubble:nth-child(2) { animation-delay: 0.4s; }
+        .thought-bubble:nth-child(3) { animation-delay: 0.6s; }
+        .thought-bubble:nth-child(4) { animation-delay: 0.8s; }
+        .trait-bubble:nth-child(1) { animation-delay: 0.3s; }
+        .trait-bubble:nth-child(2) { animation-delay: 0.5s; }
+        .trait-bubble:nth-child(3) { animation-delay: 0.7s; }
+        .trait-bubble:nth-child(4) { animation-delay: 0.9s; }
+
         .results::before,
         .results::after {
             content: '✨';
@@ -377,262 +346,81 @@
             animation: twinkle 2s infinite;
         }
 
-        .results::before {
-            top: 10px;
-            left: 10px;
-        }
+        .results::before { top: 10px; left: 10px; }
+        .results::after { bottom: 10px; right: 10px; }
 
-        .results::after {
-            bottom: 10px;
-            right: 10px;
-        }
-
-        /* 定義動畫 */
         @keyframes slideDown {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         @keyframes popAndRotate {
-            0% {
-                transform: scale(0) rotate(-180deg);
-                opacity: 0;
-            }
-            60% {
-                transform: scale(1.1) rotate(10deg);
-            }
-            80% {
-                transform: scale(0.95) rotate(-5deg);
-            }
-            100% {
-                transform: scale(1) rotate(0);
-                opacity: 1;
-            }
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            60% { transform: scale(1.1) rotate(10deg); }
+            80% { transform: scale(0.95) rotate(-5deg); }
+            100% { transform: scale(1) rotate(0); opacity: 1; }
         }
 
         @keyframes fadeInUp {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         @keyframes twinkle {
-            0%, 100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.5;
-                transform: scale(0.8);
-            }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
         }
 
-        /* 添加亂跑動畫 */
         @keyframes randomMove {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            25% {
-                transform: translate(100px, -50px) rotate(15deg);
-            }
-            50% {
-                transform: translate(-50px, 100px) rotate(-15deg);
-            }
-            75% {
-                transform: translate(-100px, -50px) rotate(15deg);
-            }
-            100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, -50px) rotate(15deg); }
+            50% { transform: translate(-50px, 100px) rotate(-15deg); }
+            75% { transform: translate(-100px, -50px) rotate(15deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
         }
 
-        /* 添加點擊效果的動畫 */
         @keyframes shake {
-            0%, 100% {
-                transform: rotate(0deg) scale(1);
-            }
-            25% {
-                transform: rotate(-15deg) scale(1.1);
-            }
-            50% {
-                transform: rotate(10deg) scale(1.1);
-            }
-            75% {
-                transform: rotate(-5deg) scale(1.1);
-            }
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-15deg) scale(1.1); }
+            50% { transform: rotate(10deg) scale(1.1); }
+            75% { transform: rotate(-5deg) scale(1.1); }
         }
 
-        /* 響應式設計 */
         @media (max-width: 768px) {
-            .container {
-                margin: 10px auto;
-                padding: 10px;
-                width: 95%;
-            }
-
-            .character-img {
-                max-width: 150px;
-            }
-
-            h1 {
-                font-size: 1.5em;
-                padding: 0 10px;
-            }
-
-            h3 {
-                font-size: 1.2em;
-                padding: 0 10px;
-            }
-
-            td {
-                padding: 0 5px;
-            }
-
-            label {
-                padding: 12px 8px;
-                font-size: 0.9em;
-                width: 100%;
-            }
-
-            button {
-                max-width: 180px;
-                padding: 10px 20px;
-                font-size: 1em;
-            }
-
-            table {
-                width: 100%;
-                padding: 0;
-                margin: 10px 0;
-            }
-
-            .question {
-                padding: 10px 5px;
-                margin: 5px 0;
-            }
-
-            /* 調整錯誤訊息的樣式 */
-            .error {
-                padding: 0 10px;
-                font-size: 0.9em;
-            }
-
-            .floating-character {
-                width: 80px;
-                height: 80px;
-            }
-            
-            .char1 {
-                top: 5%;
-                left: -10px;
-            }
-            
-            .char2 {
-                top: 20%;
-                right: -10px;
-            }
-            
-            .char3 {
-                bottom: 5%;
-                left: -10px;
-            }
-            .results {
-                padding: 15px;
-                width: 90%;
-                margin: 0 auto; /* 確保置中 */
-                display: block; /* 確保顯示時為塊級元素 */
-            }
-
-            .results h2 {
-                font-size: 1.5em;
-            }
-
-            .character-img {
-                max-width: 150px;
-                max-height: 150px;
-            }
-
-            .results p {
-                font-size: 0.9em;
-            }
+            .container { margin: 10px auto; padding: 10px; width: 95%; }
+            .character-img { max-width: 150px; }
+            h1 { font-size: 1.5em; padding: 0 10px; }
+            h3 { font-size: 1.2em; padding: 0 10px; }
+            td { padding: 0 5px; }
+            label { padding: 12px 8px; font-size: 0.9em; width: 100%; }
+            button { max-width: 180px; padding: 10px 20px; font-size: 1em; }
+            table { width: 100%; padding: 0; margin: 10px 0; }
+            .question { padding: 10px 5px; margin: 5px 0; }
+            .error { padding: 0 10px; font-size: 0.9em; }
+            .floating-character { width: 80px; height: 80px; }
+            .char1 { top: 5%; left: -10px; }
+            .char2 { top: 20%; right: -10px; }
+            .char3 { bottom: 5%; left: -10px; }
+            .results { padding: 15px; width: 90%; margin: 0 auto; display: block; }
+            .results h2 { font-size: 1.5em; }
+            .results .character-img { max-width: 150px; max-height: 150px; }
+            .results p { font-size: 0.9em; }
         }
 
-        /* 添加更小螢幕的樣式 */
         @media (max-width: 480px) {
-            .container {
-                margin: 5px auto;
-                padding: 8px;
-                width: 95%;
-            }
-
-            h1 {
-                font-size: 1.3em;
-            }
-
-            h3 {
-                font-size: 1.1em;
-            }
-
-            label {
-                padding: 10px 6px;
-                font-size: 0.85em;
-            }
-
-            button {
-                max-width: 150px;
-                padding: 8px 16px;
-                font-size: 0.9em;
-            }
-
-            .floating-character {
-                width: 60px;
-                height: 60px;
-            }
-            
-            .char1 {
-                top: 2%;
-                left: -5px;
-            }
-            
-            .char2 {
-                top: 15%;
-                right: -5px;
-            }
-            
-            .char3 {
-                bottom: 2%;
-                left: -5px;
-            }
-            .results {
-                padding: 10px;
-                width: 95%;
-                margin: 0 auto; /* 確保置中 */
-                display: block;
-            }
-
-            .results h2 {
-                font-size: 1.3em;
-            }
-
-            .character-img {
-                max-width: 120px;
-                max-height: 120px;
-            }
-
-            .results p {
-                font-size: 0.85em;
-            }
+            .container { margin: 5px auto; padding: 8px; width: 95%; }
+            h1 { font-size: 1.3em; }
+            h3 { font-size: 1.1em; }
+            label { padding: 10px 6px; font-size: 0.85em; }
+            button { max-width: 150px; padding: 8px 16px; font-size: 0.9em; }
+            .floating-character { width: 60px; height: 60px; }
+            .char1 { top: 2%; left: -5px; }
+            .char2 { top: 15%; right: -5px; }
+            .char3 { bottom: 2%; left: -5px; }
+            .results { padding: 10px; width: 95%; margin: 0 auto; display: block; }
+            .results h2 { font-size: 1.3em; }
+            .results .character-img { max-width: 120px; max-height: 120px; }
+            .results p { font-size: 0.85em; }
         }
 
         table {
@@ -646,7 +434,7 @@
         }
 
         input[type="radio"] {
-            display: none; /* 隱藏原始的 radio 按鈕 */
+            display: none;
         }
 
         label {
@@ -675,158 +463,18 @@
         }
 
         td {
-            padding: 0; /* 移除 td 的內邊距，因為 label 已經有內邊距了 */
+            padding: 0;
             border: none;
             background: transparent;
         }
 
         td:hover {
-            transform: none; /* 移除 td 的懸停效果，因為已經在 label 上設置了 */
-        }
-
-        /* 結果區域的基本樣式 */
-        .results {
-            display: none;
-            padding: 30px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95));
-            box-shadow: 0 10px 30px rgba(255, 126, 179, 0.2);
-            border: 2px solid rgba(255, 126, 179, 0.3);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* 結果標題動畫 */
-        .results h2 {
-            animation: slideDown 0.8s ease-out;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            font-size: 1.8em;
-            text-shadow: 2px 2px 4px rgba(255, 126, 179, 0.2);
-        }
-
-        /* 結果角色圖片動畫 */
-        .results .character-img {
-            animation: popAndRotate 1s ease-out;
-            border: 4px solid var(--primary-color);
-            border-radius: 50%;
-            box-shadow: 0 5px 15px rgba(255, 126, 179, 0.3);
-            margin: 20px auto;
-        }
-
-        /* 結果文字動畫 */
-        .results p {
-            animation: fadeInUp 0.8s ease-out;
-            margin: 15px 0;
-            line-height: 1.6;
-        }
-
-        .results .result-description {
-            animation: fadeInUp 1s ease-out 0.3s;
-            opacity: 0;
-            animation-fill-mode: forwards;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            margin-top: 20px;
-        }
-
-        /* 裝飾元素 */
-        .results::before,
-        .results::after {
-            content: '✨';
-            position: absolute;
-            font-size: 2em;
-            color: var(--accent-color);
-            animation: twinkle 2s infinite;
-        }
-
-        .results::before {
-            top: 10px;
-            left: 10px;
-        }
-
-        .results::after {
-            bottom: 10px;
-            right: 10px;
-        }
-
-        /* 定義動畫 */
-        @keyframes slideDown {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes popAndRotate {
-            0% {
-                transform: scale(0) rotate(-180deg);
-                opacity: 0;
-            }
-            60% {
-                transform: scale(1.1) rotate(10deg);
-            }
-            80% {
-                transform: scale(0.95) rotate(-5deg);
-            }
-            100% {
-                transform: scale(1) rotate(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes twinkle {
-            0%, 100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.5;
-                transform: scale(0.8);
-            }
-        }
-
-        /* 響應式設計調整 */
-        @media (max-width: 768px) {
-            .results {
-                padding: 20px;
-                margin: 10px;
-            }
-
-            .results h2 {
-                font-size: 1.5em;
-            }
-
-            .results .character-img {
-                max-width: 150px;
-            }
-
-            .results p {
-                font-size: 0.9em;
-            }
+            transform: none;
         }
     </style>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // 為所有圖片添加 crossorigin 屬性
             const allImages = document.getElementsByTagName('img');
             for(let img of allImages) {
                 img.crossOrigin = "anonymous";
@@ -856,36 +504,11 @@
                 <h3>1. 已經很晚了但明天一大早就要出門，你會選擇？</h3>
                 <img src="./images/character1.png" class="character-img" alt="角色1">
                 <table>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q1-option1" name="q1" value="好好心">
-                            <label for="q1-option1">最後檢查包包有沒有東西都帶齊後上床睡覺</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q1-option2" name="q1" value="乖寶寶">
-                            <label for="q1-option2">設好鬧鐘立刻關燈睡覺</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q1-option3" name="q1" value="吵吵鬧">
-                            <label for="q1-option3">不要睡著就不會睡過頭，直接熬夜！</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q1-option4" name="q1" value="酷哭星">
-                            <label for="q1-option4">睡過頭就算了＠＠，會有人叫我起床的</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q1-option5" name="q1" value="吃光光">
-                            <label for="q1-option5">但消夜還是要吃，吃飽睡得比較安穩</label>
-                        </td>
-                    </tr>
+                    <tr><td><input type="radio" id="q1-option1" name="q1" value="好好心"><label for="q1-option1">最後檢查包包有沒有東西都帶齊後上床睡覺</label></td></tr>
+                    <tr><td><input type="radio" id="q1-option2" name="q1" value="乖寶寶"><label for="q1-option2">設好鬧鐘立刻關燈睡覺</label></td></tr>
+                    <tr><td><input type="radio" id="q1-option3" name="q1" value="吵吵鬧"><label for="q1-option3">不要睡著就不會睡過頭，直接熬夜！</label></td></tr>
+                    <tr><td><input type="radio" id="q1-option4" name="q1" value="酷哭星"><label for="q1-option4">睡過頭就算了＠＠，會有人叫我起床的</label></td></tr>
+                    <tr><td><input type="radio" id="q1-option5" name="q1" value="吃光光"><label for="q1-option5">但消夜還是要吃，吃飽睡得比較安穩</label></td></tr>
                 </table>
                 <div class="error" id="error1"></div>
                 <button type="button" onclick="nextQuestion(1)">下一題</button>
@@ -895,36 +518,11 @@
                 <h3>2. 在出門之前，你會？</h3>
                 <img src="./images/character1.png" class="character-img" alt="車掌角色">
                 <table>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q2-option1" name="q2" value="吵吵鬧">
-                            <label for="q2-option1">直接出門，安啦！</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q2-option2" name="q2" value="好好心">
-                            <label for="q2-option2">仔細檢查要帶東西有沒有都帶到，順便看看天氣預報決定帶傘還是防曬</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q2-option3" name="q2" value="酷哭星">
-                            <label for="q2-option3">佛要金裝，人要衣裝。所以要化好妝，外貌ｃｈｅｃｋ～再出門</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q2-option4" name="q2" value="乖寶寶">
-                            <label for="q2-option4">有帶手機、錢包就夠了</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q2-option5" name="q2" value="吃光光">
-                            <label for="q2-option5">想著到目的地後要吃甚麼，並且會在通勤鐘用手機繼續找當地好吃的美食</label>
-                        </td>
-                    </tr>
+                    <tr><td><input type="radio" id="q2-option1" name="q2" value="吵吵鬧"><label for="q2-option1">直接出門，安啦！</label></td></tr>
+                    <tr><td><input type="radio" id="q2-option2" name="q2" value="好好心"><label for="q2-option2">仔細檢查要帶東西有沒有都帶到，順便看看天氣預報決定帶傘還是防曬</label></td></tr>
+                    <tr><td><input type="radio" id="q2-option3" name="q2" value="酷哭星"><label for="q2-option3">佛要金裝，人要衣裝。所以要化好妝，外貌ｃｈｅｃｋ～再出門</label></td></tr>
+                    <tr><td><input type="radio" id="q2-option4" name="q2" value="乖寶寶"><label for="q2-option4">有帶手機、錢包就夠了</label></td></tr>
+                    <tr><td><input type="radio" id="q2-option5" name="q2" value="吃光光"><label for="q2-option5">想著到目的地後要吃甚麼，並且會在通勤鐘用手機繼續找當地好吃的美食</label></td></tr>
                 </table>
                 <div class="error" id="error2"></div>
                 <button type="button" onclick="nextQuestion(2)">下一題</button>
@@ -934,36 +532,11 @@
                 <h3>3. 到跟朋友的集合地點後發現有人遲到，這時你會？</h3>
                 <img src="./images/character1.png" class="character-img" alt="車掌角色">
                 <table>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q3-option1" name="q3" value="吵吵鬧">
-                            <label for="q3-option1">打電話瘋狂 call 他</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q3-option2" name="q3" value="好好心">
-                            <label for="q3-option2">傳訊息問他目前到哪了</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q3-option3" name="q3" value="乖寶寶">
-                            <label for="q3-option3">做自己的事繼續等，等到他來</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q3-option4" name="q3" value="酷哭星">
-                            <label for="q3-option4">先自拍一張ＯＯＴＤ記錄自己人模人樣，但不滿意然後再拍一張，然後再一張</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q3-option5" name="q3" value="吃光光">
-                            <label for="q3-option5">去附近買個手搖喝，這樣買回來他可能也到了</label>
-                        </td>
-                    </tr>
+                    <tr><td><input type="radio" id="q3-option1" name="q3" value="吵吵鬧"><label for="q3-option1">打電話瘋狂 call 他</label></td></tr>
+                    <tr><td><input type="radio" id="q3-option2" name="q3" value="好好心"><label for="q3-option2">傳訊息問他目前到哪了</label></td></tr>
+                    <tr><td><input type="radio" id="q3-option3" name="q3" value="乖寶寶"><label for="q3-option3">做自己的事繼續等，等到他來</label></td></tr>
+                    <tr><td><input type="radio" id="q3-option4" name="q3" value="酷哭星"><label for="q3-option4">先自拍一張ＯＯＴＤ記錄自己人模人樣，但不滿意然後再拍一張，然後再一張</label></td></tr>
+                    <tr><td><input type="radio" id="q3-option5" name="q3" value="吃光光"><label for="q3-option5">去附近買個手搖喝，這樣買回來他可能也到了</label></td></tr>
                 </table>
                 <div class="error" id="error3"></div>
                 <button type="button" onclick="nextQuestion(3)">下一題</button>
@@ -973,75 +546,25 @@
                 <h3>4. 大家決定開車前往目的地，在過去的過程中，你通常會？</h3>
                 <img src="./images/character1.png" class="character-img" alt="車掌角色">
                 <table>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q4-option1" name="q4" value="好好心">
-                            <label for="q4-option1">我認真開車，遵守交通規則，安全的運送大家到地點</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q4-option2" name="q4" value="酷哭星">
-                            <label for="q4-option2">負責拍限時動態記錄美麗的自己與大家的歡樂時光</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q4-option3" name="q4" value="吵吵鬧">
-                            <label for="q4-option3">光聊天不夠還要用手機把音樂放出來，大家一起嗨！</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q4-option4" name="q4" value="吃光光">
-                            <label for="q4-option4">邊吃在上車前準備好的食物，吃飽等等才有力氣玩</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q4-option5" name="q4" value="乖寶寶">
-                            <label for="q4-option5">安靜玩手機直到到目的地</label>
-                        </td>
-                    </tr>
+                    <tr><td><input type="radio" id="q4-option1" name="q4" value="好好心"><label for="q4-option1">我認真開車，遵守交通規則，安全的運送大家到地點</label></td></tr>
+                    <tr><td><input type="radio" id="q4-option2" name="q4" value="酷哭星"><label for="q4-option2">負責拍限時動態記錄美麗的自己與大家的歡樂時光</label></td></tr>
+                    <tr><td><input type="radio" id="q4-option3" name="q4" value="吵吵鬧"><label for="q4-option3">光聊天不夠還要用手機把音樂放出來，大家一起嗨！</label></td></tr>
+                    <tr><td><input type="radio" id="q4-option4" name="q4" value="吃光光"><label for="q4-option4">邊吃在上車前準備好的食物，吃飽等等才有力氣玩</label></td></tr>
+                    <tr><td><input type="radio" id="q4-option5" name="q4" value="乖寶寶"><label for="q4-option5">安靜玩手機直到到目的地</label></td></tr>
                 </table>
                 <div class="error" id="error4"></div>
                 <button type="button" onclick="nextQuestion(4)">下一題</button>
             </div>
             <div class="question" id="q5">
-                <div class="./images/question-bg" style="background-image: url('./images/bg1.jpg');"></div>
+                <div class="question-bg" style="background-image: url('./images/bg1.jpg');"></div>
                 <h3>5. 玩了一整天終於回到家了，最令你難忘的是？</h3>
-                <img src="character1.png" class="character-img" alt="車掌角色">
+                <img src="./images/character1.png" class="character-img" alt="車掌角色">
                 <table>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q5-option1" name="q5" value="好好心">
-                            <label for="q5-option1">跟大家在一起的時光，友誼長存ＢＦＦ！</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q5-option2" name="q5" value="吃光光">
-                            <label for="q5-option2">回味無窮的美食，想到又餓了，之後還要去吃更多好吃的</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q5-option3" name="q5" value="酷哭星">
-                            <label for="q5-option3">拍了超多好看的照片，等等修完圖就可以大家分享好看的我</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q5-option4" name="q5" value="吵吵鬧">
-                            <label for="q5-option4">這個要講可能會講很久ㄟ，但我只記得我超開心的啦！</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="q5-option5" name="q5" value="乖寶寶">
-                            <label for="q5-option5">好像都還好，其實我就是有人揪我我就去而已</label>
-                        </td>
-                    </tr>
+                    <tr><td><input type="radio" id="q5-option1" name="q5" value="好好心"><label for="q5-option1">跟大家在一起的時光，友誼長存ＢＦＦ！</label></td></tr>
+                    <tr><td><input type="radio" id="q5-option2" name="q5" value="吃光光"><label for="q5-option2">回味無窮的美食，想到又餓了，之後還要去吃更多好吃的</label></td></tr>
+                    <tr><td><input type="radio" id="q5-option3" name="q5" value="酷哭星"><label for="q5-option3">拍了超多好看的照片，等等修完圖就可以大家分享好看的我</label></td></tr>
+                    <tr><td><input type="radio" id="q5-option4" name="q5" value="吵吵鬧"><label for="q5-option4">這個要講可能會講很久ㄟ，但我只記得我超開心的啦！</label></td></tr>
+                    <tr><td><input type="radio" id="q5-option5" name="q5" value="乖寶寶"><label for="q5-option5">好像都還好，其實我就是有人揪我我就去而已</label></td></tr>
                 </table>
                 <div class="error" id="error5"></div>
                 <button type="button" onclick="nextQuestion(5)">下一題</button>
@@ -1052,6 +575,13 @@
         <div style="text-align: center;">
             <button id="retryButton" style="display:none;" onclick="retryQuiz()">再測一次</button>
         </div>
+    </div>
+
+    <div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
+    <div class="popup" id="popup">
+        <h3 id="popupTitle"></h3>
+        <p id="popupDescription"></p>
+        <button onclick="closePopup()">關閉</button>
     </div>
 
     <script>
@@ -1072,8 +602,6 @@
             document.getElementById('startPage').style.display = 'none';
             quizContainer.style.display = 'block';
             questions[0].classList.add('active');
-            
-            // 重置所有其他問題
             for (let i = 1; i < questions.length; i++) {
                 questions[i].classList.remove('active');
             }
@@ -1095,14 +623,10 @@
             const currentQuestion = questions[questionIndex - 1];
             const nextQuestionElement = questions[questionIndex];
 
-            // 隱藏當前問題
             currentQuestion.classList.remove('active');
             
             if (questionIndex < questions.length) {
-                // 顯示下一題
                 nextQuestionElement.classList.add('active');
-                
-                // 更新問題的圖片
                 const questionImages = {
                     1: { bg: './images/bg1.jpg', character: './images/character1.png' },
                     2: { bg: './images/bg2.jpg', character: './images/character2.png' },
@@ -1110,10 +634,8 @@
                     4: { bg: './images/bg4.jpg', character: './images/character4.png' },
                     5: { bg: './images/bg5.jpg', character: './images/character5.png' }
                 };
-                
                 const nextQuestionBg = nextQuestionElement.querySelector('.question-bg');
                 const nextQuestionChar = nextQuestionElement.querySelector('.character-img');
-                
                 if (nextQuestionBg && questionImages[questionIndex + 1]) {
                     nextQuestionBg.style.backgroundImage = `url('${questionImages[questionIndex + 1].bg}')`;
                 }
@@ -1128,7 +650,6 @@
         function showResults() {
             let maxScore = 0;
             let result = "";
-
             for (const character in scores) {
                 if (scores[character] > maxScore) {
                     maxScore = scores[character];
@@ -1141,43 +662,51 @@
                     "乖寶寶": {
                         image: "./images/character_乖寶寶.png",
                         description: "你是個貼心的旅伴，總是準時且遵守約定。雖然不太會主動提出建議，但會認真配合大家的行程。",
-                        innerThoughts: ["要準時到", "大家說什麼都好", "不要麻煩到人", "記得報平安"],
-                        outerTraits: ["守時", "配合", "有禮貌", "溫和"],
+                        innerThoughts: ["#要準時到", "#大家說什麼都好", "#不要麻煩到人", "#記得報平安"],
+                        outerTraits: ["#守時", "#配合", "#有禮貌", "#溫和"],
                         compatible: ["好好心", "酷哭星"],
                         incompatible: ["吵吵鬧"]
                     },
                     "吵吵鬧": {
                         image: "./images/character_吵吵鬧.png",
                         description: "你是團隊中的開心果，總是帶來歡樂的氣氛。喜歡嘗試新事物，常常會有意想不到的驚喜發現。",
-                        innerThoughts: ["好想玩", "看起來很好玩", "我要拍照", "我要打卡"],
-                        outerTraits: ["活潑", "熱情", "愛玩", "愛拍照"],
+                        innerThoughts: ["#好想玩", "#看起來很好玩", "#我要拍照", "#我要打卡"],
+                        outerTraits: ["#活潑", "#熱情", "#愛玩", "#愛拍照"],
                         compatible: ["吃光光", "酷哭星"],
                         incompatible: ["乖寶寶"]
                     },
                     "酷哭星": {
                         image: "./images/character_酷哭星.png",
                         description: "你是個注重外表的時尚旅人，走到哪都像走秀一樣。善於發現打卡美點，是朋友們的攝影師。",
-                        innerThoughts: ["這裡好好拍", "衣服要搭配", "找好角度", "修圖要美美的"],
-                        outerTraits: ["時尚", "有品味", "講究", "會拍照"],
+                        innerThoughts: ["#這裡好好拍", "#衣服要搭配", "#找好角度", "#修圖要美美的"],
+                        outerTraits: ["#時尚", "#有品味", "#講究", "#會拍照"],
                         compatible: ["乖寶寶", "吵吵鬧"],
                         incompatible: ["吃光光"]
                     },
                     "吃光光": {
                         image: "./images/character_吃光光.png",
                         description: "你是個美食專家，對於當地特色小吃瞭若指掌。總是能找到隱藏版美食，讓旅程更加美味。",
-                        innerThoughts: ["肚子餓了", "這家很有名", "要排隊嗎", "要訂位嗎"],
-                        outerTraits: ["饞嘴", "懂吃", "會找美食", "愛分享"],
+                        innerThoughts: ["#肚子餓了", "#這家很有名", "#要排隊嗎", "#要訂位嗎"],
+                        outerTraits: ["#饞嘴", "#懂吃", "#會找美食", "#愛分享"],
                         compatible: ["吵吵鬧", "好好心"],
                         incompatible: ["酷哭星"]
                     },
                     "好好心": {
                         image: "./images/character_kind.png",
                         description: "你是個細心的規劃者，總是為團隊著想。會事先做好完整準備，讓旅程順利進行。",
-                        innerThoughts: ["行程要安排好", "大家都帶夠錢了嗎", "要記得買伴手禮", "時間要掌控好"],
-                        outerTraits: ["細心", "負責", "有條理", "體貼"],
+                        innerThoughts: ["#行程要安排好", "#大家都帶夠錢了嗎", "#要記得買伴手禮", "#時間要掌控好"],
+                        outerTraits: ["#細心", "#負責", "#有條理", "#體貼"],
                         compatible: ["乖寶寶", "酷哭星"],
                         incompatible: ["吵吵鬧"]
                     }
+                };
+
+                const companionDescriptions = {
+                    "乖寶寶": "貼心配合的旅伴，喜歡安靜且有規律的旅行。",
+                    "吵吵鬧": "熱鬧的開心果，總能炒熱氣氛但可能有點吵。",
+                    "酷哭星": "時尚的拍照達人，注重外表與紀念。",
+                    "吃光光": "美食獵人，旅行中總在找好吃的。",
+                    "好好心": "細心的規劃者，確保旅程順利無憂。"
                 };
 
                 const resultData = resultDescriptions[result];
@@ -1188,58 +717,36 @@
                         <img src="${resultData.image}" class="character-img" alt="${result}角色">
                         <p class="character-description">${resultData.description}</p>
                     </div>
-                    
                     <section class="result-description">
                         <h3>內心表現：</h3>
                         <div class="inner-thoughts">
-                            ${resultData.innerThoughts.map(thought => 
-                                `<span class="thought-bubble">${thought}</span>`
-                            ).join('')}
+                            ${resultData.innerThoughts.map(thought => `<span class="thought-bubble">${thought}</span>`).join('')}
                         </div>
-
                         <h3>外在特徵：</h3>
                         <div class="outer-traits">
-                            ${resultData.outerTraits.map(trait => 
-                                `<span class="trait-bubble">${trait}</span>`
-                            ).join('')}
+                            ${resultData.outerTraits.map(trait => `<span class="trait-bubble">${trait}</span>`).join('')}
                         </div>
                     </section>
-
                     <section class="compatibility">
                         <h3>最佳旅伴：</h3>
                         <div class="compatible-types">
-                            ${resultData.compatible.map(type => 
-                                `<div class="type">
+                            ${resultData.compatible.map(type => `
+                                <div class="type" onclick="showPopup('${type}', '${companionDescriptions[type]}')">
                                     <img src="./images/character_${type}.png" alt="${type}">
                                     <span>${type}</span>
-                                </div>`
-                            ).join('')}
+                                </div>`).join('')}
                         </div>
-
                         <h3>較不合適的旅伴：</h3>
                         <div class="incompatible-types">
-                            ${resultData.incompatible.map(type => 
-                                `<div class="type">
+                            ${resultData.incompatible.map(type => `
+                                <div class="type" onclick="showPopup('${type}', '${companionDescriptions[type]}')">
                                     <img src="./images/character_${type}.png" alt="${type}">
                                     <span>${type}</span>
-                                </div>`
-                            ).join('')}
+                                </div>`).join('')}
                         </div>
                     </section>
-
                     <div class="call-to-action" style="text-align: center; width: 100%; margin: 20px 0;">
-                        <button onclick="downloadResult()" style="
-                            background: var(--primary-color);
-                            color: white;
-                            border: none;
-                            border-radius: 8px;
-                            font-size: 1.1em;
-                            padding: 12px 30px;
-                            cursor: pointer;
-                            display: inline-block;
-                            margin: 0 auto;
-                            max-width: 200px;
-                        ">下載測驗結果</button>
+                        <button onclick="downloadResult()">下載測驗結果</button>
                     </div>
                 `;
             } else {
@@ -1248,28 +755,19 @@
             retryButton.style.display = 'block';
         }
 
-        function preloadImages(callback) {
-            const images = document.querySelectorAll('.results img');
-            let loaded = 0;
-            if (images.length === 0) {
-                callback(); // 如果沒有圖片，直接執行截圖
-                return;
-            }
-            
-            images.forEach(img => {
-                img.onload = () => {
-                    loaded++;
-                    if (loaded === images.length) callback(); // 當所有圖片載入後執行
-                };
-                img.onerror = () => {
-                    loaded++;
-                    if (loaded === images.length) callback();
-                };
-            });
+        function showPopup(title, description) {
+            document.getElementById('popupTitle').textContent = title;
+            document.getElementById('popupDescription').textContent = description;
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('popupOverlay').style.display = 'block';
         }
-        
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('popupOverlay').style.display = 'none';
+        }
+
         function downloadResult() {
-            // 創建一個新的容器
             const container = document.createElement('div');
             container.style.cssText = `
                 position: fixed;
@@ -1277,20 +775,16 @@
                 top: -9999px;
                 width: 800px;
                 padding: 40px;
-                background: linear-gradient(135deg, #fff6f9 0%, #f0f7ff 100%);
+                background: linear-gradient(45deg, #f0e6ff, #ffe6f0);
                 border-radius: 25px;
                 border: 3px solid rgba(255, 126, 179, 0.4);
                 box-shadow: 0 15px 35px rgba(255, 126, 179, 0.25);
             `;
             
-            // 複製結果內容
             const tempDiv = resultsDiv.cloneNode(true);
-            
-            // 移除下載按鈕
             const button = tempDiv.querySelector('.call-to-action');
             if (button) button.remove();
 
-            // 移除所有動畫和過渡效果，確保無透明度和旋轉
             tempDiv.querySelectorAll('*').forEach(el => {
                 el.style.animation = 'none';
                 el.style.transition = 'none';
@@ -1299,7 +793,6 @@
                 el.style.visibility = 'visible';
             });
 
-            // 設置基本樣式
             tempDiv.style.cssText = `
                 display: block !important;
                 width: 100% !important;
@@ -1314,7 +807,6 @@
                 transform: none !important;
             `;
 
-            // 修正標題樣式
             const title = tempDiv.querySelector('.result-title');
             if (title) {
                 title.style.cssText = `
@@ -1328,7 +820,6 @@
                 `;
             }
 
-            // 修正角色描述樣式
             const description = tempDiv.querySelector('.character-description');
             if (description) {
                 description.style.cssText = `
@@ -1348,27 +839,21 @@
                 `;
             }
 
-            // 修正角色圖片樣式，保持原始比例並確保圓形外框
             tempDiv.querySelectorAll('.character-img').forEach(img => {
-                // 創建一個圓形容器
                 const imgContainer = document.createElement('div');
                 imgContainer.style.cssText = `
                     width: 180px !important;
                     height: 180px !important;
-                    border-radius: 50% !important;
-                    border: 4px solid #ff7eb3 !important;
-                    box-shadow: 0 8px 25px rgba(255, 126, 179, 0.4) !important;
+                    border: none !important; /* 移除下載結果中的邊框 */
                     margin: 20px auto !important;
                     overflow: hidden !important;
                     display: flex !important;
                     justify-content: center !important;
                     align-items: center !important;
-                    background: white !important;
+                    background: transparent !important;
                     opacity: 1 !important;
                     transform: none !important;
                 `;
-
-                // 設置圖片樣式，保持比例且填滿容器
                 img.style.cssText = `
                     max-width: 180px !important;
                     max-height: 180px !important;
@@ -1382,14 +867,11 @@
                     transform: none !important;
                     display: block !important;
                 `;
-
-                // 將圖片放入容器並替換原始位置
                 const parent = img.parentNode;
                 parent.replaceChild(imgContainer, img);
                 imgContainer.appendChild(img);
             });
 
-            // 修正內心表現和外在特徵區塊
             const sections = tempDiv.querySelectorAll('section');
             sections.forEach(section => {
                 section.style.cssText = `
@@ -1401,7 +883,6 @@
                     transform: none !important;
                     opacity: 1 !important;
                 `;
-
                 const heading = section.querySelector('h3');
                 if (heading) {
                     heading.style.cssText = `
@@ -1415,20 +896,6 @@
                 }
             });
 
-            // 修正標題樣式（包括所有 h3）
-            tempDiv.querySelectorAll('h3').forEach(heading => {
-                heading.style.cssText = `
-                    color: #333333 !important;
-                    font-size: 20px !important;
-                    margin: 10px 0 !important;
-                    text-align: center !important;
-                    font-weight: bold !important;
-                    opacity: 1 !important;
-                    transform: none !important;
-                `;
-            });
-
-            // 修正泡泡樣式
             tempDiv.querySelectorAll('.thought-bubble').forEach(bubble => {
                 bubble.style.cssText = `
                     display: inline-block !important;
@@ -1459,12 +926,10 @@
                 `;
             });
 
-            // 修正類型圖片樣式
             tempDiv.querySelectorAll('.type img').forEach(img => {
                 img.style.cssText = `
                     width: 40px !important;
                     height: 40px !important;
-                    border-radius: 50% !important;
                     border: 2px solid #ff7eb3 !important;
                     margin: 5px !important;
                     display: inline-block !important;
@@ -1477,7 +942,6 @@
                 img.crossOrigin = 'anonymous';
             });
 
-            // 修正類型容器樣式
             tempDiv.querySelectorAll('.compatible-types, .incompatible-types').forEach(container => {
                 container.style.cssText = `
                     display: flex !important;
@@ -1493,7 +957,6 @@
             container.appendChild(tempDiv);
             document.body.appendChild(container);
 
-            // 等待所有圖片載入後進行截圖
             const images = tempDiv.getElementsByTagName('img');
             Promise.all(Array.from(images).map(img => {
                 return new Promise((resolve) => {
@@ -1503,13 +966,13 @@
                         img.onload = () => resolve();
                         img.onerror = () => {
                             console.error(`圖片載入失敗: ${img.src}`);
-                            resolve(); // 即使失敗也繼續，避免卡住
+                            resolve();
                         };
                     }
                 });
             })).then(() => {
                 html2canvas(tempDiv, {
-                    backgroundColor: '#fff6f9',
+                    backgroundColor: null,
                     scale: 2,
                     useCORS: true,
                     allowTaint: true,
@@ -1518,7 +981,6 @@
                     height: tempDiv.offsetHeight
                 }).then(canvas => {
                     document.body.removeChild(container);
-                    
                     try {
                         const image = canvas.toDataURL('image/png', 1.0);
                         const link = document.createElement('a');
@@ -1536,132 +998,67 @@
                 });
             });
         }
-                
-                
+
         function retryQuiz() {
-            // 重置分數
-            scores = {
-                "乖寶寶": 0,
-                "吵吵鬧": 0,
-                "酷哭星": 0,
-                "吃光光": 0,
-                "好好心": 0
-            };
-            
-            // 隱藏結果和重試按鈕
+            scores = { "乖寶寶": 0, "吵吵鬧": 0, "酷哭星": 0, "吃光光": 0, "好好心": 0 };
             resultsDiv.style.display = 'none';
             retryButton.style.display = 'none';
-            
-            // 重置所有問題狀態
             questions.forEach((question, index) => {
-                // 移除 active 類別
                 question.classList.remove('active');
-                
-                // 重置選項
                 const radios = question.querySelectorAll('input[type="radio"]');
-                radios.forEach(radio => {
-                    radio.checked = false;
-                });
-                
-                // 重置錯誤訊息
+                radios.forEach(radio => radio.checked = false);
                 const errorDiv = question.querySelector('.error');
-                if (errorDiv) {
-                    errorDiv.textContent = '';
-                }
-                
-                // 重置圖片
+                if (errorDiv) errorDiv.textContent = '';
                 const questionBg = question.querySelector('.question-bg');
                 const questionChar = question.querySelector('.character-img');
-                if (questionBg) {
-                    questionBg.style.backgroundImage = `url('bg${index + 1}.jpg')`;
-                }
-                if (questionChar) {
-                    questionChar.src = `character${index + 1}.png`;
-                }
+                if (questionBg) questionBg.style.backgroundImage = `url('bg${index + 1}.jpg')`;
+                if (questionChar) questionChar.src = `character${index + 1}.png`;
             });
-            
-            // 顯示第一題
             questions[0].classList.add('active');
-            
-            // 重置當前問題索引
             currentQuestion = 0;
         }
 
         document.addEventListener('DOMContentLoaded', function() {
             const characters = document.querySelectorAll('.floating-character');
             const quizContainer = document.getElementById('quizContainer');
-            
             characters.forEach(character => {
                 character.addEventListener('click', function() {
-                    // 先添加搖晃動畫
                     this.style.animation = 'shake 0.5s ease';
-                    
-                    // 搖晃動畫結束後開始亂跑
                     setTimeout(() => {
-                        // 獲取測驗容器的位置
                         const quizRect = quizContainer.getBoundingClientRect();
-                        const charWidth = 150; // 角色寬度
-                        
-                        // 計算安全區域（避開測驗區域）
+                        const charWidth = 150;
                         let randomX, randomY;
                         const isLeftSide = Math.random() < 0.5;
-                        
                         if (isLeftSide) {
-                            // 在左側移動
                             randomX = Math.random() * (quizRect.left - charWidth);
                         } else {
-                            // 在右側移動
                             randomX = quizRect.right + Math.random() * (window.innerWidth - quizRect.right - charWidth);
                         }
-                        
-                        // 垂直位置在整個視窗範圍內
                         randomY = Math.random() * (window.innerHeight - charWidth);
-                        
-                        // 確保不會跑出視窗外
                         const x = Math.max(0, Math.min(randomX, window.innerWidth - charWidth));
                         const y = Math.max(0, Math.min(randomY, window.innerHeight - charWidth));
-                        
-                        // 設置新位置
                         this.style.animation = 'randomMove 1s ease-in-out';
                         this.style.left = x + 'px';
                         this.style.top = y + 'px';
-                        
-                        // 動畫結束後恢復原本的浮動動畫
                         setTimeout(() => {
                             this.style.animation = 'float 6s ease-in-out infinite';
                         }, 1000);
                     }, 500);
                 });
-                
-                // 防止角色跑出視窗外和進入測驗區域
                 character.addEventListener('transitionend', function() {
                     const rect = this.getBoundingClientRect();
                     const quizRect = quizContainer.getBoundingClientRect();
-                    
-                    // 檢查是否進入測驗區域
                     if (rect.right > quizRect.left && rect.left < quizRect.right) {
-                        // 如果在左側，則移到最左邊
                         if (rect.left < quizRect.left) {
                             this.style.left = '0px';
                         } else {
-                            // 否則移到最右邊
                             this.style.left = (window.innerWidth - rect.width) + 'px';
                         }
                     }
-                    
-                    // 防止超出視窗邊界
-                    if (rect.right > window.innerWidth) {
-                        this.style.left = (window.innerWidth - rect.width) + 'px';
-                    }
-                    if (rect.bottom > window.innerHeight) {
-                        this.style.top = (window.innerHeight - rect.height) + 'px';
-                    }
-                    if (rect.left < 0) {
-                        this.style.left = '0px';
-                    }
-                    if (rect.top < 0) {
-                        this.style.top = '0px';
-                    }
+                    if (rect.right > window.innerWidth) this.style.left = (window.innerWidth - rect.width) + 'px';
+                    if (rect.bottom > window.innerHeight) this.style.top = (window.innerHeight - rect.height) + 'px';
+                    if (rect.left < 0) this.style.left = '0px';
+                    if (rect.top < 0) this.style.top = '0px';
                 });
             });
         });

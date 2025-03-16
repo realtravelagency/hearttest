@@ -460,6 +460,7 @@
         const questions = document.querySelectorAll('.question');
         const resultsDiv = document.getElementById('results');
         const quizContainer = document.getElementById('quizContainer');
+        const startPage = document.getElementById('startPage');
         const retryButton = document.getElementById('retryButton');
         let scores = {
             "乖寶寶": 0,
@@ -471,7 +472,7 @@
         let currentResult = "";
 
         function startQuiz() {
-            document.getElementById('startPage').style.display = 'none';
+            startPage.style.display = 'none';
             quizContainer.style.display = 'block';
             questions[0].classList.add('active');
             for (let i = 1; i < questions.length; i++) {
@@ -599,11 +600,13 @@
             const characters = document.querySelectorAll('.floating-character');
             const quizContainer = document.getElementById('quizContainer');
             const startPage = document.getElementById('startPage');
+            const startButton = startPage.querySelector('button');
 
             function getSafePosition(charWidth, charHeight) {
-                const containerRect = quizContainer.style.display === 'block' 
-                    ? quizContainer.getBoundingClientRect() 
-                    : startPage.getBoundingClientRect();
+                const isQuizActive = quizContainer.style.display === 'block';
+                const referenceElement = isQuizActive ? quizContainer : startPage;
+                const containerRect = referenceElement.getBoundingClientRect();
+                const buttonRect = isQuizActive ? null : startButton.getBoundingClientRect();
                 const safeTop = 0;
                 const safeLeft = 0;
                 const safeRight = window.innerWidth - charWidth;
@@ -612,14 +615,35 @@
                 const avoidBottom = containerRect.bottom; // 避免下方
                 const avoidLeft = containerRect.left - charWidth; // 避免左側
                 const avoidRight = containerRect.right; // 避免右側
+                // 對於首頁，額外避免按鈕區域
+                const buttonAvoidTop = isQuizActive ? -Infinity : buttonRect.top - charHeight;
+                const buttonAvoidBottom = isQuizActive ? Infinity : buttonRect.bottom;
+                const buttonAvoidLeft = isQuizActive ? -Infinity : buttonRect.left - charWidth;
+                const buttonAvoidRight = isQuizActive ? Infinity : buttonRect.right;
 
                 let randomX, randomY;
+                let attempts = 0;
+                const maxAttempts = 50; // 增加嘗試次數
                 do {
                     randomX = Math.random() * (safeRight - safeLeft) + safeLeft;
                     randomY = Math.random() * (safeBottom - safeTop) + safeTop;
+                    attempts++;
+                    if (attempts > maxAttempts) {
+                        // 失敗時選擇隨機邊緣位置而非固定左上角
+                        const edge = Math.floor(Math.random() * 4); // 0: 左, 1: 上, 2: 右, 3: 下
+                        switch (edge) {
+                            case 0: randomX = safeLeft; randomY = Math.random() * safeBottom; break;
+                            case 1: randomX = Math.random() * safeRight; randomY = safeTop; break;
+                            case 2: randomX = safeRight; randomY = Math.random() * safeBottom; break;
+                            case 3: randomX = Math.random() * safeRight; randomY = safeBottom; break;
+                        }
+                        break;
+                    }
                 } while (
-                    randomY >= avoidTop && randomY <= avoidBottom && // 避免垂直重疊
-                    randomX >= avoidLeft && randomX <= avoidRight    // 避免水平重疊
+                    (randomY >= avoidTop && randomY <= avoidBottom &&
+                    randomX >= avoidLeft && randomX <= avoidRight) ||
+                    (randomY >= buttonAvoidTop && randomY <= buttonAvoidBottom &&
+                    randomX >= buttonAvoidLeft && randomX <= buttonAvoidRight)
                 );
 
                 return { x: randomX, y: randomY };

@@ -28,7 +28,7 @@
             overflow-x: hidden;
         }
 
-        /* 背景圖（草地、雲朵等） */
+        /* 背景圖（cover-bg2，半透明） */
         body::before {
             content: '';
             position: fixed;
@@ -36,9 +36,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://picsum.photos/800/1200') no-repeat center center;
+            background: url('./images/cover-bg2.png') no-repeat center center; /* 更換為 cover-bg2 */
             background-size: cover;
-            opacity: 0.2;
+            opacity: 0.5; /* 設為半透明 */
             z-index: 1;
         }
 
@@ -60,11 +60,11 @@
             text-align: center;
             margin-bottom: 30px;
             color: white;
-            font-family: "ZCOOL QingKe HuangYou", "Noto Sans TC", sans-serif; /* 使用新手寫字體 */
+            font-family: "ZCOOL QingKe HuangYou", "Noto Sans TC", sans-serif;
             font-size: 2.5em;
             text-shadow: var(--text-shadow);
             padding: 0 20px;
-            letter-spacing: 2px; /* 增加字間距，增強手寫感 */
+            letter-spacing: 2px;
         }
 
         .question {
@@ -85,7 +85,7 @@
 
         .question h3 {
             color: white;
-            font-family: "ZCOOL QingKe HuangYou", "Noto Sans TC", sans-serif; /* 使用新手寫字體 */
+            font-family: "ZCOOL QingKe HuangYou", "Noto Sans TC", sans-serif;
             font-size: 1.8em;
             text-shadow: var(--text-shadow);
             margin: 0 0 20px 0;
@@ -183,7 +183,7 @@
             align-items: center;
             min-height: 100vh;
             width: 100%;
-            background: url('./images/cover-bg.png') no-repeat center center;
+            background: url('./images/cover-bg2.png') no-repeat center center; /* 更換為 cover-bg2 */
             background-size: contain;
             background-position: top;
             text-align: center;
@@ -271,7 +271,7 @@
             margin: 20px auto;
             padding: 20px;
             border-radius: 20px;
-            background: rgba(255, 255, 'Arm Sans TC', sans-serif);
+            background: rgba(255, 255, 255, 0.3);
             box-shadow: none;
             border: none;
             text-align: center;

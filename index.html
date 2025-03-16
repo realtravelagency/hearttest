@@ -8,10 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #ff7eb3;
-            --secondary-color: #7ec4ff;
-            --accent-color: #ffd93d;
-            --bg-color: #A9D8C8; /* 柔和的綠色背景 */
+            --primary-color: #7ec4ff; /* 粉紅色 */
+            --secondary-color: #7ec4ff; /* 淺藍色 */
+            --accent-color: #ffd93d; /* 黃色 */
+            --bg-color: #A9D8C8; /* 柔和綠色 */
             --text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
@@ -47,7 +47,7 @@
             width: 100%;
             margin: 20px auto;
             padding: 20px;
-            background-color: transparent; /* 移除原有的白色背景 */
+            background-color: transparent;
             box-shadow: none;
             border: none;
             border-radius: 25px;
@@ -60,7 +60,7 @@
             text-align: center;
             margin-bottom: 30px;
             color: white;
-            font-family: "Ma Shan Zheng", cursive; /* 手寫字體 */
+            font-family: "Ma Shan Zheng", cursive;
             font-size: 2.5em;
             text-shadow: var(--text-shadow);
             padding: 0 20px;
@@ -68,16 +68,18 @@
 
         .question {
             display: none;
-            padding: 40px 20px; /* 增加內邊距，避免標籤蓋住內容 */
+            padding: 40px 15px; /* 縮減側邊內邊距，適配小螢幕 */
             margin: 0;
             border-radius: 20px;
-            background: rgba(255, 255, 255, 0.3); /* 半透明背景 */
+            background: rgba(255, 255, 255, 0.3);
             min-height: auto;
             text-align: center;
             box-sizing: border-box;
             width: 100%;
             position: relative;
             z-index: 3;
+            overflow-wrap: break-word; /* 確保長文字換行 */
+            max-width: 100%; /* 防止溢出 */
         }
 
         .question h3 {
@@ -86,6 +88,7 @@
             font-size: 1.8em;
             text-shadow: var(--text-shadow);
             margin: 0 0 20px 0;
+            overflow-wrap: break-word; /* 確保題目換行 */
         }
 
         /* 隨機分佈的標籤 */
@@ -101,14 +104,14 @@
         }
 
         .question::before {
-            top: -20px; /* 移到更上方，避免蓋住題目 */
-            left: 30px; /* 稍微調整左邊距離 */
+            top: -20px;
+            left: 30px;
             transform: rotate(-10deg);
         }
 
         .question::after {
-            bottom: -20px; /* 移到更下方，避免蓋住選項或按鈕 */
-            right: 30px; /* 稍微調整右邊距離 */
+            bottom: -20px;
+            right: 30px;
             transform: rotate(10deg);
         }
 
@@ -151,7 +154,7 @@
         }
 
         td {
-            background: rgba(255, 255, 255, 0.8); /* 選項背景 */
+            background: rgba(255, 255, 255, 0.8);
             border-radius: 8px;
             padding: 15px;
             margin: 5px 0;
@@ -164,10 +167,11 @@
         }
 
         input[type="radio"]:checked + label {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(45deg, var(--bg-color), var(--primary-color)); /* 簡化為兩色漸層 */
             color: white;
             border-radius: 12px;
             transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(255, 126, 179, 0.3);
         }
 
         .start-page {
@@ -260,11 +264,11 @@
         .results {
             display: none;
             width: 100%;
-            max-width: 450px; /* 控制最大寬度，適配手機端 */
+            max-width: 450px;
             margin: 20px auto;
             padding: 20px;
             border-radius: 20px;
-            background: rgba(255, 255, 255, 0.3); /* 與 question.active 相同背景 */
+            background: rgba(255, 255, 255, 0.3);
             box-shadow: none;
             border: none;
             text-align: center;
@@ -272,21 +276,22 @@
             box-sizing: border-box;
             overflow-x: hidden;
             z-index: 3;
+            overflow-wrap: break-word; /* 確保長文字換行 */
         }
 
         .results.active {
             display: block;
-            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* 添加動畫 */
+            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
         /* 結果圖片調整 */
         .result-img {
-            width: 100%; /* 圖片寬度填滿父容器 */
-            height: auto; /* 自動調整高度以保持比例 */
-            aspect-ratio: 9 / 16; /* 保持 9:16 比例 */
-            object-fit: contain; /* 確保圖片不被裁剪 */
+            width: 100%;
+            height: auto;
+            aspect-ratio: 9 / 16;
+            object-fit: contain;
             display: block;
-            margin: 0 auto; /* 居中顯示 */
+            margin: 0 auto;
         }
 
         /* 隨機分佈的標籤（應用於結果頁面） */
@@ -316,14 +321,21 @@
         /* 手機端適配 */
         @media (max-width: 768px) {
             .container { margin: 10px auto; padding: 10px; width: 95%; }
-            .container h1 { font-size: 1.8em; padding: 0 10px; }
-            .question h3 { font-size: 1.4em; padding: 0 10px; margin-bottom: 15px; }
-            td { padding: 0 5px; margin: 3px 0; }
-            label { padding: 12px 8px; font-size: 0.9em; width: 100%; }
+            .container h1 { font-size: 1.6em; padding: 0 10px; }
+            .question h3 { font-size: 1.3em; padding: 0 10px; margin-bottom: 15px; }
+            td { padding: 10px 5px; margin: 3px 0; }
+            label {
+                padding: 10px 8px; /* 略減內邊距 */
+                font-size: 0.85em; /* 縮減字體大小 */
+                width: 100%;
+                max-width: 90%; /* 限制最大寬度 */
+                margin: 0 auto; /* 居中 */
+                overflow-wrap: break-word; /* 確保換行 */
+            }
             button { max-width: 180px; padding: 8px 20px; font-size: 1em; margin: 3px auto; }
             table { width: 100%; padding: 0; margin: 5px 0; }
-            .question { padding: 30px 10px 20px 10px; margin: 0; min-height: auto; } /* 調整內邊距 */
-            .error { padding: 0 10px; font-size: 0.9em; margin: 0; }
+            .question { padding: 25px 10px 15px 10px; margin: 0; min-height: auto; }
+            .error { padding: 0 10px; font-size: 0.85em; margin: 0; }
             .character-img { max-width: 120px; max-height: 120px; margin: 5px auto; }
             .floating-character { width: 80px; height: 80px; }
             .char1 { top: 5%; left: 5%; }
@@ -342,24 +354,29 @@
                 padding: 10px 30px;
                 max-width: 180px;
             }
-            /* 調整標籤位置和大小 */
             .question::before {
-                top: -15px; /* 更靠上 */
+                top: -15px;
                 left: 15px;
-                font-size: 0.9em; /* 縮小字體 */
+                font-size: 0.9em;
             }
             .question::after {
-                bottom: -15px; /* 更靠下 */
+                bottom: -15px;
                 right: 15px;
-                font-size: 0.9em; /* 縮小字體 */
+                font-size: 0.9em;
             }
         }
 
         @media (max-width: 480px) {
             .container { margin: 5px auto; padding: 8px; width: 95%; }
-            .container h1 { font-size: 1.5em; }
-            .question h3 { font-size: 1.2em; margin-bottom: 10px; }
-            label { padding: 10px 6px; font-size: 0.85em; }
+            .container h1 { font-size: 1.4em; }
+            .question h3 { font-size: 1.1em; margin-bottom: 10px; }
+            label {
+                padding: 8px 6px; /* 進一步減內邊距 */
+                font-size: 0.8em; /* 進一步縮字體 */
+                max-width: 90%; /* 限制最大寬度 */
+                margin: 0 auto;
+                overflow-wrap: break-word;
+            }
             button { max-width: 150px; padding: 6px 16px; font-size: 0.9em; margin: 3px auto; }
             .character-img { max-width: 100px; max-height: 100px; margin: 5px auto; }
             .floating-character { width: 60px; height: 60px; }
@@ -379,16 +396,15 @@
                 padding: 8px 25px;
                 max-width: 160px;
             }
-            /* 調整標籤位置和大小 */
             .question::before {
-                top: -10px; /* 更靠上 */
+                top: -10px;
                 left: 10px;
-                font-size: 0.8em; /* 進一步縮小字體 */
+                font-size: 0.8em;
             }
             .question::after {
-                bottom: -10px; /* 更靠下 */
+                bottom: -10px;
                 right: 10px;
-                font-size: 0.8em; /* 進一步縮小字體 */
+                font-size: 0.8em;
             }
         }
 
@@ -416,19 +432,14 @@
             background: rgba(255, 255, 255, 0.8);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
             box-sizing: border-box;
+            overflow-wrap: break-word; /* 確保長文字換行 */
+            max-width: 100%; /* 防止溢出 */
         }
 
         label:hover {
             background: #f8f9fa;
             transform: translateY(-2px);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        input[type="radio"]:checked + label {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 126, 179, 0.3);
         }
 
         td {
@@ -555,7 +566,7 @@
         function startQuiz() {
             startPage.style.display = 'none';
             quizContainer.style.display = 'block';
-            resultsDiv.classList.remove('active'); // 確保結果頁面初始隱藏
+            resultsDiv.classList.remove('active');
             questions[0].classList.add('active');
             for (let i = 1; i < questions.length; i++) {
                 questions[i].classList.remove('active');
@@ -574,7 +585,7 @@
 
             const answer = selectedOption.value;
             scores[answer]++;
-            console.log(`Question ${questionIndex} answered: ${answer}, Scores:`, scores); // 調試用日誌
+            console.log(`Question ${questionIndex} answered: ${answer}, Scores:`, scores);
 
             const currentQuestion = questions[questionIndex - 1];
             const nextQuestionElement = questions[questionIndex];
@@ -582,7 +593,7 @@
             currentQuestion.classList.remove('active');
             
             if (questionIndex < questions.length) {
-                resultsDiv.classList.remove('active'); // 隱藏結果頁面
+                resultsDiv.classList.remove('active');
                 nextQuestionElement.classList.add('active');
                 const questionImages = {
                     1: { character: './images/character1.png' },
@@ -610,8 +621,8 @@
                 }
             }
 
-            console.log("Final Scores:", scores); // 調試用日誌
-            console.log("Result:", result); // 調試用日誌
+            console.log("Final Scores:", scores);
+            console.log("Result:", result);
 
             if (result) {
                 const resultImages = {
@@ -631,10 +642,10 @@
                         <button onclick="downloadResult()">下載測驗結果</button>
                     </div>
                 `;
-                resultsDiv.classList.add('active'); // 顯示結果頁面並觸發動畫
+                resultsDiv.classList.add('active');
             } else {
                 resultsDiv.innerHTML = '<p>無法計算結果，請重試。</p>';
-                resultsDiv.classList.add('active'); // 即使結果為空，也顯示錯誤訊息
+                resultsDiv.classList.add('active');
             }
             retryButton.style.display = 'block';
         }
@@ -663,10 +674,10 @@
         function retryQuiz() {
             scores = { "乖寶寶": 0, "吵吵鬧": 0, "酷哭星": 0, "吃光光": 0, "好好心": 0 };
             currentResult = "";
-            resultsDiv.classList.remove('active'); // 隱藏結果頁面
+            resultsDiv.classList.remove('active');
             retryButton.style.display = 'none';
-            quizContainer.style.display = 'none'; // 隱藏測驗容器
-            startPage.style.display = 'flex'; // 顯示起始頁面
+            quizContainer.style.display = 'none';
+            startPage.style.display = 'flex';
             questions.forEach((question, index) => {
                 question.classList.remove('active');
                 const radios = question.querySelectorAll('input[type="radio"]');

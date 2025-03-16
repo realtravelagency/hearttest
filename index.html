@@ -19,6 +19,9 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .container {
@@ -32,6 +35,8 @@
             border-radius: 25px;
             box-sizing: border-box;
             overflow: hidden;
+            position: relative;
+            z-index: 2;
         }
 
         .container h1 {
@@ -125,22 +130,29 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(rgba(255, 126, 179, 0.3), rgba(126, 196, 255, 0.3)), url('cover-bg.png');
-            background-size: cover;
-            background-position: center;
+            width: 100%;
+            background: url('./images/cover-bg.png') no-repeat center center;
+            background-size: contain; /* 確保圖片完整顯示 */
+            background-position: top; /* 從頂部開始顯示 */
             text-align: center;
             padding: 20px;
+            position: relative;
+            z-index: 1;
         }
 
         .start-page h1 {
             color: var(--primary-color);
             text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 2;
         }
 
         .start-page p {
             color: #666;
             font-size: 1.3em;
             text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+            position: relative;
+            z-index: 2;
         }
 
         @keyframes float {
@@ -245,6 +257,11 @@
             .char3 { bottom: 5%; left: -10px; }
             .results { padding: 15px; width: 90%; margin: 0 auto; display: block; }
             .result-img { max-width: 100%; }
+            .start-page {
+                background-size: contain;
+                background-position: center;
+                min-height: 100vh;
+            }
         }
 
         @media (max-width: 480px) {
@@ -259,6 +276,11 @@
             .char3 { bottom: 2%; left: -5px; }
             .results { padding: 10px; width: 95%; margin: 0 auto; display: block; }
             .result-img { max-width: 100%; }
+            .start-page {
+                background-size: contain;
+                background-position: center;
+                min-height: 100vh;
+            }
         }
 
         table {
@@ -419,7 +441,7 @@
             "吃光光": 0,
             "好好心": 0
         };
-        let currentResult = ""; // 用來儲存當前測驗結果的角色
+        let currentResult = "";
 
         function startQuiz() {
             document.getElementById('startPage').style.display = 'none';
@@ -489,7 +511,7 @@
                     "好好心": "./images/result_好好心.png"
                 };
 
-                currentResult = result; // 儲存當前結果角色
+                currentResult = result;
                 resultsDiv.style.display = 'block';
                 resultsDiv.innerHTML = `
                     <div class="result-header">
@@ -528,7 +550,7 @@
 
         function retryQuiz() {
             scores = { "乖寶寶": 0, "吵吵鬧": 0, "酷哭星": 0, "吃光光": 0, "好好心": 0 };
-            currentResult = ""; // 重置當前結果
+            currentResult = "";
             resultsDiv.style.display = 'none';
             retryButton.style.display = 'none';
             questions.forEach((question, index) => {

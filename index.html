@@ -84,9 +84,19 @@
             width: auto;
             height: auto;
             object-fit: contain;
-            border: none; /* 移除邊框 */
+            border: none;
             margin: 20px auto;
             animation: popAndRotate 1.2s ease-out;
+        }
+
+        .result-img {
+            max-width: 100%;
+            height: auto;
+            border: none;
+            margin: 20px auto;
+            display: block;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(255, 126, 179, 0.2);
         }
 
         td {
@@ -196,179 +206,11 @@
             overflow-x: hidden;
         }
 
-        .result-header {
-            margin-bottom: 30px;
-            animation: slideDown 0.8s ease-out;
-        }
-
-        .result-title {
-            color: var(--primary-color);
-            font-size: 2em;
-            margin: 15px 0;
-            text-shadow: 2px 2px 4px rgba(255, 126, 179, 0.3);
-            animation: popAndRotate 1s ease-out;
-        }
-
-        .results .character-img {
-            width: 180px;
-            height: 180px;
-            border: none; /* 移除結果中的邊框 */
-            margin: 20px auto;
-            animation: popAndRotate 1.2s ease-out;
-            object-fit: cover;
-        }
-
-        .inner-thoughts, .outer-traits {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin: 15px 0;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .thought-bubble, .trait-bubble {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            animation: popIn 0.5s ease-out forwards;
-            opacity: 0;
-        }
-
-        .trait-bubble {
-            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
-        }
-
-        .compatibility {
-            margin: 30px 0;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 15px;
-            animation: fadeInUp 1.2s ease-out;
-        }
-
-        .compatible-types, .incompatible-types {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 15px 0;
-        }
-
-        .type {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 15px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .type:hover {
-            transform: scale(1.05);
-        }
-
-        .type img {
-            width: 40px;
-            height: 40px;
-            object-fit: cover;
-            border: 2px solid var(--primary-color);
-        }
-
-        .compatible-types .type img {
-            border-color: var(--primary-color);
-        }
-
-        .incompatible-types .type img {
-            border-color: var(--secondary-color);
-        }
-
-        .type span {
-            font-size: 0.9em;
-            color: #666;
-        }
-
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            max-width: 300px;
-            text-align: center;
-        }
-
-        .popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
-        @media (max-width: 768px) {
-            .type img { width: 30px; height: 30px; }
-            .type span { font-size: 0.8em; }
-        }
-
-        .call-to-action {
-            margin-top: 30px;
-            animation: fadeInUp 1.4s ease-out;
-        }
-
-        .thought-bubble:nth-child(1) { animation-delay: 0.2s; }
-        .thought-bubble:nth-child(2) { animation-delay: 0.4s; }
-        .thought-bubble:nth-child(3) { animation-delay: 0.6s; }
-        .thought-bubble:nth-child(4) { animation-delay: 0.8s; }
-        .trait-bubble:nth-child(1) { animation-delay: 0.3s; }
-        .trait-bubble:nth-child(2) { animation-delay: 0.5s; }
-        .trait-bubble:nth-child(3) { animation-delay: 0.7s; }
-        .trait-bubble:nth-child(4) { animation-delay: 0.9s; }
-
-        .results::before,
-        .results::after {
-            content: '✨';
-            position: absolute;
-            font-size: 2em;
-            color: var(--accent-color);
-            animation: twinkle 2s infinite;
-        }
-
-        .results::before { top: 10px; left: 10px; }
-        .results::after { bottom: 10px; right: 10px; }
-
-        @keyframes slideDown {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
         @keyframes popAndRotate {
             0% { transform: scale(0) rotate(-180deg); opacity: 0; }
             60% { transform: scale(1.1) rotate(10deg); }
             80% { transform: scale(0.95) rotate(-5deg); }
             100% { transform: scale(1) rotate(0); opacity: 1; }
-        }
-
-        @keyframes fadeInUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
         }
 
         @keyframes randomMove {
@@ -402,9 +244,7 @@
             .char2 { top: 20%; right: -10px; }
             .char3 { bottom: 5%; left: -10px; }
             .results { padding: 15px; width: 90%; margin: 0 auto; display: block; }
-            .results h2 { font-size: 1.5em; }
-            .results .character-img { max-width: 150px; max-height: 150px; }
-            .results p { font-size: 0.9em; }
+            .result-img { max-width: 100%; }
         }
 
         @media (max-width: 480px) {
@@ -418,9 +258,7 @@
             .char2 { top: 15%; right: -5px; }
             .char3 { bottom: 2%; left: -5px; }
             .results { padding: 10px; width: 95%; margin: 0 auto; display: block; }
-            .results h2 { font-size: 1.3em; }
-            .results .character-img { max-width: 120px; max-height: 120px; }
-            .results p { font-size: 0.85em; }
+            .result-img { max-width: 100%; }
         }
 
         table {
@@ -472,15 +310,6 @@
             transform: none;
         }
     </style>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const allImages = document.getElementsByTagName('img');
-            for(let img of allImages) {
-                img.crossOrigin = "anonymous";
-            }
-        });
-    </script>
 </head>
 <body>
     <div class="floating-characters">
@@ -577,13 +406,6 @@
         </div>
     </div>
 
-    <div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
-    <div class="popup" id="popup">
-        <h3 id="popupTitle"></h3>
-        <p id="popupDescription"></p>
-        <button onclick="closePopup()">關閉</button>
-    </div>
-
     <script>
         let currentQuestion = 0;
         const questions = document.querySelectorAll('.question');
@@ -597,6 +419,7 @@
             "吃光光": 0,
             "好好心": 0
         };
+        let currentResult = ""; // 用來儲存當前測驗結果的角色
 
         function startQuiz() {
             document.getElementById('startPage').style.display = 'none';
@@ -658,93 +481,20 @@
             }
 
             if (result) {
-                const resultDescriptions = {
-                    "乖寶寶": {
-                        image: "./images/character_乖寶寶.png",
-                        description: "你是個貼心的旅伴，總是準時且遵守約定。雖然不太會主動提出建議，但會認真配合大家的行程。",
-                        innerThoughts: ["#要準時到", "#大家說什麼都好", "#不要麻煩到人", "#記得報平安"],
-                        outerTraits: ["#守時", "#配合", "#有禮貌", "#溫和"],
-                        compatible: ["好好心", "酷哭星"],
-                        incompatible: ["吵吵鬧"]
-                    },
-                    "吵吵鬧": {
-                        image: "./images/character_吵吵鬧.png",
-                        description: "你是團隊中的開心果，總是帶來歡樂的氣氛。喜歡嘗試新事物，常常會有意想不到的驚喜發現。",
-                        innerThoughts: ["#好想玩", "#看起來很好玩", "#我要拍照", "#我要打卡"],
-                        outerTraits: ["#活潑", "#熱情", "#愛玩", "#愛拍照"],
-                        compatible: ["吃光光", "酷哭星"],
-                        incompatible: ["乖寶寶"]
-                    },
-                    "酷哭星": {
-                        image: "./images/character_酷哭星.png",
-                        description: "你是個注重外表的時尚旅人，走到哪都像走秀一樣。善於發現打卡美點，是朋友們的攝影師。",
-                        innerThoughts: ["#這裡好好拍", "#衣服要搭配", "#找好角度", "#修圖要美美的"],
-                        outerTraits: ["#時尚", "#有品味", "#講究", "#會拍照"],
-                        compatible: ["乖寶寶", "吵吵鬧"],
-                        incompatible: ["吃光光"]
-                    },
-                    "吃光光": {
-                        image: "./images/character_吃光光.png",
-                        description: "你是個美食專家，對於當地特色小吃瞭若指掌。總是能找到隱藏版美食，讓旅程更加美味。",
-                        innerThoughts: ["#肚子餓了", "#這家很有名", "#要排隊嗎", "#要訂位嗎"],
-                        outerTraits: ["#饞嘴", "#懂吃", "#會找美食", "#愛分享"],
-                        compatible: ["吵吵鬧", "好好心"],
-                        incompatible: ["酷哭星"]
-                    },
-                    "好好心": {
-                        image: "./images/character_kind.png",
-                        description: "你是個細心的規劃者，總是為團隊著想。會事先做好完整準備，讓旅程順利進行。",
-                        innerThoughts: ["#行程要安排好", "#大家都帶夠錢了嗎", "#要記得買伴手禮", "#時間要掌控好"],
-                        outerTraits: ["#細心", "#負責", "#有條理", "#體貼"],
-                        compatible: ["乖寶寶", "酷哭星"],
-                        incompatible: ["吵吵鬧"]
-                    }
+                const resultImages = {
+                    "乖寶寶": "./images/result_乖寶寶.png",
+                    "吵吵鬧": "./images/result_吵吵鬧.png",
+                    "酷哭星": "./images/result_酷哭星.png",
+                    "吃光光": "./images/result_吃光光.png",
+                    "好好心": "./images/result_好好心.png"
                 };
 
-                const companionDescriptions = {
-                    "乖寶寶": "貼心配合的旅伴，喜歡安靜且有規律的旅行。",
-                    "吵吵鬧": "熱鬧的開心果，總能炒熱氣氛但可能有點吵。",
-                    "酷哭星": "時尚的拍照達人，注重外表與紀念。",
-                    "吃光光": "美食獵人，旅行中總在找好吃的。",
-                    "好好心": "細心的規劃者，確保旅程順利無憂。"
-                };
-
-                const resultData = resultDescriptions[result];
+                currentResult = result; // 儲存當前結果角色
                 resultsDiv.style.display = 'block';
                 resultsDiv.innerHTML = `
                     <div class="result-header">
-                        <h2 class="result-title">✨ 你的旅遊角色是：${result} ✨</h2>
-                        <img src="${resultData.image}" class="character-img" alt="${result}角色">
-                        <p class="character-description">${resultData.description}</p>
+                        <img src="${resultImages[result]}" class="result-img" alt="${result} 結果圖片">
                     </div>
-                    <section class="result-description">
-                        <h3>內心表現：</h3>
-                        <div class="inner-thoughts">
-                            ${resultData.innerThoughts.map(thought => `<span class="thought-bubble">${thought}</span>`).join('')}
-                        </div>
-                        <h3>外在特徵：</h3>
-                        <div class="outer-traits">
-                            ${resultData.outerTraits.map(trait => `<span class="trait-bubble">${trait}</span>`).join('')}
-                        </div>
-                    </section>
-                    <section class="compatibility">
-                        <h3>最佳旅伴：</h3>
-                        <div class="compatible-types">
-                            ${resultData.compatible.map(type => `
-                                <div class="type" onclick="showPopup('${type}', '${companionDescriptions[type]}')">
-                                    <img src="./images/character_${type}.png" alt="${type}">
-                                    <span>${type}</span>
-                                </div>`).join('')}
-                        </div>
-                        <h3>較不合適的旅伴：</h3>
-                        <div class="incompatible-types">
-                            ${resultData.incompatible.map(type => `
-                                <div class="type" onclick="showPopup('${type}', '${companionDescriptions[type]}')">
-                                    <img src="./images/character_${type}.png" alt="${type}">
-                                    <span>${type}</span>
-                                </div>`).join('')}
-                        </div>
-                    </section>
                     <div class="call-to-action" style="text-align: center; width: 100%; margin: 20px 0;">
                         <button onclick="downloadResult()">下載測驗結果</button>
                     </div>
@@ -755,252 +505,30 @@
             retryButton.style.display = 'block';
         }
 
-        function showPopup(title, description) {
-            document.getElementById('popupTitle').textContent = title;
-            document.getElementById('popupDescription').textContent = description;
-            document.getElementById('popup').style.display = 'block';
-            document.getElementById('popupOverlay').style.display = 'block';
-        }
-
-        function closePopup() {
-            document.getElementById('popup').style.display = 'none';
-            document.getElementById('popupOverlay').style.display = 'none';
-        }
-
         function downloadResult() {
-            const container = document.createElement('div');
-            container.style.cssText = `
-                position: fixed;
-                left: -9999px;
-                top: -9999px;
-                width: 800px;
-                padding: 40px;
-                background: linear-gradient(45deg, #f0e6ff, #ffe6f0);
-                border-radius: 25px;
-                border: 3px solid rgba(255, 126, 179, 0.4);
-                box-shadow: 0 15px 35px rgba(255, 126, 179, 0.25);
-            `;
-            
-            const tempDiv = resultsDiv.cloneNode(true);
-            const button = tempDiv.querySelector('.call-to-action');
-            if (button) button.remove();
+            const resultImages = {
+                "乖寶寶": "./images/result_乖寶寶.png",
+                "吵吵鬧": "./images/result_吵吵鬧.png",
+                "酷哭星": "./images/result_酷哭星.png",
+                "吃光光": "./images/result_吃光光.png",
+                "好好心": "./images/result_好好心.png"
+            };
 
-            tempDiv.querySelectorAll('*').forEach(el => {
-                el.style.animation = 'none';
-                el.style.transition = 'none';
-                el.style.transform = 'none';
-                el.style.opacity = '1';
-                el.style.visibility = 'visible';
-            });
-
-            tempDiv.style.cssText = `
-                display: block !important;
-                width: 100% !important;
-                max-width: 720px !important;
-                margin: 0 auto !important;
-                padding: 20px !important;
-                text-align: center !important;
-                background: transparent !important;
-                position: relative !important;
-                opacity: 1 !important;
-                visibility: visible !important;
-                transform: none !important;
-            `;
-
-            const title = tempDiv.querySelector('.result-title');
-            if (title) {
-                title.style.cssText = `
-                    color: #ff7eb3 !important;
-                    font-size: 28px !important;
-                    margin: 20px 0 !important;
-                    text-align: center !important;
-                    font-weight: bold !important;
-                    transform: none !important;
-                    opacity: 1 !important;
-                `;
+            if (currentResult && resultImages[currentResult]) {
+                const link = document.createElement('a');
+                link.href = resultImages[currentResult];
+                link.download = `旅遊角色測驗結果_${currentResult}.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                alert('無法下載結果，請先完成測驗！');
             }
-
-            const description = tempDiv.querySelector('.character-description');
-            if (description) {
-                description.style.cssText = `
-                    color: #666666 !important;
-                    font-size: 1.1em !important;
-                    margin: 20px auto !important;
-                    max-width: 600px !important;
-                    line-height: 1.6 !important;
-                    padding: 15px !important;
-                    background: rgba(255, 255, 255, 0.8) !important;
-                    border-radius: 15px !important;
-                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
-                    text-align: center !important;
-                    display: block !important;
-                    opacity: 1 !important;
-                    transform: none !important;
-                `;
-            }
-
-            tempDiv.querySelectorAll('.character-img').forEach(img => {
-                const imgContainer = document.createElement('div');
-                imgContainer.style.cssText = `
-                    width: 180px !important;
-                    height: 180px !important;
-                    border: none !important; /* 移除下載結果中的邊框 */
-                    margin: 20px auto !important;
-                    overflow: hidden !important;
-                    display: flex !important;
-                    justify-content: center !important;
-                    align-items: center !important;
-                    background: transparent !important;
-                    opacity: 1 !important;
-                    transform: none !important;
-                `;
-                img.style.cssText = `
-                    max-width: 180px !important;
-                    max-height: 180px !important;
-                    width: auto !important;
-                    height: auto !important;
-                    object-fit: contain !important;
-                    border: none !important;
-                    box-shadow: none !important;
-                    margin: 0 !important;
-                    opacity: 1 !important;
-                    transform: none !important;
-                    display: block !important;
-                `;
-                const parent = img.parentNode;
-                parent.replaceChild(imgContainer, img);
-                imgContainer.appendChild(img);
-            });
-
-            const sections = tempDiv.querySelectorAll('section');
-            sections.forEach(section => {
-                section.style.cssText = `
-                    margin: 30px 0 !important;
-                    padding: 20px !important;
-                    background: rgba(255, 255, 255, 0.8) !important;
-                    border-radius: 15px !important;
-                    text-align: center !important;
-                    transform: none !important;
-                    opacity: 1 !important;
-                `;
-                const heading = section.querySelector('h3');
-                if (heading) {
-                    heading.style.cssText = `
-                        color: #ff7eb3 !important;
-                        font-size: 20px !important;
-                        margin: 10px 0 !important;
-                        text-align: center !important;
-                        opacity: 1 !important;
-                        transform: none !important;
-                    `;
-                }
-            });
-
-            tempDiv.querySelectorAll('.thought-bubble').forEach(bubble => {
-                bubble.style.cssText = `
-                    display: inline-block !important;
-                    margin: 5px !important;
-                    padding: 8px 15px !important;
-                    background: linear-gradient(45deg, #ff7eb3, #7ec4ff) !important;
-                    color: white !important;
-                    border-radius: 20px !important;
-                    font-size: 16px !important;
-                    opacity: 1 !important;
-                    transform: none !important;
-                    box-shadow: 0 2px 8px rgba(255, 126, 179, 0.3) !important;
-                `;
-            });
-
-            tempDiv.querySelectorAll('.trait-bubble').forEach(bubble => {
-                bubble.style.cssText = `
-                    display: inline-block !important;
-                    margin: 5px !important;
-                    padding: 8px 15px !important;
-                    background: linear-gradient(45deg, #7ec4ff, #ffd93d) !important;
-                    color: white !important;
-                    border-radius: 20px !important;
-                    font-size: 16px !important;
-                    opacity: 1 !important;
-                    transform: none !important;
-                    box-shadow: 0 2px 8px rgba(126, 196, 255, 0.3) !important;
-                `;
-            });
-
-            tempDiv.querySelectorAll('.type img').forEach(img => {
-                img.style.cssText = `
-                    width: 40px !important;
-                    height: 40px !important;
-                    border: 2px solid #ff7eb3 !important;
-                    margin: 5px !important;
-                    display: inline-block !important;
-                    vertical-align: middle !important;
-                    object-fit: cover !important;
-                    background: white !important;
-                    opacity: 1 !important;
-                    transform: none !important;
-                `;
-                img.crossOrigin = 'anonymous';
-            });
-
-            tempDiv.querySelectorAll('.compatible-types, .incompatible-types').forEach(container => {
-                container.style.cssText = `
-                    display: flex !important;
-                    justify-content: center !important;
-                    flex-wrap: wrap !important;
-                    gap: 10px !important;
-                    margin: 15px 0 !important;
-                    opacity: 1 !important;
-                    transform: none !important;
-                `;
-            });
-
-            container.appendChild(tempDiv);
-            document.body.appendChild(container);
-
-            const images = tempDiv.getElementsByTagName('img');
-            Promise.all(Array.from(images).map(img => {
-                return new Promise((resolve) => {
-                    if (img.complete && img.naturalWidth !== 0) {
-                        resolve();
-                    } else {
-                        img.onload = () => resolve();
-                        img.onerror = () => {
-                            console.error(`圖片載入失敗: ${img.src}`);
-                            resolve();
-                        };
-                    }
-                });
-            })).then(() => {
-                html2canvas(tempDiv, {
-                    backgroundColor: null,
-                    scale: 2,
-                    useCORS: true,
-                    allowTaint: true,
-                    logging: true,
-                    width: tempDiv.offsetWidth,
-                    height: tempDiv.offsetHeight
-                }).then(canvas => {
-                    document.body.removeChild(container);
-                    try {
-                        const image = canvas.toDataURL('image/png', 1.0);
-                        const link = document.createElement('a');
-                        link.download = `旅遊角色測驗結果_${new Date().getTime()}.png`;
-                        link.href = image;
-                        link.click();
-                    } catch (error) {
-                        console.error('下載圖片時發生錯誤：', error);
-                        alert('無法下載圖片，請確保圖片資源可以正確載入。');
-                    }
-                }).catch(error => {
-                    document.body.removeChild(container);
-                    console.error('生成圖片時發生錯誤：', error);
-                    alert('生成圖片時發生錯誤，請稍後再試。');
-                });
-            });
         }
 
         function retryQuiz() {
             scores = { "乖寶寶": 0, "吵吵鬧": 0, "酷哭星": 0, "吃光光": 0, "好好心": 0 };
+            currentResult = ""; // 重置當前結果
             resultsDiv.style.display = 'none';
             retryButton.style.display = 'none';
             questions.forEach((question, index) => {

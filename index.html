@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>心理測驗：你的旅遊角色是什麼？</title>
-    <!-- 引入 Google Fonts 的手寫字體 -->
+    <!-- 引入 Google Fonts 的手寫字體和主要字體 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #7ec4ff; /* 粉紅色 */
+            --primary-color: #7ec4ff; /* 淺藍色 */
             --secondary-color: #7ec4ff; /* 淺藍色 */
             --accent-color: #ffd93d; /* 黃色 */
             --bg-color: #A9D8C8; /* 柔和綠色 */
@@ -17,7 +17,7 @@
 
         body {
             background: var(--bg-color);
-            font-family: "Noto Sans TC", sans-serif;
+            font-family: "Noto Sans TC", sans-serif; /* 後備字體 */
             margin: 0;
             padding: 0;
             min-height: 100vh;
@@ -38,7 +38,7 @@
             height: 100%;
             background: url('https://picsum.photos/800/1200') no-repeat center center; /* 穩定的背景圖 */
             background-size: cover;
-            opacity: 0.2; /* 背景圖透明度 */
+            opacity: 0.2;
             z-index: 1;
         }
 
@@ -68,7 +68,7 @@
 
         .question {
             display: none;
-            padding: 40px 15px; /* 縮減側邊內邊距，適配小螢幕 */
+            padding: 40px 10px; /* 進一步縮減側邊內邊距 */
             margin: 0;
             border-radius: 20px;
             background: rgba(255, 255, 255, 0.3);
@@ -78,8 +78,8 @@
             width: 100%;
             position: relative;
             z-index: 3;
-            overflow-wrap: break-word; /* 確保長文字換行 */
-            max-width: 100%; /* 防止溢出 */
+            overflow-wrap: break-word;
+            max-width: 100%;
         }
 
         .question h3 {
@@ -88,7 +88,7 @@
             font-size: 1.8em;
             text-shadow: var(--text-shadow);
             margin: 0 0 20px 0;
-            overflow-wrap: break-word; /* 確保題目換行 */
+            overflow-wrap: break-word;
         }
 
         /* 隨機分佈的標籤 */
@@ -167,11 +167,11 @@
         }
 
         input[type="radio"]:checked + label {
-            background: linear-gradient(45deg, var(--bg-color), var(--primary-color)); /* 簡化為兩色漸層 */
+            background: linear-gradient(45deg, var(--bg-color), var(--primary-color)); /* 柔和綠色到淺藍色 */
             color: white;
             border-radius: 12px;
             transform: scale(1.02);
-            box-shadow: 0 4px 15px rgba(255, 126, 179, 0.3);
+            box-shadow: 0 4px 15px rgba(126, 196, 255, 0.3); /* 藍色系陰影 */
         }
 
         .start-page {
@@ -197,6 +197,7 @@
             border: none;
             border-radius: 50px;
             font-size: 1.2em;
+            font-family: "Noto Sans TC", sans-serif;
             font-weight: bold;
             padding: 12px 40px;
             cursor: pointer;
@@ -276,7 +277,7 @@
             box-sizing: border-box;
             overflow-x: hidden;
             z-index: 3;
-            overflow-wrap: break-word; /* 確保長文字換行 */
+            overflow-wrap: break-word;
         }
 
         .results.active {
@@ -325,16 +326,17 @@
             .question h3 { font-size: 1.3em; padding: 0 10px; margin-bottom: 15px; }
             td { padding: 10px 5px; margin: 3px 0; }
             label {
-                padding: 10px 8px; /* 略減內邊距 */
-                font-size: 0.85em; /* 縮減字體大小 */
+                padding: 10px 6px; /* 進一步縮減內邊距 */
+                font-size: 0.85em;
                 width: 100%;
-                max-width: 90%; /* 限制最大寬度 */
-                margin: 0 auto; /* 居中 */
-                overflow-wrap: break-word; /* 確保換行 */
+                max-width: 90%;
+                margin: 0 auto;
+                overflow-wrap: break-word;
+                word-break: break-all; /* 強制換行 */
             }
             button { max-width: 180px; padding: 8px 20px; font-size: 1em; margin: 3px auto; }
             table { width: 100%; padding: 0; margin: 5px 0; }
-            .question { padding: 25px 10px 15px 10px; margin: 0; min-height: auto; }
+            .question { padding: 20px 8px 12px 8px; margin: 0; min-height: auto; }
             .error { padding: 0 10px; font-size: 0.85em; margin: 0; }
             .character-img { max-width: 120px; max-height: 120px; margin: 5px auto; }
             .floating-character { width: 80px; height: 80px; }
@@ -367,15 +369,16 @@
         }
 
         @media (max-width: 480px) {
-            .container { margin: 5px auto; padding: 8px; width: 95%; }
+            .container { margin: 5px auto; padding: 6px; width: 95%; }
             .container h1 { font-size: 1.4em; }
             .question h3 { font-size: 1.1em; margin-bottom: 10px; }
             label {
-                padding: 8px 6px; /* 進一步減內邊距 */
-                font-size: 0.8em; /* 進一步縮字體 */
-                max-width: 90%; /* 限制最大寬度 */
+                padding: 8px 4px; /* 進一步縮減內邊距 */
+                font-size: 0.75em; /* 進一步縮減字體 */
+                max-width: 90%;
                 margin: 0 auto;
                 overflow-wrap: break-word;
+                word-break: break-all;
             }
             button { max-width: 150px; padding: 6px 16px; font-size: 0.9em; margin: 3px auto; }
             .character-img { max-width: 100px; max-height: 100px; margin: 5px auto; }
@@ -432,8 +435,9 @@
             background: rgba(255, 255, 255, 0.8);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
             box-sizing: border-box;
-            overflow-wrap: break-word; /* 確保長文字換行 */
-            max-width: 100%; /* 防止溢出 */
+            overflow-wrap: break-word;
+            max-width: 100%;
+            font-family: "Noto Sans TC", sans-serif; /* 統一使用 Noto Sans TC */
         }
 
         label:hover {
@@ -453,7 +457,7 @@
         }
 
         .error {
-            color: red;
+            color: #333; /* 避免紅色系，使用深灰色 */
             font-size: 0.9em;
             margin: 0;
         }
@@ -495,7 +499,7 @@
                     <tr><td><input type="radio" id="q2-option2" name="q2" value="好好心"><label for="q2-option2">檢查物品是否帶齊，順便看天氣預報決定帶傘或防曬</label></td></tr>
                     <tr><td><input type="radio" id="q2-option3" name="q2" value="酷哭星"><label for="q2-option3">化好妝，檢查外貌後再出門</label></td></tr>
                     <tr><td><input type="radio" id="q2-option4" name="q2" value="乖寶寶"><label for="q2-option4">有帶手機、錢包就夠了</label></td></tr>
-                    <tr><td><input type="radio" id="q2-option5" name="q2" value="吃光光"><label for="q2-option5">想著目的地美食，通勤時用手機找當地好吃的</label></td></tr>
+                    <tr><td><input type="radio" id="q2-option5" name="q2" value="吃光光"><label for="q2-option2">想著目的地美食，通勤時用手機找當地好吃的</label></td></tr>
                 </table>
                 <div class="error" id="error2"></div>
                 <button type="button" onclick="nextQuestion(2)">下一題</button>

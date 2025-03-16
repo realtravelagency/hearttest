@@ -52,7 +52,7 @@
 
         .question {
             display: none;
-            padding: 20px 20px 10px 20px; /* 減少底部 padding，避免多餘空間 */
+            padding: 20px 20px 10px 20px;
             margin: 0;
             border: 2px dashed var(--secondary-color);
             border-radius: 20px;
@@ -73,16 +73,16 @@
         }
 
         button {
-            background: rgba(255, 255, 255, 0.9); /* 改為與題目框背景一致，避免粉色框 */
-            color: var(--primary-color); /* 文字顏色使用粉色 */
-            border: 2px solid var(--primary-color); /* 添加邊框，保持視覺效果 */
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
             border-radius: 8px;
             font-size: 1.1em;
-            padding: 10px 30px; /* 減少 padding */
+            padding: 10px 30px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: block;
-            margin: 5px auto; /* 減少外邊距 */
+            margin: 5px auto;
             max-width: 200px;
             width: 100%;
             box-sizing: border-box;
@@ -223,7 +223,7 @@
         }
 
         .results {
-            display: none;
+            display: none; /* 確保初始隱藏 */
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
@@ -231,7 +231,7 @@
             border-radius: 20px;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95));
             box-shadow: 0 10px 30px rgba(255, 126, 179, 0.2);
-            border: 2px solid rgba(255, 126, 179, 0.3);
+            border: none; /* 移除粉色邊框 */
             text-align: center;
             position: relative;
             box-sizing: border-box;
@@ -275,7 +275,7 @@
             .char1 { top: 5%; left: 5%; }
             .char2 { top: 20%; right: 5%; }
             .char3 { bottom: 5%; left: 5%; }
-            .results { padding: 15px; width: 90%; margin: 0 auto; display: block; }
+            .results { padding: 15px; width: 90%; margin: 0 auto; border: none; }
             .result-img { max-width: 100%; }
             .start-page {
                 background-size: contain;
@@ -301,7 +301,7 @@
             .char1 { top: 5%; left: 5%; }
             .char2 { top: 15%; right: 5%; }
             .char3 { bottom: 5%; left: 5%; }
-            .results { padding: 10px; width: 95%; margin: 0 auto; display: block; }
+            .results { padding: 10px; width: 95%; margin: 0 auto; border: none; }
             .result-img { max-width: 100%; }
             .start-page {
                 background-size: contain;
@@ -454,7 +454,7 @@
             </div>
         </form>
 
-        <div class="results" id="results"></div>
+        <div class="results" id="results" style="display: none;"></div>
         <div style="text-align: center;">
             <button id="retryButton" style="display:none;" onclick="retryQuiz()">再測一次</button>
         </div>
@@ -479,6 +479,7 @@
         function startQuiz() {
             startPage.style.display = 'none';
             quizContainer.style.display = 'block';
+            resultsDiv.style.display = 'none'; /* 確保測驗開始時隱藏 */
             questions[0].classList.add('active');
             for (let i = 1; i < questions.length; i++) {
                 questions[i].classList.remove('active');
@@ -504,6 +505,7 @@
             currentQuestion.classList.remove('active');
             
             if (questionIndex < questions.length) {
+                resultsDiv.style.display = 'none'; /* 確保測驗進行中隱藏 results */
                 nextQuestionElement.classList.add('active');
                 const questionImages = {
                     1: { character: './images/character1.png' },
@@ -541,7 +543,7 @@
                 };
 
                 currentResult = result;
-                resultsDiv.style.display = 'block';
+                resultsDiv.style.display = 'block'; /* 測驗完成後顯示 */
                 resultsDiv.innerHTML = `
                     <div class="result-header">
                         <img src="${resultImages[result]}" class="result-img" alt="${result} 結果圖片">
@@ -551,6 +553,7 @@
                     </div>
                 `;
             } else {
+                resultsDiv.style.display = 'block';
                 resultsDiv.textContent = '無法計算結果，請重試。';
             }
             retryButton.style.display = 'block';
@@ -600,6 +603,10 @@
             const quizContainer = document.getElementById('quizContainer');
             const startPage = document.getElementById('startPage');
             const startButton = startPage.querySelector('button');
+            const resultsDiv = document.getElementById('results');
+
+            /* 確保頁面載入時 results 隱藏 */
+            resultsDiv.style.display = 'none';
 
             function getSafePosition(charWidth, charHeight) {
                 const isQuizActive = quizContainer.style.display === 'block';

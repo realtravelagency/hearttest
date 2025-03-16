@@ -39,15 +39,6 @@
             z-index: 2;
         }
 
-        .container h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: var(--primary-color);
-            font-size: 2.2em;
-            text-shadow: 2px 2px 4px rgba(255, 126, 179, 0.2);
-            padding: 0 20px;
-        }
-
         .question {
             display: none;
             padding: 20px;
@@ -127,32 +118,38 @@
         .start-page {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-end; /* 將內容推向底部 */
             align-items: center;
             min-height: 100vh;
             width: 100%;
             background: url('./images/cover-bg.png') no-repeat center center;
-            background-size: contain; /* 確保圖片完整顯示 */
-            background-position: top; /* 從頂部開始顯示 */
+            background-size: contain;
+            background-position: top;
             text-align: center;
             padding: 20px;
+            padding-bottom: 100px; /* 調整底部間距，靠近圖片中按鈕位置 */
             position: relative;
             z-index: 1;
         }
 
-        .start-page h1 {
-            color: var(--primary-color);
-            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.5);
+        .start-page button {
+            background: #E6F0FA; /* 淺藍色背景 */
+            color: #3B5998; /* 深藍色文字 */
+            border: none;
+            border-radius: 50px; /* 橢圓形圓角 */
+            font-size: 1.2em;
+            padding: 12px 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
             position: relative;
             z-index: 2;
+            max-width: 250px;
         }
 
-        .start-page p {
-            color: #666;
-            font-size: 1.3em;
-            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
-            position: relative;
-            z-index: 2;
+        .start-page button:hover {
+            background: #D1E3F6; /* 懸停時背景色稍變深 */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         @keyframes float {
@@ -261,6 +258,12 @@
                 background-size: contain;
                 background-position: center;
                 min-height: 100vh;
+                padding-bottom: 80px; /* 手機上調整底部間距 */
+            }
+            .start-page button {
+                font-size: 1em;
+                padding: 10px 30px;
+                max-width: 200px;
             }
         }
 
@@ -280,6 +283,12 @@
                 background-size: contain;
                 background-position: center;
                 min-height: 100vh;
+                padding-bottom: 60px; /* 小手機上調整底部間距 */
+            }
+            .start-page button {
+                font-size: 0.9em;
+                padding: 8px 25px;
+                max-width: 180px;
             }
         }
 
@@ -341,8 +350,6 @@
     </div>
 
     <div class="start-page" id="startPage">
-        <h1>心理測驗</h1>
-        <p>測驗看看你的旅遊角色是什麼！</p>
         <button onclick="startQuiz()">開始測驗</button>
     </div>
 

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>心理測驗：你的旅遊角色是什麼？</title>
-    <!-- 引入 Google Fonts 的手寫字體和主要字體 -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <!-- 引入 Google Fonts，使用 ZCOOL QingKe HuangYou 作為手寫字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #7ec4ff; /* 淺藍色 */
@@ -17,7 +17,7 @@
 
         body {
             background: var(--bg-color);
-            font-family: "Noto Sans TC", sans-serif; /* 後備字體 */
+            font-family: "Noto Sans TC", Arial, Helvetica, sans-serif; /* 後備字體更通用 */
             margin: 0;
             padding: 0;
             min-height: 100vh;
@@ -36,7 +36,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://picsum.photos/800/1200') no-repeat center center; /* 穩定的背景圖 */
+            background: url('https://picsum.photos/800/1200') no-repeat center center;
             background-size: cover;
             opacity: 0.2;
             z-index: 1;
@@ -60,15 +60,16 @@
             text-align: center;
             margin-bottom: 30px;
             color: white;
-            font-family: "Ma Shan Zheng", cursive;
+            font-family: "ZCOOL QingKe HuangYou", "Noto Sans TC", sans-serif; /* 使用新手寫字體 */
             font-size: 2.5em;
             text-shadow: var(--text-shadow);
             padding: 0 20px;
+            letter-spacing: 2px; /* 增加字間距，增強手寫感 */
         }
 
         .question {
             display: none;
-            padding: 40px 10px; /* 進一步縮減側邊內邊距 */
+            padding: 40px 10px;
             margin: 0;
             border-radius: 20px;
             background: rgba(255, 255, 255, 0.3);
@@ -84,11 +85,12 @@
 
         .question h3 {
             color: white;
-            font-family: "Ma Shan Zheng", cursive;
+            font-family: "ZCOOL QingKe HuangYou", "Noto Sans TC", sans-serif; /* 使用新手寫字體 */
             font-size: 1.8em;
             text-shadow: var(--text-shadow);
             margin: 0 0 20px 0;
             overflow-wrap: break-word;
+            letter-spacing: 1px;
         }
 
         /* 隨機分佈的標籤 */
@@ -97,7 +99,7 @@
             content: '#有條理';
             position: absolute;
             color: white;
-            font-family: "Ma Shan Zheng", cursive;
+            font-family: "ZCOOL QingKe HuangYou", "Noto Sans TC", sans-serif;
             font-size: 1em;
             text-shadow: var(--text-shadow);
             z-index: 4;
@@ -134,7 +136,7 @@
             border: none;
             border-radius: 25px;
             font-size: 1.1em;
-            font-family: "Noto Sans TC", sans-serif;
+            font-family: "Noto Sans TC", Arial, Helvetica, sans-serif;
             font-weight: bold;
             padding: 10px 30px;
             cursor: pointer;
@@ -167,11 +169,11 @@
         }
 
         input[type="radio"]:checked + label {
-            background: linear-gradient(45deg, var(--bg-color), var(--primary-color)); /* 柔和綠色到淺藍色 */
+            background: linear-gradient(45deg, var(--bg-color), var(--primary-color));
             color: white;
             border-radius: 12px;
             transform: scale(1.02);
-            box-shadow: 0 4px 15px rgba(126, 196, 255, 0.3); /* 藍色系陰影 */
+            box-shadow: 0 4px 15px rgba(126, 196, 255, 0.3);
         }
 
         .start-page {
@@ -197,7 +199,7 @@
             border: none;
             border-radius: 50px;
             font-size: 1.2em;
-            font-family: "Noto Sans TC", sans-serif;
+            font-family: "Noto Sans TC", Arial, Helvetica, sans-serif;
             font-weight: bold;
             padding: 12px 40px;
             cursor: pointer;
@@ -269,7 +271,7 @@
             margin: 20px auto;
             padding: 20px;
             border-radius: 20px;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 'Arm Sans TC', sans-serif);
             box-shadow: none;
             border: none;
             text-align: center;
@@ -301,7 +303,7 @@
             content: '#旅遊狂';
             position: absolute;
             color: white;
-            font-family: "Ma Shan Zheng", cursive;
+            font-family: "ZCOOL QingKe HuangYou", "Noto Sans TC", sans-serif;
             font-size: 1em;
             text-shadow: var(--text-shadow);
             z-index: 4;
@@ -326,13 +328,13 @@
             .question h3 { font-size: 1.3em; padding: 0 10px; margin-bottom: 15px; }
             td { padding: 10px 5px; margin: 3px 0; }
             label {
-                padding: 10px 6px; /* 進一步縮減內邊距 */
+                padding: 10px 6px;
                 font-size: 0.85em;
                 width: 100%;
                 max-width: 90%;
                 margin: 0 auto;
                 overflow-wrap: break-word;
-                word-break: break-all; /* 強制換行 */
+                word-break: break-all;
             }
             button { max-width: 180px; padding: 8px 20px; font-size: 1em; margin: 3px auto; }
             table { width: 100%; padding: 0; margin: 5px 0; }
@@ -373,8 +375,8 @@
             .container h1 { font-size: 1.4em; }
             .question h3 { font-size: 1.1em; margin-bottom: 10px; }
             label {
-                padding: 8px 4px; /* 進一步縮減內邊距 */
-                font-size: 0.75em; /* 進一步縮減字體 */
+                padding: 8px 4px;
+                font-size: 0.75em;
                 max-width: 90%;
                 margin: 0 auto;
                 overflow-wrap: break-word;
@@ -437,7 +439,7 @@
             box-sizing: border-box;
             overflow-wrap: break-word;
             max-width: 100%;
-            font-family: "Noto Sans TC", sans-serif; /* 統一使用 Noto Sans TC */
+            font-family: "Noto Sans TC", Arial, Helvetica, sans-serif;
         }
 
         label:hover {
@@ -457,9 +459,10 @@
         }
 
         .error {
-            color: #333; /* 避免紅色系，使用深灰色 */
+            color: #333;
             font-size: 0.9em;
             margin: 0;
+            font-family: "Noto Sans TC", Arial, Helvetica, sans-serif;
         }
     </style>
 </head>
@@ -499,7 +502,7 @@
                     <tr><td><input type="radio" id="q2-option2" name="q2" value="好好心"><label for="q2-option2">檢查物品是否帶齊，順便看天氣預報決定帶傘或防曬</label></td></tr>
                     <tr><td><input type="radio" id="q2-option3" name="q2" value="酷哭星"><label for="q2-option3">化好妝，檢查外貌後再出門</label></td></tr>
                     <tr><td><input type="radio" id="q2-option4" name="q2" value="乖寶寶"><label for="q2-option4">有帶手機、錢包就夠了</label></td></tr>
-                    <tr><td><input type="radio" id="q2-option5" name="q2" value="吃光光"><label for="q2-option2">想著目的地美食，通勤時用手機找當地好吃的</label></td></tr>
+                    <tr><td><input type="radio" id="q2-option5" name="q2" value="吃光光"><label for="q2-option5">想著目的地美食，通勤時用手機找當地好吃的</label></td></tr>
                 </table>
                 <div class="error" id="error2"></div>
                 <button type="button" onclick="nextQuestion(2)">下一題</button>

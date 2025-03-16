@@ -142,14 +142,14 @@
             align-items: center;
             min-height: 100vh;
             width: 100%;
-            background: url('./images/cover-bg.png') no-repeat center center; /* 更改為 PNG */
+            background: url('./images/cover-bg.png') no-repeat center center;
             background-size: contain;
             background-position: top;
             text-align: center;
             padding: 20px;
             padding-bottom: 100px;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
         .start-page button {
@@ -163,7 +163,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
-            z-index: 2;
+            z-index: 3;
             max-width: 220px;
         }
 
@@ -184,7 +184,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 5;
         }
 
         .floating-character {
@@ -198,9 +198,9 @@
             transition: all 0.3s ease;
         }
 
-        .char1 { top: 15%; left: 2%; animation: float 6s ease-in-out infinite; }
-        .char2 { top: 30%; right: 2%; animation: float 6s ease-in-out infinite 2s; }
-        .char3 { bottom: 15%; left: 3%; animation: float 6s ease-in-out infinite 4s; }
+        .char1 { top: 10%; left: 5%; animation: float 6s ease-in-out infinite; }
+        .char2 { top: 25%; right: 5%; animation: float 6s ease-in-out infinite 2s; }
+        .char3 { bottom: 10%; left: 5%; animation: float 6s ease-in-out infinite 4s; }
 
         @keyframes bounceIn {
             0% { opacity: 0; transform: scale(0.3) translateY(100px); }
@@ -245,9 +245,9 @@
 
         @keyframes randomMove {
             0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(100px, -50px) rotate(15deg); }
-            50% { transform: translate(-50px, 100px) rotate(-15deg); }
-            75% { transform: translate(-100px, -50px) rotate(15deg); }
+            25% { transform: translate(50px, -30px) rotate(10deg); }
+            50% { transform: translate(-30px, 50px) rotate(-10deg); }
+            75% { transform: translate(-50px, -30px) rotate(10deg); }
             100% { transform: translate(0, 0) rotate(0deg); }
         }
 
@@ -269,9 +269,9 @@
             .question { padding: 10px 5px; margin: 5px 0; }
             .error { padding: 0 10px; font-size: 0.9em; }
             .floating-character { width: 80px; height: 80px; }
-            .char1 { top: 5%; left: -10px; }
-            .char2 { top: 20%; right: -10px; }
-            .char3 { bottom: 5%; left: -10px; }
+            .char1 { top: 5%; left: 5%; }
+            .char2 { top: 20%; right: 5%; }
+            .char3 { bottom: 5%; left: 5%; }
             .results { padding: 15px; width: 90%; margin: 0 auto; display: block; }
             .result-img { max-width: 100%; }
             .start-page {
@@ -294,9 +294,9 @@
             label { padding: 10px 6px; font-size: 0.85em; }
             button { max-width: 150px; padding: 8px 16px; font-size: 0.9em; }
             .floating-character { width: 60px; height: 60px; }
-            .char1 { top: 2%; left: -5px; }
-            .char2 { top: 15%; right: -5px; }
-            .char3 { bottom: 2%; left: -5px; }
+            .char1 { top: 5%; left: 5%; }
+            .char2 { top: 15%; right: 5%; }
+            .char3 { bottom: 5%; left: 5%; }
             .results { padding: 10px; width: 95%; margin: 0 auto; display: block; }
             .result-img { max-width: 100%; }
             .start-page {
@@ -598,44 +598,47 @@
         document.addEventListener('DOMContentLoaded', function() {
             const characters = document.querySelectorAll('.floating-character');
             const quizContainer = document.getElementById('quizContainer');
+            const startPage = document.getElementById('startPage');
+
+            function getSafePosition(charWidth, charHeight) {
+                const containerRect = quizContainer.style.display === 'block' 
+                    ? quizContainer.getBoundingClientRect() 
+                    : startPage.getBoundingClientRect();
+                const safeTop = 0;
+                const safeLeft = 0;
+                const safeRight = window.innerWidth - charWidth;
+                const safeBottom = window.innerHeight - charHeight;
+                const avoidTop = containerRect.top - charHeight; // 避免上方
+                const avoidBottom = containerRect.bottom; // 避免下方
+                const avoidLeft = containerRect.left - charWidth; // 避免左側
+                const avoidRight = containerRect.right; // 避免右側
+
+                let randomX, randomY;
+                do {
+                    randomX = Math.random() * (safeRight - safeLeft) + safeLeft;
+                    randomY = Math.random() * (safeBottom - safeTop) + safeTop;
+                } while (
+                    randomY >= avoidTop && randomY <= avoidBottom && // 避免垂直重疊
+                    randomX >= avoidLeft && randomX <= avoidRight    // 避免水平重疊
+                );
+
+                return { x: randomX, y: randomY };
+            }
+
             characters.forEach(character => {
                 character.addEventListener('click', function() {
                     this.style.animation = 'shake 0.5s ease';
                     setTimeout(() => {
-                        const quizRect = quizContainer.getBoundingClientRect();
-                        const charWidth = 150;
-                        let randomX, randomY;
-                        const isLeftSide = Math.random() < 0.5;
-                        if (isLeftSide) {
-                            randomX = Math.random() * (quizRect.left - charWidth);
-                        } else {
-                            randomX = quizRect.right + Math.random() * (window.innerWidth - quizRect.right - charWidth);
-                        }
-                        randomY = Math.random() * (window.innerHeight - charWidth);
-                        const x = Math.max(0, Math.min(randomX, window.innerWidth - charWidth));
-                        const y = Math.max(0, Math.min(randomY, window.innerHeight - charWidth));
+                        const charWidth = parseInt(getComputedStyle(this).width, 10);
+                        const charHeight = parseInt(getComputedStyle(this).height, 10);
+                        const position = getSafePosition(charWidth, charHeight);
                         this.style.animation = 'randomMove 1s ease-in-out';
-                        this.style.left = x + 'px';
-                        this.style.top = y + 'px';
+                        this.style.left = position.x + 'px';
+                        this.style.top = position.y + 'px';
                         setTimeout(() => {
                             this.style.animation = 'float 6s ease-in-out infinite';
                         }, 1000);
                     }, 500);
-                });
-                character.addEventListener('transitionend', function() {
-                    const rect = this.getBoundingClientRect();
-                    const quizRect = quizContainer.getBoundingClientRect();
-                    if (rect.right > quizRect.left && rect.left < quizRect.right) {
-                        if (rect.left < quizRect.left) {
-                            this.style.left = '0px';
-                        } else {
-                            this.style.left = (window.innerWidth - rect.width) + 'px';
-                        }
-                    }
-                    if (rect.right > window.innerWidth) this.style.left = (window.innerWidth - rect.width) + 'px';
-                    if (rect.bottom > window.innerHeight) this.style.top = (window.innerHeight - rect.height) + 'px';
-                    if (rect.left < 0) this.style.left = '0px';
-                    if (rect.top < 0) this.style.top = '0px';
                 });
             });
         });

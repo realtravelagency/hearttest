@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>你的旅遊角色是什麼？</title>
+    <!-- Open Graph Meta Tags for Facebook Sharing -->
+    <meta property="og:title" content="你的旅遊角色是什麼？">
+    <meta property="og:description" content="快來測測你的旅遊角色是什麼吧！分享你的結果給朋友！">
+    <meta property="og:url" content="https://your-username.github.io/your-repo-name/"> <!-- Replace with your GitHub Pages URL -->
+    <meta property="og:image" content="https://your-username.github.io/your-repo-name/images/result_乖寶寶.png"> <!-- Default image; dynamically updated in JS -->
+    <meta property="og:type" content="website">
     <!-- 引入 Google Fonts，使用 ZCOOL QingKe HuangYou 作為手寫字體 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
     <style>
@@ -691,6 +697,18 @@
                 };
                 const quizUrl = window.location.href;
                 const shareText = `我的旅遊角色是「${result}」！快來測測你的旅遊角色是什麼吧！`;
+                const resultImageUrl = resultImages[result];
+
+                // Dynamically update Open Graph image meta tag for Facebook
+                let ogImageMeta = document.querySelector('meta[property="og:image"]');
+                if (ogImageMeta) {
+                    ogImageMeta.setAttribute('content', resultImageUrl);
+                } else {
+                    ogImageMeta = document.createElement('meta');
+                    ogImageMeta.setAttribute('property', 'og:image');
+                    ogImageMeta.setAttribute('content', resultImageUrl);
+                    document.head.appendChild(ogImageMeta);
+                }
 
                 currentResult = result;
                 resultsDiv.innerHTML = `
@@ -719,8 +737,13 @@
         }
 
         function shareToInstagram() {
-            alert('請下載測驗結果圖片後，開啟 Instagram 並上傳到你的貼文或限時動態！');
-            downloadResult();
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            const message = isMobile
+                ? '請下載測驗結果圖片，然後開啟 Instagram 應用程式，將圖片上傳到你的貼文或限時動態！點擊「確定」開始下載。'
+                : '請下載測驗結果圖片，然後在 Instagram 應用程式中將圖片上傳到你的貼文或限時動態！點擊「確定」開始下載。';
+            if (confirm(message)) {
+                downloadResult();
+            }
         }
 
         function downloadResult() {

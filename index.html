@@ -189,12 +189,12 @@
             align-items: center;
             min-height: 100vh;
             width: 100%;
-            background: url('./images/cover-bg.png') no-repeat center center; /* 首頁背景保持為 cover-bg.png */
+            background: url('./images/cover-bg.png') no-repeat center center;
             background-size: contain;
             background-position: top;
             text-align: center;
             padding: 20px;
-            padding-bottom: 100px;
+            padding-bottom: 50px; /* Reduced from 100px to move button upward */
             position: relative;
             z-index: 2;
         }
@@ -397,7 +397,7 @@
                 background-size: contain;
                 background-position: center;
                 min-height: 100vh;
-                padding-bottom: 80px;
+                padding-bottom: 40px; /* Reduced from 80px to move button upward */
             }
             .start-page button {
                 font-size: 1em;
@@ -445,7 +445,7 @@
                 background-size: contain;
                 background-position: center;
                 min-height: 100vh;
-                padding-bottom: 60px;
+                padding-bottom: 30px; /* Reduced from 60px to move button upward */
             }
             .start-page button {
                 font-size: 0.9em;
@@ -541,7 +541,7 @@
                 <h3>1. 已經很晚了但明天一大早就要出門，你會選擇？</h3>
                 <img src="./images/character1.png" class="character-img" alt="角色1">
                 <table>
-                    <tr><td><input type="radio" id="q1-option1" name="q1" value="好好心"><label for="q1-option1">提醒旅伴檢查包包是否帶齊後上床睡覺</label></td></tr>
+                    <tr><td><input type="radio" id="q1-option1" name="q1" value="好好心"><label for="q1-option1">檢查包包是否帶齊後上床睡覺</label></td></tr>
                     <tr><td><input type="radio" id="q1-option2" name="q1" value="乖寶寶"><label for="q1-option2">設好鬧鐘立刻關燈睡覺</label></td></tr>
                     <tr><td><input type="radio" id="q1-option3" name="q1" value="吵吵鬧"><label for="q1-option3">不要睡著就不會睡過頭，直接熬夜！</label></td></tr>
                     <tr><td><input type="radio" id="q1-option4" name="q1" value="酷哭星"><label for="q1-option4">睡過頭也沒關係，有人會叫我起床</label></td></tr>
@@ -555,7 +555,7 @@
                 <img src="./images/character1.png" class="character-img" alt="車掌角色">
                 <table>
                     <tr><td><input type="radio" id="q2-option1" name="q2" value="吵吵鬧"><label for="q2-option1">直接出門，安啦！</label></td></tr>
-                    <tr><td><input type="radio" id="q2-option2" name="q2" value="好好心"><label for="q2-option2">提醒旅伴檢查物品是否帶齊，順便看天氣預報決定帶傘或防曬</label></td></tr>
+                    <tr><td><input type="radio" id="q2-option2" name="q2" value="好好心"><label for="q2-option2">檢查物品是否帶齊，順便看天氣預報決定帶傘或防曬</label></td></tr>
                     <tr><td><input type="radio" id="q2-option3" name="q2" value="酷哭星"><label for="q2-option3">化好妝，檢查外貌後再出門</label></td></tr>
                     <tr><td><input type="radio" id="q2-option4" name="q2" value="乖寶寶"><label for="q2-option4">有帶手機、錢包就夠了</label></td></tr>
                     <tr><td><input type="radio" id="q2-option5" name="q2" value="吃光光"><label for="q2-option5">想著目的地美食，通勤時用手機找當地好吃的</label></td></tr>

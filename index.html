@@ -39,7 +39,7 @@
             content: '';
             position: fixed;
             top: 0;
-            left: 0;
+            left: 0彼此: 0;
             width: 100%;
             height: 100%;
             background: url('./images/cover-bg2.png') no-repeat center center;
@@ -97,6 +97,8 @@
             margin: 0 0 20px 0;
             overflow-wrap: break-word;
             letter-spacing: 1px;
+            text-align: left; /* Changed to left-align question text */
+            padding-left: 20px; /* Added padding for better spacing */
         }
 
         /* 隨機分佈的標籤 */
@@ -163,7 +165,6 @@
 
         td {
             background: rgba(255, 255, 255, 0.8);
-            Route: /your-route
             border-radius: 8px;
             padding: 15px;
             margin: 5px 0;
@@ -372,7 +373,11 @@
         @media (max-width: 768px) {
             .container { margin: 10px auto; padding: 10px; width: 95%; }
             .container h1 { font-size: 1.6em; padding: 0 10px; }
-            .question h3 { font-size: 1.3em; padding: 0 10px; margin-bottom: 15px; }
+            .question h3 { 
+                font-size: 1.3em; 
+                padding: 0 15px; /* Adjusted padding for mobile */
+                margin-bottom: 15px; 
+            }
             td { padding: 10px 5px; margin: 3px 0; }
             label {
                 padding: 10px 6px;
@@ -425,7 +430,11 @@
         @media (max-width: 480px) {
             .container { margin: 5px auto; padding: 6px; width: 95%; }
             .container h1 { font-size: 1.4em; }
-            .question h3 { font-size: 1.1em; margin-bottom: 10px; }
+            .question h3 { 
+                font-size: 1.1em; 
+                padding: 0 10px; /* Adjusted padding for smaller screens */
+                margin-bottom: 10px; 
+            }
             label {
                 padding: 8px 4px;
                 font-size: 0.75em;
@@ -539,7 +548,7 @@
 
         <form id="quizForm">
             <div class="question" id="q1">
-                <h3>1.     你一醒來發現自己在一個奇怪的房間，面前有張擺滿物品的桌子，上面有張紙條寫著：「拿完你的東西後滾出去！」。隨後便聽到一個奇怪的聲音開始倒數，你還在疑惑時發現時間只剩下十秒，你只好趕快拿走一樣東西離開，你會拿走什麼？</h3>
+                <h3>1. 你一醒來發現自己在一個奇怪的房間，面前有張擺滿物品的桌子，上面有張紙條寫著：「拿完你的東西後滾出去！」。隨後便聽到一個奇怪的聲音開始倒數，你還在疑惑時發現時間只剩下十秒，你只好趕快拿走一樣東西離開，你會拿走什麼？</h3>
                 <img src="./images/character1.png" class="character-img" alt="角色1">
                 <table>
                     <tr><td><input type="radio" id="q1-option1" name="q1" value="好好心"><label for="q1-option1">清潔手套</label></td></tr>
@@ -552,7 +561,7 @@
                 <button type="button" onclick="nextQuestion(1)">下一題</button>
             </div>
             <div class="question" id="q2">
-                <h3>2.     你拿著它離開房間，當你還在思考到底發生了什麼事時走到了一處花園，忽然間你覺得有點不對勁，檢查一下發現……</h3>
+                <h3>2. 你拿著它離開房間，當你還在思考到底發生了什麼事時走到了一處花園，忽然間你覺得有點不對勁，檢查一下發現……</h3>
                 <img src="./images/character2.png" class="character-img" alt="角色2">
                 <table>
                     <tr><td><input type="radio" id="q2-option1" name="q2" value="吵吵鬧"><label for="q2-option1">這裡安靜地令人不安</label></td></tr>
@@ -565,20 +574,20 @@
                 <button type="button" onclick="nextQuestion(2)">下一題</button>
             </div>
             <div class="question" id="q3">
-                <h3>3.     這時你發現旁邊的草叢有一些動靜，你朝那方向看發現是一隻……</h3>
+                <h3>3. 這時你發現旁邊的草叢有一些動靜，你朝那方向看發現是一隻……</h3>
                 <img src="./images/character3.png" class="character-img" alt="角色3">
                 <table>
                     <tr><td><input type="radio" id="q3-option1" name="q3" value="吵吵鬧"><label for="q3-option1">喋喋不休的鸚鵡</label></td></tr>
                     <tr><td><input type="radio" id="q3-option2" name="q3" value="好好心"><label for="q3-option2">尋找自己寶寶的袋鼠</label></td></tr>
                     <tr><td><input type="radio" id="q3-option3" name="q3" value="乖寶寶"><label for="q3-option3">隱蔽在背景的變色龍</label></td></tr>
-                    <tr><td><input type="radio" id="q3-option4" name="q3" value="酷哭星"><label for="q3-option4">伴隨亮粉與星星的獨角�兽</label></td></tr>
+                    <tr><td><input type="radio" id="q3-option4" name="q3" value="酷哭星"><label for="q3-option4">伴隨亮粉與星星的獨角獸</label></td></tr>
                     <tr><td><input type="radio" id="q3-option5" name="q3" value="吃光光"><label for="q3-option5">啃食竹子的大熊貓</label></td></tr>
                 </table>
                 <div class="error" id="error3"></div>
                 <button type="button" onclick="nextQuestion(3)">下一題</button>
             </div>
-            <div classwiec class="question" id="q4">
-                <h3>4.     牠似乎在引領你往一個方向走，你跟隨著牠到了一面鏡子前，你看著鏡子中的自己。鏡中的你是什麼模樣？</h3>
+            <div class="question" id="q4">
+                <h3>4. 牠似乎在引領你往一個方向走，你跟隨著牠到了一面鏡子前，你看著鏡子中的自己。鏡中的你是什麼模樣？</h3>
                 <img src="./images/character4.png" class="character-img" alt="角色4">
                 <table>
                     <tr><td><input type="radio" id="q4-option1" name="q4" value="好好心"><label for="q4-option1">簡潔自在的乾淨穿搭</label></td></tr>
@@ -591,10 +600,10 @@
                 <button type="button" onclick="nextQuestion(4)">下一題</button>
             </div>
             <div class="question" id="q5">
-                <h3>5.     你看著鏡子中的自己越看越入迷，此時當初倒數的那個奇怪聲音再次出現，它不停發出尖銳的聲音，這聲音吵得你難以忍受，一直叫、一直叫！突然你眼前一亮發現原來都是一場夢，一直在吵的其實是鬧鐘啦哈哈笑死，因為你特別設好時鐘要去華山看REAL社的畢製他才一直在響(,,・ω・,,)。對於原本的題目出現這樣的反轉，你覺得如何？</h3>
+                <h3>5. 你看著鏡子中的自己越看越入迷，此時當初倒數的那個奇怪聲音再次出現，它不停發出尖銳的聲音，這聲音吵得你難以忍受，一直叫、一直叫！突然你眼前一亮發現原來都是一場夢，一直在吵的其實是鬧鐘啦哈哈笑死，因為你特別設好時鐘要去華山看REAL社的畢製他才一直在響(,,・ω・,,)。對於原本的題目出現這樣的反轉，你覺得如何？</h3>
                 <img src="./images/character5.png" class="character-img" alt="角色5">
                 <table>
-                    <tr><td><input type="radio" id="q5-option1" name="q5" value="好好心"><label for="q5-option1">覺得好好笑蠻可愛的</label></td></tr>
+                    <tr><td><input type="radio" id="q5-option1" name="q5" value="好好心"><label for="q5-option1">覺得好好笑�蛮可愛的</label></td></tr>
                     <tr><td><input type="radio" id="q5-option2" name="q5" value="吃光光"><label for="q5-option2">如果有免費的雞塊分享餐我也要吃</label></td></tr>
                     <tr><td><input type="radio" id="q5-option3" name="q5" value="酷哭星"><label for="q5-option3">無言點點點</label></td></tr>
                     <tr><td><input type="radio" id="q5-option4" name="q5" value="吵吵鬧"><label for="q5-option4">哈哈哈哈哈哈哈哈哈笑死超靠夭</label></td></tr>
@@ -857,5 +866,7 @@
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93caa5568ebb6751',t:'MTc0NjcyNTAxNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93caa5568ebb6751',t:'MTc0NjcyNTAxNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93cab50b1b8e6757',t:'MTc0NjcyNTY1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
 </html>

@@ -163,6 +163,7 @@
 
         td {
             background: rgba(255, 255, 255, 0.8);
+            Route: /your-route
             border-radius: 8px;
             padding: 15px;
             margin: 5px 0;
@@ -538,66 +539,66 @@
 
         <form id="quizForm">
             <div class="question" id="q1">
-                <h3>1. 已經很晚了但明天一大早就要出門，你會選擇？</h3>
+                <h3>1. 你一醒來發現自己在一個奇怪的房間，面前有張擺滿物品的桌子，上面有張紙條寫著：「拿完你的東西後滾出去！」。隨後便聽到一個奇怪的聲音開始倒數，你還在疑惑時發現時間只剩下十秒，你只好趕快拿走一樣東西離開，你會拿走什麼？</h3>
                 <img src="./images/character1.png" class="character-img" alt="角色1">
                 <table>
-                    <tr><td><input type="radio" id="q1-option1" name="q1" value="好好心"><label for="q1-option1">發現少帶東西了!趕快出去買</label></td></tr>
-                    <tr><td><input type="radio" id="q1-option2" name="q1" value="乖寶寶"><label for="q1-option2">設好鬧鐘立刻關燈睡覺</label></td></tr>
-                    <tr><td><input type="radio" id="q1-option3" name="q1" value="吵吵鬧"><label for="q1-option3">不要睡著就不會睡過頭，直接熬夜！</label></td></tr>
-                    <tr><td><input type="radio" id="q1-option4" name="q1" value="酷哭星"><label for="q1-option4">睡過頭也沒關係，有人會叫我起床</label></td></tr>
-                    <tr><td><input type="radio" id="q1-option5" name="q1" value="吃光光"><label for="q1-option5">先吃消夜，吃飽睡得更安穩</label></td></tr>
+                    <tr><td><input type="radio" id="q1-option1" name="q1" value="好好心"><label for="q1-option1">清潔手套</label></td></tr>
+                    <tr><td><input type="radio" id="q1-option2" name="q1" value="乖寶寶"><label for="q1-option2">奶嘴</label></td></tr>
+                    <tr><td><input type="radio" id="q1-option3" name="q1" value="吵吵鬧"><label for="q1-option3">喉糖</label></td></tr>
+                    <tr><td><input type="radio" id="q1-option4" name="q1" value="酷哭星"><label for="q1-option4">牙套</label></td></tr>
+                    <tr><td><input type="radio" id="q1-option5" name="q1" value="吃光光"><label for="q1-option5">２０塊雞塊分享餐</label></td></tr>
                 </table>
                 <div class="error" id="error1"></div>
                 <button type="button" onclick="nextQuestion(1)">下一題</button>
             </div>
             <div class="question" id="q2">
-                <h3>2. 在出門之前，你會？</h3>
-                <img src="./images/character1.png" class="character-img" alt="車掌角色">
+                <h3>2. 你拿著它離開房間，當你還在思考到底發生了什麼事時走到了一處花園，忽然間你覺得有點不對勁，檢查一下發現……</h3>
+                <img src="./images/character2.png" class="character-img" alt="角色2">
                 <table>
-                    <tr><td><input type="radio" id="q2-option1" name="q2" value="吵吵鬧"><label for="q2-option1">直接出門，安啦！</label></td></tr>
-                    <tr><td><input type="radio" id="q2-option2" name="q2" value="好好心"><label for="q2-option2">檢查物品是否帶齊，順便看天氣預報決定帶傘或防曬</label></td></tr>
-                    <tr><td><input type="radio" id="q2-option3" name="q2" value="酷哭星"><label for="q2-option3">化好妝，檢查外貌後再出門</label></td></tr>
-                    <tr><td><input type="radio" id="q2-option4" name="q2" value="乖寶寶"><label for="q2-option4">有帶手機、錢包就夠了</label></td></tr>
-                    <tr><td><input type="radio" id="q2-option5" name="q2" value="吃光光"><label for="q2-option5">想著目的地美食，通勤時用手機找當地好吃的</label></td></tr>
+                    <tr><td><input type="radio" id="q2-option1" name="q2" value="吵吵鬧"><label for="q2-option1">這裡安靜地令人不安</label></td></tr>
+                    <tr><td><input type="radio" id="q2-option2" name="q2" value="好好心"><label for="q2-option2">身上似乎遺失了什麼東西</label></td></tr>
+                    <tr><td><input type="radio" id="q2-option3" name="q2" value="酷哭星"><label for="q2-option3">整個花園的氣味讓你感到噁心</label></td></tr>
+                    <tr><td><input type="radio" id="q2-option4" name="q2" value="吃光光"><label for="q2-option4">口乾舌燥、肚子咕嚕叫，彷彿數天沒有飲食</label></td></tr>
+                    <tr><td><input type="radio" id="q2-option5" name="q2" value="乖寶寶"><label for="q2-option5">覺得是自己想多了，沒什麼怪事</label></td></tr>
                 </table>
                 <div class="error" id="error2"></div>
                 <button type="button" onclick="nextQuestion(2)">下一題</button>
             </div>
             <div class="question" id="q3">
-                <h3>3. 到跟朋友的集合地點後發現有人遲到，這時你會？</h3>
-                <img src="./images/character1.png" class="character-img" alt="車掌角色">
+                <h3>3. 這時你發現旁邊的草叢有一些動靜，你朝那方向看發現是一隻……</h3>
+                <img src="./images/character3.png" class="character-img" alt="角色3">
                 <table>
-                    <tr><td><input type="radio" id="q3-option1" name="q3" value="吵吵鬧"><label for="q3-option1">打電話瘋狂 call 他</label></td></tr>
-                    <tr><td><input type="radio" id="q3-option2" name="q3" value="好好心"><label for="q3-option2">傳訊息問他目前到哪了</label></td></tr>
-                    <tr><td><input type="radio" id="q3-option3" name="q3" value="乖寶寶"><label for="q3-option3">做自己的事繼續等，等到他來</label></td></tr>
-                    <tr><td><input type="radio" id="q3-option4" name="q3" value="酷哭星"><label for="q3-option4">自拍ＯＯＴＤ，不滿意就多拍幾張</label></td></tr>
-                    <tr><td><input type="radio" id="q3-option5" name="q3" value="吃光光"><label for="q3-option5">去附近買個手搖喝，這樣買回來他可能也到了</label></td></tr>
+                    <tr><td><input type="radio" id="q3-option1" name="q3" value="吵吵鬧"><label for="q3-option1">喋喋不休的鸚鵡</label></td></tr>
+                    <tr><td><input type="radio" id="q3-option2" name="q3" value="好好心"><label for="q3-option2">尋找自己寶寶的袋鼠</label></td></tr>
+                    <tr><td><input type="radio" id="q3-option3" name="q3" value="乖寶寶"><label for="q3-option3">隱蔽在背景的變色龍</label></td></tr>
+                    <tr><td><input type="radio" id="q3-option4" name="q3" value="酷哭星"><label for="q3-option4">伴隨亮粉與星星的獨角�兽</label></td></tr>
+                    <tr><td><input type="radio" id="q3-option5" name="q3" value="吃光光"><label for="q3-option5">啃食竹子的大熊貓</label></td></tr>
                 </table>
                 <div class="error" id="error3"></div>
                 <button type="button" onclick="nextQuestion(3)">下一題</button>
             </div>
-            <div class="question" id="q4">
-                <h3>4. 大家決定開車前往目的地，在過去的過程中，你通常會？</h3>
-                <img src="./images/character1.png" class="character-img" alt="車掌角色">
+            <div classwiec class="question" id="q4">
+                <h3>4. 牠似乎在引領你往一個方向走，你跟隨著牠到了一面鏡子前，你看著鏡子中的自己。鏡中的你是什麼模樣？</h3>
+                <img src="./images/character4.png" class="character-img" alt="角色4">
                 <table>
-                    <tr><td><input type="radio" id="q4-option1" name="q4" value="好好心"><label for="q4-option1">認真開車，遵守規則，安全送大家到目的地</label></td></tr>
-                    <tr><td><input type="radio" id="q4-option2" name="q4" value="酷哭星"><label for="q4-option2">拍限時動態記錄自己和大家的快樂時光</label></td></tr>
-                    <tr><td><input type="radio" id="q4-option3" name="q4" value="吵吵鬧"><label for="q4-option3">光聊天不夠還要用手機把音樂放出來，大家一起嗨！</label></td></tr>
-                    <tr><td><input type="radio" id="q4-option4" name="q4" value="吃光光"><label for="q4-option4">邊吃在上車前準備好的食物，吃飽等等才有力氣玩</label></td></tr>
-                    <tr><td><input type="radio" id="q4-option5" name="q4" value="乖寶寶"><label for="q4-option5">安靜玩手機直到到目的地</label></td></tr>
+                    <tr><td><input type="radio" id="q4-option1" name="q4" value="好好心"><label for="q4-option1">簡潔自在的乾淨穿搭</label></td></tr>
+                    <tr><td><input type="radio" id="q4-option2" name="q4" value="酷哭星"><label for="q4-option2">精心打扮的模樣</label></td></tr>
+                    <tr><td><input type="radio" id="q4-option3" name="q4" value="吵吵鬧"><label for="q4-option3">寬鬆的褲子配oversize的Ｔ恤</label></td></tr>
+                    <tr><td><input type="radio" id="q4-option4" name="q4" value="吃光光"><label for="q4-option4">你看到鏡子反映出正在吃雞塊的你</label></td></tr>
+                    <tr><td><input type="radio" id="q4-option5" name="q4" value="乖寶寶"><label for="q4-option5">學生時期的制服</label></td></tr>
                 </table>
                 <div class="error" id="error4"></div>
                 <button type="button" onclick="nextQuestion(4)">下一題</button>
             </div>
             <div class="question" id="q5">
-                <h3>5. 玩了一整天終於回到家了，最令你難忘的是？</h3>
-                <img src="./images/character1.png" class="character-img" alt="車掌角色">
+                <h3>5. 你看著鏡子中的自己越看越入迷，此時當初倒數的那個奇怪聲音再次出現，它不停發出尖銳的聲音，這聲音吵得你難以忍受，一直叫、一直叫！突然你眼前一亮發現原來都是一場夢，一直在吵的其實是鬧鐘啦哈哈笑死，因為你特別設好時鐘要去華山看REAL社的畢製他才一直在響(,,・ω・,,)。對於原本的題目出現這樣的反轉，你覺得如何？</h3>
+                <img src="./images/character5.png" class="character-img" alt="角色5">
                 <table>
-                    <tr><td><input type="radio" id="q5-option1" name="q5" value="好好心"><label for="q5-option1">跟大家在一起的時光，友誼長存ＢＦＦ！</label></td></tr>
-                    <tr><td><input type="radio" id="q5-option2" name="q5" value="吃光光"><label for="q5-option2">回味美食，想到就餓，還想再吃更多</label></td></tr>
-                    <tr><td><input type="radio" id="q5-option3" name="q5" value="酷哭星"><label for="q5-option3">拍了很多好看照片，修完圖後分享</label></td></tr>
-                    <tr><td><input type="radio" id="q5-option4" name="q5" value="吵吵鬧"><label for="q5-option4">細節講很久，但我只記得超開心！</label></td></tr>
-                    <tr><td><input type="radio" id="q5-option5" name="q5" value="乖寶寶"><label for="q5-option5">感覺普通，有人揪我就去</label></td></tr>
+                    <tr><td><input type="radio" id="q5-option1" name="q5" value="好好心"><label for="q5-option1">覺得好好笑蠻可愛的</label></td></tr>
+                    <tr><td><input type="radio" id="q5-option2" name="q5" value="吃光光"><label for="q5-option2">如果有免費的雞塊分享餐我也要吃</label></td></tr>
+                    <tr><td><input type="radio" id="q5-option3" name="q5" value="酷哭星"><label for="q5-option3">無言點點點</label></td></tr>
+                    <tr><td><input type="radio" id="q5-option4" name="q5" value="吵吵鬧"><label for="q5-option4">哈哈哈哈哈哈哈哈哈笑死超靠夭</label></td></tr>
+                    <tr><td><input type="radio" id="q5-option5" name="q5" value="乖寶寶"><label for="q5-option5">隨便啦</label></td></tr>
                 </table>
                 <div class="error" id="error5"></div>
                 <button type="button" onclick="nextQuestion(5)">下一題</button>
@@ -856,5 +857,5 @@
             });
         });
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93caa5568ebb6751',t:'MTc0NjcyNTAxNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

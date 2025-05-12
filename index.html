@@ -39,7 +39,7 @@
             content: '';
             position: fixed;
             top: 0;
-            left: 0彼此: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             background: url('./images/cover-bg2.png') no-repeat center center;
@@ -97,8 +97,8 @@
             margin: 0 0 20px 0;
             overflow-wrap: break-word;
             letter-spacing: 1px;
-            text-align: left; /* Changed to left-align question text */
-            padding-left: 20px; /* Added padding for better spacing */
+            text-align: left;
+            padding-left: 20px;
         }
 
         /* 隨機分佈的標籤 */
@@ -149,8 +149,8 @@
             padding: 10px 30px;
             cursor: pointer;
             transition: all 0.3s ease;
-            display: block;
-            margin: 10px auto;
+            display: inline-block;
+            margin: 10px 5px;
             max-width: 200px;
             width: 100%;
             box-sizing: border-box;
@@ -196,7 +196,7 @@
             background-position: top;
             text-align: center;
             padding: 20px;
-            padding-bottom: 50px; /* Reduced from 100px to move button upward */
+            padding-bottom: 50px;
             position: relative;
             z-index: 2;
         }
@@ -298,11 +298,25 @@
         /* 結果圖片調整 */
         .result-img {
             width: 100%;
+            max-width: 450px;
             height: auto;
             aspect-ratio: 9 / 16;
             object-fit: contain;
             display: block;
             margin: 0 auto;
+        }
+
+        /* 正在分析文字樣式 */
+        .loading-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-family: "ZCOOL QingKe HuangYou", "Noto Sans TC", sans-serif;
+            font-size: 1.5em;
+            text-shadow: var(--text-shadow);
+            z-index: 2;
         }
 
         /* 隨機分佈的標籤（應用於結果頁面） */
@@ -375,7 +389,7 @@
             .container h1 { font-size: 1.6em; padding: 0 10px; }
             .question h3 { 
                 font-size: 1.3em; 
-                padding: 0 15px; /* Adjusted padding for mobile */
+                padding: 0 15px;
                 margin-bottom: 15px; 
             }
             td { padding: 10px 5px; margin: 3px 0; }
@@ -388,7 +402,7 @@
                 overflow-wrap: break-word;
                 word-break: break-all;
             }
-            button { max-width: 180px; padding: 8px 20px; font-size: 1em; margin: 3px auto; }
+            button { max-width: 180px; padding: 8px 20px; font-size: 1em; margin: 3px 5px; }
             table { width: 100%; padding: 0; margin: 5px 0; }
             .question { padding: 20px 8px 12px 8px; margin: 0; min-height: auto; }
             .error { padding: 0 10px; font-size: 0.85em; margin: 0; }
@@ -399,11 +413,12 @@
             .char3 { bottom: 5%; left: 5%; }
             .results { max-width: 350px; padding: 15px; margin: 10px auto; }
             .result-img { max-width: 350px; }
+            .loading-text { font-size: 1.2em; }
             .start-page {
                 background-size: contain;
                 background-position: center;
                 min-height: 100vh;
-                padding-bottom: 40px; /* Reduced from 80px to move button upward */
+                padding-bottom: 40px;
             }
             .start-page button {
                 font-size: 1em;
@@ -432,7 +447,7 @@
             .container h1 { font-size: 1.4em; }
             .question h3 { 
                 font-size: 1.1em; 
-                padding: 0 10px; /* Adjusted padding for smaller screens */
+                padding: 0 10px;
                 margin-bottom: 10px; 
             }
             label {
@@ -443,7 +458,7 @@
                 overflow-wrap: break-word;
                 word-break: break-all;
             }
-            button { max-width: 150px; padding: 6px 16px; font-size: 0.9em; margin: 3px auto; }
+            button { max-width: 150px; padding: 6px 16px; font-size: 0.9em; margin: 3px 5px; }
             .character-img { max-width: 100px; max-height: 100px; margin: 5px auto; }
             .floating-character { width: 60px; height: 60px; }
             .char1 { top: 5%; left: 5%; }
@@ -451,11 +466,12 @@
             .char3 { bottom: 5%; left: 5%; }
             .results { max-width: 300px; padding: 10px; margin: 5px auto; }
             .result-img { max-width: 300px; }
+            .loading-text { font-size: 1em; }
             .start-page {
                 background-size: contain;
                 background-position: center;
                 min-height: 100vh;
-                padding-bottom: 30px; /* Reduced from 60px to move button upward */
+                padding-bottom: 30px;
             }
             .start-page button {
                 font-size: 0.9em;
@@ -571,6 +587,7 @@
                     <tr><td><input type="radio" id="q2-option5" name="q2" value="乖寶寶"><label for="q2-option5">只要衣服乾淨、好整理就好，輕便最棒</label></td></tr>
                 </table>
                 <div class="error" id="error2"></div>
+                <button type="button" onclick="prevQuestion(2)">上一題</button>
                 <button type="button" onclick="nextQuestion(2)">下一題</button>
             </div>
             <div class="question" id="q3">
@@ -584,6 +601,7 @@
                     <tr><td><input type="radio" id="q3-option5" name="q3" value="乖寶寶"><label for="q3-option5">默默趕過去，不吵不鬧。</label></td></tr>
                 </table>
                 <div class="error" id="error3"></div>
+                <button type="button" onclick="prevQuestion(3)">上一題</button>
                 <button type="button" onclick="nextQuestion(3)">下一題</button>
             </div>
             <div class="question" id="q4">
@@ -597,6 +615,7 @@
                     <tr><td><input type="radio" id="q4-option5" name="q4" value="吃光光"><label for="q4-option5">馬上搜尋「必吃排行榜」，一攤都不能錯過！</label></td></tr>
                 </table>
                 <div class="error" id="error4"></div>
+                <button type="button" onclick="prevQuestion(4)">上一題</button>
                 <button type="button" onclick="nextQuestion(4)">下一題</button>
             </div>
             <div class="question" id="q5">
@@ -610,6 +629,7 @@
                     <tr><td><input type="radio" id="q5-option5" name="q5" value="乖寶寶"><label for="q5-option5">默默收藏票根、小物，當作紀念。</label></td></tr>
                 </table>
                 <div class="error" id="error5"></div>
+                <button type="button" onclick="prevQuestion(5)">上一題</button>
                 <button type="button" onclick="nextQuestion(5)">下一題</button>
             </div>
         </form>
@@ -635,6 +655,21 @@
             "好好心": 0
         };
         let currentResult = "";
+
+        // 預載結果圖片以加快顯示速度
+        document.addEventListener('DOMContentLoaded', function() {
+            const resultImages = [
+                './images/result_乖寶寶.png',
+                './images/result_吵吵鬧.png',
+                './images/result_酷哭星.png',
+                './images/result_吃光光.png',
+                './images/result_好好心.png'
+            ];
+            resultImages.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        });
 
         function startQuiz() {
             startPage.style.display = 'none';
@@ -684,6 +719,43 @@
             }
         }
 
+        function prevQuestion(questionIndex) {
+            if (questionIndex <= 1) return; // 第一題沒有上一題
+
+            const currentQuestion = questions[questionIndex - 1];
+            const prevQuestionElement = questions[questionIndex - 2];
+
+            // 隱藏當前題目，顯示上一題
+            currentQuestion.classList.remove('active');
+            prevQuestionElement.classList.add('active');
+
+            // 清除當前題目的錯誤訊息
+            const errorDiv = document.getElementById(`error${questionIndex}`);
+            errorDiv.textContent = '';
+
+            // 清除當前題目的選擇並減去分數
+            const selectedOption = document.querySelector(`input[name="q${questionIndex}"]:checked`);
+            if (selectedOption) {
+                const answer = selectedOption.value;
+                scores[answer]--;
+                selectedOption.checked = false;
+                console.log(`Returned to Question ${questionIndex - 1}, Reverted score for ${answer}, Scores:`, scores);
+            }
+
+            // 更新角色圖片
+            const questionImages = {
+                1: { character: './images/character1.png' },
+                2: { character: './images/character2.png' },
+                3: { character: './images/character3.png' },
+                4: { character: './images/character4.png' },
+                5: { character: './images/character5.png' }
+            };
+            const prevQuestionChar = prevQuestionElement.querySelector('.character-img');
+            if (prevQuestionChar && questionImages[questionIndex - 1]) {
+                prevQuestionChar.src = questionImages[questionIndex - 1].character;
+            }
+        }
+
         function showResults() {
             let maxScore = 0;
             let result = "";
@@ -709,7 +781,7 @@
                 const shareText = `我的旅遊角色是「${result}」！快來測測你的旅遊角色是什麼吧！`;
                 const resultImageUrl = resultImages[result];
 
-                // Dynamically update Open Graph image meta tag for Facebook
+                // 更新 Open Graph 圖片 meta 標籤
                 let ogImageMeta = document.querySelector('meta[property="og:image"]');
                 if (ogImageMeta) {
                     ogImageMeta.setAttribute('content', resultImageUrl);
@@ -721,9 +793,12 @@
                 }
 
                 currentResult = result;
+
+                // 設置結果 HTML，包含 loadingText
                 resultsDiv.innerHTML = `
+                    <div class="loading-text" id="loadingText">正在分析你的REAL精…</div>
                     <div class="result-header">
-                        <img src="${resultImages[result]}" class="result-img" alt="${result} 結果圖片">
+                        <img src="${resultImages[result]}" class="result-img" alt="${result} 結果圖片" id="resultImage">
                     </div>
                     <div class="call-to-action" style="text-align: center; width: 100%; margin: 20px 0;">
                         <button onclick="downloadResult()">下載測驗結果</button>
@@ -734,6 +809,16 @@
                     </div>
                 `;
                 resultsDiv.classList.add('active');
+
+                // 當圖片載入完成後隱藏 loadingText
+                const resultImage = document.getElementById('resultImage');
+                if (resultImage.complete) {
+                    document.getElementById('loadingText').style.display = 'none';
+                } else {
+                    resultImage.onload = () => {
+                        document.getElementById('loadingText').style.display = 'none';
+                    };
+                }
             } else {
                 resultsDiv.innerHTML = '<p>無法計算結果，請重試。</p>';
                 resultsDiv.classList.add('active');
@@ -866,7 +951,5 @@
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93caa5568ebb6751',t:'MTc0NjcyNTAxNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93cab50b1b8e6757',t:'MTc0NjcyNTY1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>

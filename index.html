@@ -196,7 +196,7 @@
             background-position: top;
             text-align: center;
             padding: 20px;
-            padding-bottom: 50px;
+            padding-bottom: 30px; /* 從 50px 減少到 30px，讓按鈕向上移動 */
             position: relative;
             z-index: 2;
         }
@@ -383,6 +383,15 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
+        /* 再測一次按鈕容器樣式 */
+        .retry-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin: 20px auto;
+        }
+
         /* 手機端適配 */
         @media (max-width: 768px) {
             .container { margin: 10px auto; padding: 10px; width: 95%; }
@@ -418,7 +427,7 @@
                 background-size: contain;
                 background-position: center;
                 min-height: 100vh;
-                padding-bottom: 40px;
+                padding-bottom: 25px; /* 從 40px 減少到 25px */
             }
             .start-page button {
                 font-size: 1em;
@@ -439,6 +448,9 @@
                 padding: 6px 15px;
                 font-size: 0.9em;
                 max-width: 120px;
+            }
+            .retry-container {
+                margin: 10px auto;
             }
         }
 
@@ -471,7 +483,7 @@
                 background-size: contain;
                 background-position: center;
                 min-height: 100vh;
-                padding-bottom: 30px;
+                padding-bottom: 20px; /* 從 30px 減少到 20px */
             }
             .start-page button {
                 font-size: 0.9em;
@@ -492,6 +504,9 @@
                 padding: 5px 10px;
                 font-size: 0.8em;
                 max-width: 100px;
+            }
+            .retry-container {
+                margin: 5px auto;
             }
         }
 
@@ -635,7 +650,7 @@
         </form>
 
         <div class="results" id="results"></div>
-        <div style="text-align: center;">
+        <div class="retry-container">
             <button id="retryButton" style="display:none;" onclick="retryQuiz()">再測一次</button>
         </div>
     </div>

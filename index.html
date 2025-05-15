@@ -187,7 +187,7 @@
         .start-page {
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
+            justify-content: center; /* 修改為中央對齊 */
             align-items: center;
             min-height: 100vh;
             width: 100%;
@@ -196,7 +196,6 @@
             background-position: top;
             text-align: center;
             padding: 20px;
-            padding-bottom: 30px; /* 從 50px 減少到 30px，讓按鈕向上移動 */
             position: relative;
             z-index: 2;
         }
@@ -427,7 +426,7 @@
                 background-size: contain;
                 background-position: center;
                 min-height: 100vh;
-                padding-bottom: 25px; /* 從 40px 減少到 25px */
+                justify-content: center; /* 確保在手機上也是垂直居中 */
             }
             .start-page button {
                 font-size: 1em;
@@ -483,7 +482,7 @@
                 background-size: contain;
                 background-position: center;
                 min-height: 100vh;
-                padding-bottom: 20px; /* 從 30px 減少到 20px */
+                justify-content: center; /* 確保在小型手機上也是垂直居中 */
             }
             .start-page button {
                 font-size: 0.9em;

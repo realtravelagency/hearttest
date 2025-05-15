@@ -560,6 +560,9 @@
             margin: 0;
             font-family: "Noto Sans TC", Arial, Helvetica, sans-serif;
         }
+        .start-quiz-button {
+        margin-top: 200px; /* Adjust this value to move the button further down */
+        }
     </style>
 </head>
 <body>
@@ -570,7 +573,7 @@
     </div>
 
     <div class="start-page" id="startPage">
-        <button onclick="startQuiz()">開始測驗</button>
+        <button onclick="startQuiz()" class="start-quiz-button">開始測驗</button>
     </div>
 
     <div class="container" id="quizContainer" style="display:none;">
